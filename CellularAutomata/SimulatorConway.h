@@ -31,6 +31,6 @@ public:
 	virtual int getCell(int y, int x, int t = -1);
 
 	bool stepForward(int steps = 1);
-	bool stepForward(float seconds);
+	bool stepForward(double seconds);
 };
 

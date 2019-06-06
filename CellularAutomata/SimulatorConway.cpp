@@ -5,6 +5,7 @@
 SimulatorConway::SimulatorConway(int y, int x) : y_dim(y), x_dim(x)
 {
 	// Initialise the blank cellStore
+	cellStore = std::vector<std::vector<std::vector<int>>>();
 	clear();
 }
 
@@ -13,25 +14,22 @@ SimulatorConway::~SimulatorConway()
 {
 }
 
-bool SimulatorConway::clear(bool addBlankFirstFrame = true) {
-	try {
-		// check if the cellStore is initialised or not
-		cellStore.empty(); 
-	}
-	catch (...) {
-		cellStore = std::vector<std::vector<std::vector<int>>>();
-	}
+bool SimulatorConway::clear(bool addBlankFirstFrame) {
 	cellStore.clear();
 	// Add cells into the blank frame only if needed
 	cellStore.push_back(std::vector<std::vector<int>>(addBlankFirstFrame ? y_dim : 0));
-	cellStore.back().push_back(std::vector<int>(addBlankFirstFrame ? x_dim : 0));
+	for (auto& it : cellStore.back()) {
+		it = std::vector<int>(addBlankFirstFrame ? x_dim : 0);
+	}
+	
+	return true;
 }
 
 int SimulatorConway::getNumFrames() {
 	return cellStore.size();
 }
 
-bool SimulatorConway::setCell(int y, int x, int new_val, int t = -1) {
+bool SimulatorConway::setCell(int y, int x, int new_val, int t) {
 	t = (t == -1) ? getNumFrames() - 1 : t;
 	if (y < 0 || y >= y_dim) {
 		throw std::runtime_error("Y dimension out of range");
@@ -53,10 +51,13 @@ bool SimulatorConway::setCell(int y, int x, int new_val, int t = -1) {
 
 bool SimulatorConway::blankFrame() {
 	cellStore.push_back(std::vector<std::vector<int>>(y_dim));
-	cellStore.back().push_back(std::vector<int>(x_dim));
+	for (auto& it : cellStore.back()) {
+		it = std::vector<int>(x_dim);
+	}
+	return true;
 }
 
-int SimulatorConway::getCell(int y, int x, int t = -1) {
+int SimulatorConway::getCell(int y, int x, int t) {
 	t = (t == -1) ? getNumFrames() - 1 : t;
 	if (y < 0 || y >= y_dim) {
 		throw std::runtime_error("Y dimension out of range");
@@ -72,8 +73,9 @@ int SimulatorConway::getCell(int y, int x, int t = -1) {
 	}
 }
 
-int SimulatorConway::countNeighbours(int y, int x, int t=-1) {
-	int t = (t == -1) ? getNumFrames() - 1 : t;
+int SimulatorConway::countNeighbours(int y, int x, int t) {
+	int thing = getNumFrames();
+	t = (t == -1) ? getNumFrames() - 1 : t;
 	int count = 0;
 	if (y < 0 || y >= y_dim) {
 		throw std::runtime_error("Y dimension out of range");
@@ -85,7 +87,7 @@ int SimulatorConway::countNeighbours(int y, int x, int t=-1) {
 	xmin = (x == 0) ? x : x - 1;
 	xmax = (x == x_dim - 1) ? x : x + 1;
 	ymin = (y == 0) ? y : y - 1;
-	ymax = (y == x_dim - 1) ? y : x + 1;
+	ymax = (y == y_dim - 1) ? y : y + 1;
 	for (int y = ymin; y <= ymax; y++) {
 		for (int x = xmin; x <= xmax; x++) {
 			if (getCell(y, x)) {
@@ -96,7 +98,7 @@ int SimulatorConway::countNeighbours(int y, int x, int t=-1) {
 	return count;
 }
 
-int SimulatorConway::updateCell(int y, int x, int t=-1) {
+int SimulatorConway::updateCell(int y, int x, int t) {
 	t = (t == -1) ? getNumFrames() - 1 : t;
 	int cell_count = countNeighbours(y, x, t-1);
 	if (getCell(y,x,t-1)) {
@@ -116,7 +118,7 @@ int SimulatorConway::updateCell(int y, int x, int t=-1) {
 	}
 }
 
-bool SimulatorConway::stepForward(int steps = 1) {
+bool SimulatorConway::stepForward(int steps) {
 	if (steps < 0) {
 		throw std::runtime_error("The simulation cannnot work backwards");
 	}
@@ -133,10 +135,10 @@ bool SimulatorConway::stepForward(int steps = 1) {
 	return true;
 }
 
-bool SimulatorConway::stepForward(float seconds) {
+bool SimulatorConway::stepForward(double seconds) {
 	timer.reset();
-	while (timer.elapsed <= seconds) {
+	while (timer.elapsed() <= seconds) {
 		stepForward();
 	}
-	
+	return true;
 }

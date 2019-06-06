@@ -114,8 +114,10 @@
     <ClInclude Include="ISimulator.h" />
     <ClInclude Include="ITester.h" />
     <ClInclude Include="SimulatorConway.h" />
+    <ClInclude Include="Stopwatch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="SimulatorConway.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

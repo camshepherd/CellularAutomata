@@ -24,9 +24,15 @@
     <ClInclude Include="SimulatorConway.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Stopwatch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SimulatorConway.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

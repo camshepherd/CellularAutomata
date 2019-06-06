@@ -13,7 +13,7 @@ public:
 	ISimulator() {};
 
 	virtual bool stepForward(int steps = 1) = 0;
-	virtual bool stepForward(float seconds) = 0;
+	virtual bool stepForward(double seconds) = 0;
 	virtual bool blankFrame() = 0;
 
 	virtual int getCell(int y, int x, int t = -1) = 0;
