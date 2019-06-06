@@ -1,11 +1,14 @@
 #ifndef ISIMULATOR_H
 #define ISIMULATOR_H
 
+#include "Stopwatch.h"
 //ISimulator is an interface defining the behaviour of the different 
 // types of simulator. It defines basic functionality that is entirely 
 // separated from the underlying implementation details
 
 class ISimulator {
+protected:
+	Stopwatch timer;
 public:
 	ISimulator() {};
 

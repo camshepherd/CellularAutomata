@@ -134,5 +134,9 @@ bool SimulatorConway::stepForward(int steps = 1) {
 }
 
 bool SimulatorConway::stepForward(float seconds) {
-	// need to get the timer aggregate put together so that this function can actually work
+	timer.reset();
+	while (timer.elapsed <= seconds) {
+		stepForward();
+	}
+	
 }
