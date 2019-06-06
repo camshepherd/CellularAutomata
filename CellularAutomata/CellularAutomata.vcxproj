@@ -111,6 +111,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ISimulator.h" />
+    <ClInclude Include="ITester.h" />
+    <ClInclude Include="SimulatorConway.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SimulatorConway.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
