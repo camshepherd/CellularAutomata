@@ -1,5 +1,6 @@
 #pragma once
 #include "ISimulator.h"
+#include "IRules.h"
 #include <vector>
 
 // ISimulator implementation to handle the simulation of Conway's Game of Life
@@ -8,30 +9,22 @@ class SimulatorConway :
 {
 private:
 	std::vector<std::vector<std::vector<int>>> cellStore;
-	int y_dim, x_dim;
-	static const int cell_min = 0;
-	static const int cell_max = 3;
+	const int y_dim, x_dim;
 
-	static const int live_min = 2;
-	static const int live_max = 3;
-	static const int birth_min = 3;
-	static const int birth_max = 3;
-
-	int updateCell(int y, int x, int t =-1);
-	int countNeighbours(int y, int x, int t=-1);
+	const IRules& rules;
 
 public:
-	SimulatorConway(int y, int x);
+	SimulatorConway(const int y, const int x, const IRules& _rules);
 	~SimulatorConway();
-	virtual bool clear(bool addBlankFirstFrame = true);
-	virtual int getNumFrames();
+	virtual bool clear(bool addBlankFirstFrame = true) override;
+	virtual int getNumFrames() override;
 
-	virtual bool setCell(int y, int x, int new_val, int t = -1);
-	virtual bool blankFrame();
+	virtual bool setCell(int y, int x, int new_val, int t = -1) override;
+	virtual bool blankFrame() override;
 
-	virtual int getCell(int y, int x, int t = -1);
+	virtual int getCell(int y, int x, int t = -1) override;
 
-	bool stepForward(int steps = 1);
-	bool stepForward(double seconds);
+	bool stepForward(int steps = 1) override;
+	bool stepForward(double seconds) override;
 };
 

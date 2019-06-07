@@ -1,7 +1,8 @@
 #include "SimulatorConway.h"
-
+#include "RulesConway.h"
 int main() {
-	SimulatorConway conway = SimulatorConway(5,5);
+	RulesConway conway_rules = RulesConway();
+	SimulatorConway conway(5, 5, conway_rules);
 	conway.setCell(4, 3, 1);
 	conway.setCell(4, 2, 1);
 	conway.setCell(3, 3, 1);
