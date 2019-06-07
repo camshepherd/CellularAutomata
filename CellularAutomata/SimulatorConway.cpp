@@ -23,7 +23,7 @@ bool SimulatorConway::clear(bool addBlankFirstFrame) {
 	return true;
 }
 
-int SimulatorConway::getNumFrames() {
+int SimulatorConway::getNumFrames() const {
 	return cellStore.size();
 }
 
@@ -49,7 +49,7 @@ bool SimulatorConway::blankFrame() {
 	return true;
 }
 
-int SimulatorConway::getCell(int y, int x, int t) {
+int SimulatorConway::getCell(int y, int x, int t) const {
 	t = (t == -1) ? getNumFrames() - 1 : t;
 	if (y < 0 || y >= y_dim) {
 		throw std::runtime_error("Y dimension out of range");
@@ -70,7 +70,7 @@ bool SimulatorConway::stepForward(int steps) {
 		throw std::runtime_error("The simulation cannnot work backwards");
 	}
 	else {
-		for (int step = 0; step < steps; ++steps) {
+		for (int step = 0; step < steps; ++step) {
 			blankFrame();
 			for (int y = 0; y < y_dim; ++y) {
 				for (int x = 0; x < x_dim; ++x) {

@@ -17,12 +17,12 @@ public:
 	SimulatorConway(const int y, const int x, const IRules& _rules);
 	~SimulatorConway();
 	virtual bool clear(bool addBlankFirstFrame = true) override;
-	virtual int getNumFrames() override;
+	virtual int getNumFrames() const override;
 
 	virtual bool setCell(int y, int x, int new_val, int t = -1) override;
 	virtual bool blankFrame() override;
 
-	virtual int getCell(int y, int x, int t = -1) override;
+	virtual int getCell(int y, int x, int t = -1) const override;
 
 	bool stepForward(int steps = 1) override;
 	bool stepForward(double seconds) override;
