@@ -111,6 +111,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="IRules.h" />
     <ClInclude Include="ISimulator.h" />
     <ClInclude Include="ITester.h" />
     <ClInclude Include="SimulatorConway.h" />

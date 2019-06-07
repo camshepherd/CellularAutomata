@@ -2,6 +2,7 @@
 #include "ISimulator.h"
 #include <vector>
 
+// ISimulator implementation to handle the simulation of Conway's Game of Life
 class SimulatorConway :
 	public ISimulator
 {

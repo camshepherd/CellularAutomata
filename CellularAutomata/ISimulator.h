@@ -2,9 +2,8 @@
 #define ISIMULATOR_H
 
 #include "Stopwatch.h"
-//ISimulator is an interface defining the behaviour of the different 
-// types of simulator. It defines basic functionality that is entirely 
-// separated from the underlying implementation details
+// Interface defining standard behaviour required in order to 
+// allow for consistency and ease of testing of simulations
 
 class ISimulator {
 protected:
@@ -22,8 +21,6 @@ public:
 
 	virtual int getNumFrames() = 0;
 	virtual bool clear(bool addBlankFirstFrame=true) = 0;
-
-	
 };
 
 #endif

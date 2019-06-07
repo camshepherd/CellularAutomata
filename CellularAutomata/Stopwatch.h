@@ -1,7 +1,6 @@
 #include <chrono>
 
-// Stopwatch is a very simple class to function as a stopwatch for the purposes of timing 
-// code.
+// A set of minimal stopwatch behaviour to time code
 class Stopwatch
 {
 private:
