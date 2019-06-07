@@ -1,6 +1,6 @@
-#include "SimulatorConway.h"
+#include "SimulatorSequential.h"
 
-SimulatorConway::SimulatorConway(const int y, const int x, const IRules& _rules) : y_dim(y), x_dim(x), rules(_rules)
+SimulatorSequential::SimulatorSequential(const int y, const int x, const IRules& _rules) : y_dim(y), x_dim(x), rules(_rules)
 {
 	// Initialise the blank cellStore
 	cellStore = std::vector<std::vector<std::vector<int>>>();
@@ -8,11 +8,11 @@ SimulatorConway::SimulatorConway(const int y, const int x, const IRules& _rules)
 }
 
 
-SimulatorConway::~SimulatorConway()
+SimulatorSequential::~SimulatorSequential()
 {
 }
 
-bool SimulatorConway::clear(bool addBlankFirstFrame) {
+bool SimulatorSequential::clear(bool addBlankFirstFrame) {
 	cellStore.clear();
 	// Add cells into the blank frame only if needed
 	cellStore.push_back(std::vector<std::vector<int>>(addBlankFirstFrame ? y_dim : 0));
@@ -23,11 +23,11 @@ bool SimulatorConway::clear(bool addBlankFirstFrame) {
 	return true;
 }
 
-int SimulatorConway::getNumFrames() const {
+int SimulatorSequential::getNumFrames() const {
 	return cellStore.size();
 }
 
-bool SimulatorConway::setCell(int y, int x, int new_val, int t) {
+bool SimulatorSequential::setCell(int y, int x, int new_val, int t) {
 	t = (t == -1) ? getNumFrames() - 1 : t;
 	if (t < 0 || t >= getNumFrames()) {
 		throw std::runtime_error("The timestep t requested is outside of the valid range");
@@ -41,7 +41,7 @@ bool SimulatorConway::setCell(int y, int x, int new_val, int t) {
 	}
 }
 
-bool SimulatorConway::blankFrame() {
+bool SimulatorSequential::blankFrame() {
 	cellStore.push_back(std::vector<std::vector<int>>(y_dim));
 	for (auto& it : cellStore.back()) {
 		it = std::vector<int>(x_dim);
@@ -49,7 +49,7 @@ bool SimulatorConway::blankFrame() {
 	return true;
 }
 
-int SimulatorConway::getCell(int y, int x, int t) const {
+int SimulatorSequential::getCell(int y, int x, int t) const {
 	t = (t == -1) ? getNumFrames() - 1 : t;
 	if (y < 0 || y >= y_dim) {
 		throw std::runtime_error("Y dimension out of range");
@@ -65,7 +65,7 @@ int SimulatorConway::getCell(int y, int x, int t) const {
 	}
 }
 
-bool SimulatorConway::stepForward(int steps) {
+bool SimulatorSequential::stepForward(int steps) {
 	if (steps < 0) {
 		throw std::runtime_error("The simulation cannnot work backwards");
 	}
@@ -83,7 +83,7 @@ bool SimulatorConway::stepForward(int steps) {
 	return true;
 }
 
-bool SimulatorConway::stepForward(double seconds) {
+bool SimulatorSequential::stepForward(double seconds) {
 	timer.reset();
 	while (timer.elapsed() <= seconds) {
 		stepForward();

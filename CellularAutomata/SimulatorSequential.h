@@ -4,7 +4,7 @@
 #include <vector>
 
 // ISimulator implementation to handle the simulation of Conway's Game of Life
-class SimulatorConway :
+class SimulatorSequential :
 	public ISimulator
 {
 private:
@@ -14,8 +14,8 @@ private:
 	const IRules& rules;
 
 public:
-	SimulatorConway(const int y, const int x, const IRules& _rules);
-	~SimulatorConway();
+	SimulatorSequential(const int y, const int x, const IRules& _rules);
+	~SimulatorSequential();
 	virtual bool clear(bool addBlankFirstFrame = true) override;
 	virtual int getNumFrames() const override;
 
