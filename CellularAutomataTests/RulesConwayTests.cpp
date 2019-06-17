@@ -4,13 +4,13 @@
 #include "../CellularAutomata/RulesConway.h"
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace CellularAutomataTests
+namespace RulesTesting
 {		
 	TEST_CLASS(RulesConwayTesting)
 	{
 	public:
 		
-		TEST_METHOD(CanInstantiateClass)
+		TEST_METHOD(CanInstantiate)
 		{
 			RulesConway thing = RulesConway();
 			Assert::AreEqual(1, 1);

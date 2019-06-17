@@ -24,7 +24,13 @@ bool SimulatorSequential::clear(bool addBlankFirstFrame) {
 }
 
 int SimulatorSequential::getNumFrames() const {
-	return cellStore.size();
+	if (!cellStore[0].empty()) {
+		return cellStore.size();
+	}
+	else {
+		return 0;
+	}
+	
 }
 
 bool SimulatorSequential::setCell(int y, int x, int new_val, int t) {
@@ -42,7 +48,12 @@ bool SimulatorSequential::setCell(int y, int x, int new_val, int t) {
 }
 
 bool SimulatorSequential::blankFrame() {
-	cellStore.push_back(std::vector<std::vector<int>>(y_dim));
+	if (!cellStore[0].empty()) {
+		cellStore.push_back(std::vector<std::vector<int>>(y_dim));
+	}
+	else {
+		cellStore[0] = std::vector<std::vector<int>>(y_dim);
+	}
 	for (auto& it : cellStore.back()) {
 		it = std::vector<int>(x_dim);
 	}

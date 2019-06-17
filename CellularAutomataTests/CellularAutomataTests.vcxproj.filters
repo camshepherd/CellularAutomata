@@ -29,5 +29,8 @@
     <ClCompile Include="RulesConwayTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SimulatorSequentialTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
