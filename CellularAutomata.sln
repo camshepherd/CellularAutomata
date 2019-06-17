@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CellularAutomata", "CellularAutomata\CellularAutomata.vcxproj", "{B5B9B469-B94F-4E97-BDA6-5B04D5FCA60F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CellularAutomataTests", "CellularAutomataTests\CellularAutomataTests.vcxproj", "{CBB97C18-6D8E-48FF-925A-251610B3E00F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{B5B9B469-B94F-4E97-BDA6-5B04D5FCA60F}.Release|x64.Build.0 = Release|x64
 		{B5B9B469-B94F-4E97-BDA6-5B04D5FCA60F}.Release|x86.ActiveCfg = Release|Win32
 		{B5B9B469-B94F-4E97-BDA6-5B04D5FCA60F}.Release|x86.Build.0 = Release|Win32
+		{CBB97C18-6D8E-48FF-925A-251610B3E00F}.Debug|x64.ActiveCfg = Debug|x64
+		{CBB97C18-6D8E-48FF-925A-251610B3E00F}.Debug|x64.Build.0 = Debug|x64
+		{CBB97C18-6D8E-48FF-925A-251610B3E00F}.Debug|x86.ActiveCfg = Debug|Win32
+		{CBB97C18-6D8E-48FF-925A-251610B3E00F}.Debug|x86.Build.0 = Debug|Win32
+		{CBB97C18-6D8E-48FF-925A-251610B3E00F}.Release|x64.ActiveCfg = Release|x64
+		{CBB97C18-6D8E-48FF-925A-251610B3E00F}.Release|x64.Build.0 = Release|x64
+		{CBB97C18-6D8E-48FF-925A-251610B3E00F}.Release|x86.ActiveCfg = Release|Win32
+		{CBB97C18-6D8E-48FF-925A-251610B3E00F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

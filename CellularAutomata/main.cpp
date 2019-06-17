@@ -1,5 +1,7 @@
 #include "SimulatorSequential.h"
 #include "RulesConway.h"
+
+
 int main() {
 	RulesConway conway_rules = RulesConway();
 	SimulatorSequential conway(5, 5, conway_rules);
