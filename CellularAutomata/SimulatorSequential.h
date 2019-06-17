@@ -25,6 +25,6 @@ public:
 	virtual int getCell(int y, int x, int t = -1) const override;
 
 	bool stepForward(int steps = 1) override;
-	bool stepForward(double seconds) override;
+	bool stepForwardTime(double seconds) override;
 };
 

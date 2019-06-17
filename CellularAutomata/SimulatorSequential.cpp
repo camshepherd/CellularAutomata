@@ -86,7 +86,7 @@ bool SimulatorSequential::stepForward(int steps) {
 			for (int y = 0; y < y_dim; ++y) {
 				for (int x = 0; x < x_dim; ++x) {
 					// calculate the new cell value based on the old one
-					setCell(y, x, rules.getNextState(*(cellStore.end() - 1), y, x));
+					setCell(y, x, rules.getNextState(*(cellStore.end() - 2), y, x));
 				}
 			}
 		}
@@ -94,7 +94,7 @@ bool SimulatorSequential::stepForward(int steps) {
 	return true;
 }
 
-bool SimulatorSequential::stepForward(double seconds) {
+bool SimulatorSequential::stepForwardTime(double seconds) {
 	timer.reset();
 	while (timer.elapsed() <= seconds) {
 		stepForward();
