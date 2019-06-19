@@ -2,6 +2,7 @@
 #define ISIMULATOR_H
 
 #include "Stopwatch.h"
+
 // Interface defining standard behaviour required in order to 
 // allow for consistency and ease of testing of simulations
 

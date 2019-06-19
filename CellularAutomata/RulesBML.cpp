@@ -65,5 +65,7 @@ int RulesBML::getNextState(const std::vector<std::vector<int>>& cells, int y, in
 			return 0;
 		}
 		break;
+	default:
+		throw std::runtime_error("An invalid state got into the cell store");
 	};
 }

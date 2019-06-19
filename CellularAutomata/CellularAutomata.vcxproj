@@ -116,6 +116,7 @@
     <ClInclude Include="ITester.h" />
     <ClInclude Include="RulesBML.h" />
     <ClInclude Include="RulesConway.h" />
+    <ClInclude Include="SimulatorCPU.h" />
     <ClInclude Include="SimulatorSequential.h" />
     <ClInclude Include="Stopwatch.h" />
   </ItemGroup>
@@ -123,6 +124,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RulesBML.cpp" />
     <ClCompile Include="RulesConway.cpp" />
+    <ClCompile Include="SimulatorCPU.cpp" />
     <ClCompile Include="SimulatorSequential.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
