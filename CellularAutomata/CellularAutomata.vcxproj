@@ -112,18 +112,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="IRules.h" />
+    <ClInclude Include="ISegmenter.h" />
     <ClInclude Include="ISimulator.h" />
     <ClInclude Include="ITester.h" />
     <ClInclude Include="RulesBML.h" />
     <ClInclude Include="RulesConway.h" />
+    <ClInclude Include="SegmenterLinear.h" />
     <ClInclude Include="SimulatorCPU.h" />
     <ClInclude Include="SimulatorSequential.h" />
     <ClInclude Include="Stopwatch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ISegmenter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RulesBML.cpp" />
     <ClCompile Include="RulesConway.cpp" />
+    <ClCompile Include="SegmenterLinear.cpp" />
     <ClCompile Include="SimulatorCPU.cpp" />
     <ClCompile Include="SimulatorSequential.cpp" />
   </ItemGroup>

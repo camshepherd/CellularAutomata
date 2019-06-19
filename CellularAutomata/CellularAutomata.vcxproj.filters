@@ -39,6 +39,12 @@
     <ClInclude Include="SimulatorCPU.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ISegmenter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SegmenterLinear.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -54,6 +60,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SimulatorCPU.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ISegmenter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SegmenterLinear.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
