@@ -5,7 +5,7 @@
 #include <thread>
 #include <vector>
 
-// Simulator to utilise the full power of multi-core CPUs
+// ISimulator implementation to allow for the utilisation of multiple CPU threads
 class SimulatorCPU :
 	public ISimulator
 {

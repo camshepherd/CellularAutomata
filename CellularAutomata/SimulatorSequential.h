@@ -3,7 +3,7 @@
 #include "IRules.h"
 #include <vector>
 
-// ISimulator implementation to handle the simulation of Conway's Game of Life
+// ISimulator implementation to simulate CAs sequentially - in a single thread
 class SimulatorSequential :
 	public ISimulator
 {

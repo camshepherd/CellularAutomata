@@ -2,6 +2,10 @@
 
 #include <vector>
 #include <tuple>
+
+//
+// Interface defining functionality necessary for a class to segment 
+// cell stores, ready for assignment to multiple threads
 class ISegmenter
 {
 public:

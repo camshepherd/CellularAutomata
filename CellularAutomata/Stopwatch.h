@@ -1,6 +1,6 @@
 #include <chrono>
 
-// A set of minimal stopwatch behaviour to time code
+// A set of minimal stopwatch behaviour for timing code
 class Stopwatch
 {
 private:

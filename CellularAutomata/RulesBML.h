@@ -1,7 +1,7 @@
 #pragma once
 #include "IRules.h"
 
-// Basic class to simulate BL model type I; cars go negative to positive on both axes.
+// IRules implementation to simulate BL model type I; cars go negative to positive on both axes.
 class RulesBML :
 	public IRules
 {

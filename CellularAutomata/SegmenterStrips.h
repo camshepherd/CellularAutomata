@@ -1,6 +1,9 @@
 #pragma once
 #include "ISegmenter.h"
 
+//
+// ISegmenter implementation to generate segments that use an entire row or column
+// of the cell store
 class SegmenterStrips :
 	public ISegmenter
 {

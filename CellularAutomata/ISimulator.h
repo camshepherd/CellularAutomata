@@ -3,8 +3,8 @@
 
 #include "Stopwatch.h"
 
-// Interface defining standard behaviour required in order to 
-// allow for consistency and ease of testing of simulations
+// Interface defining standard behaviour of simulators, able to generically simulate 
+// synchronous cellular automata
 
 class ISimulator {
 protected:
