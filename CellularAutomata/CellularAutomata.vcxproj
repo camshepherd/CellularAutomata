@@ -114,7 +114,6 @@
     <ClInclude Include="IRules.h" />
     <ClInclude Include="ISegmenter.h" />
     <ClInclude Include="ISimulator.h" />
-    <ClInclude Include="ITester.h" />
     <ClInclude Include="RulesBML.h" />
     <ClInclude Include="RulesConway.h" />
     <ClInclude Include="SegmenterStrips.h" />

@@ -18,9 +18,6 @@
     <ClInclude Include="ISimulator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ITester.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Stopwatch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
