@@ -1,13 +1,23 @@
 #include "SimulatorSequential.h"
+#include "SimulatorCPU.h"
+
 #include "RulesConway.h"
+#include "RulesBML.h"
+
+#include "SegmenterStrips.h"
+#include <iostream>
 
 
 int main() {
-	RulesConway conway_rules = RulesConway();
-	SimulatorSequential conway(5, 5, conway_rules);
-	conway.setCell(4, 3, 1);
-	conway.setCell(4, 2, 1);
-	conway.setCell(3, 3, 1);
-	conway.stepForward();
-	conway.stepForward();
+	std::cout << "The system compiles!" << std::endl;
+	
+	RulesConway rules{};
+	SegmenterStrips strips{ 0 };
+	SimulatorCPU cpu{5, 3, rules, strips};
+
+	cpu.stepForward();
+	cpu.stepForward();
+	cpu.stepForward(2);
+	std::cout << "Has " << cpu.getNumFrames() << std::endl;
+	getchar();
 }

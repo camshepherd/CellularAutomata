@@ -3,6 +3,7 @@
 
 #include "../CellularAutomata/RulesConway.h"
 #include "../CellularAutomata/SimulatorSequential.h"
+#include "../CellularAutomata/RulesBML.h"
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace SimulatorTesting {
@@ -145,6 +146,20 @@ namespace SimulatorTesting {
 			int numFrames = 3;
 			sim.stepForward(numFrames);
 			Assert::AreEqual(sim.getNumFrames(), 7);
+		}
+
+		TEST_METHOD(WorksWithBML) {
+			RulesBML bml{};
+			SimulatorSequential sim{ 5, 4, bml };
+
+			sim.setCell(3, 2, 1);
+			sim.setCell(2, 1, 2);
+			sim.stepForward(1);
+
+			Assert::AreEqual(sim.getCell(3, 2), 0);
+			Assert::AreEqual(sim.getCell(2, 1), 0);
+			Assert::AreEqual(sim.getCell(3, 3), 1);
+			Assert::AreEqual(sim.getCell(3, 1), 2);
 		}
 	};
 }
