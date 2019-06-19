@@ -3,6 +3,8 @@
 
 #include "RulesConway.h"
 #include "RulesBML.h"
+
+#include "SegmenterStrips.h"
 #include <iostream>
 
 
@@ -10,8 +12,12 @@ int main() {
 	std::cout << "The system compiles!" << std::endl;
 	
 	RulesConway rules{};
-	SimulatorCPU cpu{5, 3, rules};
+	SegmenterStrips strips{ 0 };
+	SimulatorCPU cpu{5, 3, rules, strips};
 
-	cpu.stepForward(4);
+	cpu.stepForward();
+	cpu.stepForward();
+	cpu.stepForward(2);
+	std::cout << "Has " << cpu.getNumFrames() << std::endl;
 	getchar();
 }

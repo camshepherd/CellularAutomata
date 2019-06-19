@@ -1,6 +1,7 @@
 #pragma once
 #include "ISimulator.h"
 #include "IRules.h"
+#include "ISegmenter.h"
 #include <thread>
 #include <vector>
 
@@ -13,9 +14,9 @@ private:
 	const int y_dim, x_dim;
 
 	const IRules& rules;
-	
+	const ISegmenter& segmenter;
 public:
-	SimulatorCPU(int ydim, int xdim, IRules& rules);
+	SimulatorCPU(int ydim, int xdim, IRules& rules, ISegmenter& segmenter);
 	~SimulatorCPU();
 	virtual bool clear(bool addBlankFirstFrame = true) override;
 	virtual int getNumFrames() const override;
@@ -29,4 +30,3 @@ public:
 	bool stepForward(int steps = 1) override;
 	bool stepForwardTime(double seconds) override;
 };
-

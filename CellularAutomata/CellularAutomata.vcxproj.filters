@@ -42,7 +42,7 @@
     <ClInclude Include="ISegmenter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SegmenterLinear.h">
+    <ClInclude Include="SegmenterStrips.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -65,7 +65,7 @@
     <ClCompile Include="ISegmenter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SegmenterLinear.cpp">
+    <ClCompile Include="SegmenterStrips.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

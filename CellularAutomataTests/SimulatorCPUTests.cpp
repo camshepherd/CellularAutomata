@@ -4,14 +4,16 @@
 #include "../CellularAutomata/RulesConway.h"
 #include "../CellularAutomata/SimulatorCPU.h"
 #include "../CellularAutomata/SimulatorSequential.h"
+#include "../CellularAutomata/SegmenterStrips.h"
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace SimulatorTesting {
-	TEST_CLASS(SimulatorSequentialTesting) {
+	TEST_CLASS(SimulatorCPUTesting) {
 	public:
 		TEST_METHOD(CanInstantiate) {
 			RulesConway con = RulesConway();
-			SimulatorCPU sim{6,4, con};
+			SegmenterStrips strips{};
+			SimulatorCPU sim{6,4, con, strips};
 			Assert::IsTrue(true);
 		}
 	};

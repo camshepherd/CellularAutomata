@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-SimulatorCPU::SimulatorCPU(int y, int x, IRules& rules) : y_dim(y), x_dim(x), rules(rules)
+SimulatorCPU::SimulatorCPU(int y, int x, IRules& rules, ISegmenter& segmenter) : y_dim(y), x_dim(x), rules(rules), segmenter(segmenter)
 {
 	// Initialise the blank cellStore
 	cellStore = std::vector<std::vector<std::vector<int>>>();
@@ -99,20 +99,23 @@ bool SimulatorCPU::stepForwardRegion(int y_min, int y_max, int x_min, int x_max)
 }
 
 bool SimulatorCPU::stepForward(int steps) {
-	blankFrame();
-	std::vector<std::thread> threads{};
-	int num_threads = std::thread::hardware_concurrency();
+	for (int u = 0; u < steps; ++u) {
+		blankFrame();
+		std::vector<std::thread> threads{};
+		int num_threads = std::thread::hardware_concurrency();
 
-	// CURRENTLY THE FRAME SPLITTING IS TOTALLY NON-FUNCTIONAL
-	for (int k = 0; k < num_threads - 1; ++k) {
-		threads.push_back(std::thread(&SimulatorCPU::stepForwardRegion, this, static_cast<int>(k * y_dim / num_threads), static_cast<int>((k + 1) * y_dim / num_threads - 1), static_cast<int>(k * x_dim / num_threads), static_cast<int>((k + 1) * x_dim / num_threads - 1)));
-	}
-	// Assign the final thread whatever portion is left
-	threads.push_back(std::thread(&SimulatorCPU::stepForwardRegion, this, static_cast<int>((num_threads - 1) * y_dim / num_threads), y_dim - 1, static_cast<int>((num_threads - 1) * x_dim / num_threads), x_dim - 1));
-	for (int ref = 0; ref < threads.size(); ++ref){
-		threads[ref].join();
+		std::vector<std::tuple<int, int, int, int>> segments = segmenter.segment(y_dim, x_dim, num_threads);
+
+		for (int k = 0; k < num_threads; ++k) {
+			int y_min, y_max, x_min, x_max;
+			std::tie(y_min, y_max, x_min, x_max) = segments[k];
+			threads.push_back(std::thread(&SimulatorCPU::stepForwardRegion, this, y_min, y_max, x_min, x_max));
+		}
+
+		for (int ref = 0; ref < threads.size(); ++ref) {
+			threads[ref].join();
+		}
 	}
 	return true;
-	getchar();
 }
 

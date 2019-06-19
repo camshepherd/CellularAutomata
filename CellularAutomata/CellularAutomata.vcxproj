@@ -117,7 +117,7 @@
     <ClInclude Include="ITester.h" />
     <ClInclude Include="RulesBML.h" />
     <ClInclude Include="RulesConway.h" />
-    <ClInclude Include="SegmenterLinear.h" />
+    <ClInclude Include="SegmenterStrips.h" />
     <ClInclude Include="SimulatorCPU.h" />
     <ClInclude Include="SimulatorSequential.h" />
     <ClInclude Include="Stopwatch.h" />
@@ -127,7 +127,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RulesBML.cpp" />
     <ClCompile Include="RulesConway.cpp" />
-    <ClCompile Include="SegmenterLinear.cpp" />
+    <ClCompile Include="SegmenterStrips.cpp" />
     <ClCompile Include="SimulatorCPU.cpp" />
     <ClCompile Include="SimulatorSequential.cpp" />
   </ItemGroup>
