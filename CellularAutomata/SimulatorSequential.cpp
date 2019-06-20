@@ -94,10 +94,10 @@ bool SimulatorSequential::stepForward(int steps) {
 	return true;
 }
 
-bool SimulatorSequential::stepForwardTime(double seconds) {
-	timer.reset();
-	while (timer.elapsed() <= seconds) {
-		stepForward();
-	}
-	return true;
+int SimulatorSequential::getYDim() {
+	return y_dim;
+}
+
+int SimulatorSequential::getXDim() {
+	return x_dim;
 }

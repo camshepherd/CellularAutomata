@@ -20,5 +20,6 @@ int main() {
 	cpu.stepForward();
 	cpu.stepForward(2);
 	std::cout << "Has " << cpu.getNumFrames() << std::endl;
+	cpu.writeData("cpuOutput.txt");
 	getchar();
 }

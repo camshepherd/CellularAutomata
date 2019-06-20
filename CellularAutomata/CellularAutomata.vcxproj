@@ -123,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISegmenter.cpp" />
+    <ClCompile Include="ISimulator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RulesBML.cpp" />
     <ClCompile Include="RulesConway.cpp" />

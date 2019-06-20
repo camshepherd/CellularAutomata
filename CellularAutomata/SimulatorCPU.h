@@ -28,5 +28,6 @@ public:
 
 	bool stepForwardRegion(int y_min, int y_max, int x_min, int x_max);
 	bool stepForward(int steps = 1) override;
-	bool stepForwardTime(double seconds) override;
+	int getYDim() override;
+	int getXDim() override;
 };

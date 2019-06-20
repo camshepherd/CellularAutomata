@@ -65,5 +65,8 @@
     <ClCompile Include="SegmenterStrips.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ISimulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

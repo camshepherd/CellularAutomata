@@ -80,13 +80,6 @@ int SimulatorCPU::getCell(int y, int x, int t) const {
 }
 
 
-bool SimulatorCPU::stepForwardTime(double seconds) {
-	timer.reset();
-	while (timer.elapsed() <= seconds) {
-		stepForward();
-	}
-	return true;
-}
 
 bool SimulatorCPU::stepForwardRegion(int y_min, int y_max, int x_min, int x_max) {
 	for (int y = y_min; y <= y_max; ++y) {
@@ -119,3 +112,10 @@ bool SimulatorCPU::stepForward(int steps) {
 	return true;
 }
 
+int SimulatorCPU::getXDim() {
+	return x_dim;
+}
+
+int SimulatorCPU::getYDim() {
+	return y_dim;
+}
