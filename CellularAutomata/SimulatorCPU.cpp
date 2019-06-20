@@ -91,7 +91,8 @@ bool SimulatorCPU::stepForwardRegion(int y_min, int y_max, int x_min, int x_max)
 	return true;
 }
 
-bool SimulatorCPU::stepForward(int steps) {
+double SimulatorCPU::stepForward(int steps) {
+	timer.reset();
 	for (int u = 0; u < steps; ++u) {
 		blankFrame();
 		std::vector<std::thread> threads{};
@@ -109,7 +110,8 @@ bool SimulatorCPU::stepForward(int steps) {
 			threads[ref].join();
 		}
 	}
-	return true;
+	elapsedTime += timer.elapsed();
+	return elapsedTime;
 }
 
 int SimulatorCPU::getXDim() {

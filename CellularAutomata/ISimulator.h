@@ -11,11 +11,12 @@
 class ISimulator {
 protected:
 	Stopwatch timer;
+	double elapsedTime;
 public:
 	ISimulator() {};
 
-	virtual bool stepForward(int steps = 1) = 0;
-	bool stepForwardTime(double seconds);
+	virtual double stepForward(int steps = 1) = 0;
+	double stepForwardTime(double seconds);
 	virtual bool blankFrame() = 0;
 
 	virtual int getCell(int y, int x, int t = -1) const = 0;

@@ -1,11 +1,14 @@
 #include "ISimulator.h"
 
-
+ISimulator::ISimulator() {
+	elapsedTime = 0;
+}
 
 bool ISimulator::writeData(std::string fileName) {
 	std::ofstream file;
 	try {
 		file.open(fileName);
+		file << elapsedTime << "\n";
 		file << getYDim() << "," << getXDim() << "," << getNumFrames() << "\n";
 		for (int t = 0; t < getNumFrames(); ++t) {
 			for (int y = 0; y < getYDim(); ++y) {
@@ -24,10 +27,11 @@ bool ISimulator::writeData(std::string fileName) {
 	return true;
 }
 
-bool ISimulator::stepForwardTime(double seconds) {
+double ISimulator::stepForwardTime(double seconds) {
 	timer.reset();
 	while (timer.elapsed() <= seconds) {
 		stepForward();
 	}
-	return true;
+	elapsedTime = timer.elapsed();
+	return elapsedTime;
 }

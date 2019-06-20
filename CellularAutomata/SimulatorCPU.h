@@ -27,7 +27,7 @@ public:
 	virtual int getCell(int y, int x, int t = -1) const override;
 
 	bool stepForwardRegion(int y_min, int y_max, int x_min, int x_max);
-	bool stepForward(int steps = 1) override;
+	double stepForward(int steps = 1) override;
 	int getYDim() override;
 	int getXDim() override;
 };

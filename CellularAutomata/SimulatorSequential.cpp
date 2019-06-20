@@ -76,7 +76,8 @@ int SimulatorSequential::getCell(int y, int x, int t) const {
 	}
 }
 
-bool SimulatorSequential::stepForward(int steps) {
+double SimulatorSequential::stepForward(int steps) {
+	timer.reset();
 	if (steps < 0) {
 		throw std::runtime_error("The simulation cannnot work backwards");
 	}
@@ -91,7 +92,8 @@ bool SimulatorSequential::stepForward(int steps) {
 			}
 		}
 	}
-	return true;
+	elapsedTime += timer.elapsed();
+	return timer.elapsed();
 }
 
 int SimulatorSequential::getYDim() {
