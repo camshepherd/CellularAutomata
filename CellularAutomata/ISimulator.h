@@ -11,9 +11,9 @@
 class ISimulator {
 protected:
 	Stopwatch timer;
-	double elapsedTime;
+	double elapsedTime=0;
 public:
-	ISimulator() {};
+	ISimulator() { elapsedTime = 0; };
 
 	virtual double stepForward(int steps = 1) = 0;
 	double stepForwardTime(double seconds);

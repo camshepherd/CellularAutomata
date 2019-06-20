@@ -1,8 +1,5 @@
 #include "ISimulator.h"
 
-ISimulator::ISimulator() {
-	elapsedTime = 0;
-}
 
 bool ISimulator::writeData(std::string fileName) {
 	std::ofstream file;
