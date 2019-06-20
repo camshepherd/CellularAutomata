@@ -87,7 +87,7 @@ bool SimulatorCPU::stepForwardRegion(int y_min, int y_max, int x_min, int x_max)
 			setCell(y, x, rules.getNextState(*(cellStore.end() - 2), y, x));
 		}
 	}
-	std::cout << "Finished simulating" << std::endl;
+	//std::cout << "Finished simulating" << std::endl;
 	return true;
 }
 
@@ -110,8 +110,9 @@ double SimulatorCPU::stepForward(int steps) {
 			threads[ref].join();
 		}
 	}
-	elapsedTime += timer.elapsed();
-	return elapsedTime;
+	double elapsed = timer.elapsed();
+	elapsedTime += elapsed;
+	return elapsed;
 }
 
 int SimulatorCPU::getXDim() {

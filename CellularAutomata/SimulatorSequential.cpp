@@ -92,8 +92,9 @@ double SimulatorSequential::stepForward(int steps) {
 			}
 		}
 	}
-	elapsedTime += timer.elapsed();
-	return timer.elapsed();
+	double elapsed = timer.elapsed();
+	elapsedTime += elapsed;
+	return elapsed;
 }
 
 int SimulatorSequential::getYDim() {

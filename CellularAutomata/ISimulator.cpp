@@ -25,10 +25,10 @@ bool ISimulator::writeData(std::string fileName) {
 }
 
 double ISimulator::stepForwardTime(double seconds) {
-	timer.reset();
-	while (timer.elapsed() <= seconds) {
-		stepForward();
+	double elapsed = 0;
+	while (elapsed <= seconds) {
+		elapsed += stepForward();
 	}
-	elapsedTime = timer.elapsed();
-	return elapsedTime;
+	elapsedTime += elapsed;
+	return elapsed;
 }
