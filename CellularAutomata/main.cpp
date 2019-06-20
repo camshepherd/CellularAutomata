@@ -5,6 +5,7 @@
 #include "RulesBML.h"
 
 #include "SegmenterStrips.h"
+#include "Stopwatch.h"
 #include <iostream>
 
 

@@ -1,3 +1,4 @@
+#pragma once
 #include <chrono>
 
 // A set of minimal stopwatch behaviour for timing code

@@ -23,7 +23,7 @@
     <ProjectGuid>{CBB97C18-6D8E-48FF-925A-251610B3E00F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>CellularAutomataTests</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
     <ProjectSubType>NativeUnitTestProject</ProjectSubType>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -137,7 +137,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>../CellularAutomata\x64\Release;$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SegmenterStrips.obj;RulesBML.obj;RulesConway.obj;SimulatorSequential.obj;SimulatorCPU.obj;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Stopwatch.obj;SegmenterStrips.obj;RulesBML.obj;RulesConway.obj;SimulatorSequential.obj;SimulatorCPU.obj;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -175,6 +175,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="RulesConwayTests.cpp" />
+    <ClCompile Include="StopwatchTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CellularAutomata\CellularAutomata.vcxproj">
