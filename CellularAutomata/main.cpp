@@ -26,6 +26,5 @@ int main() {
 
 	std::cout << "Sequential: " << seqTime << ", Parallelised: " << cpuTime << std::endl;
 
-
 	getchar();
 }
