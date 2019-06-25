@@ -58,7 +58,7 @@ int RulesBML::getNextState(const std::vector<std::vector<int>>& cells, int y, in
 		}
 		break;
 	case 2:
-		if (cells[(y + 1) % y_dim + y_dim][x] == 0) {
+		if (cells[(y + 1 + y_dim) % y_dim][x] == 0) {
 			return 0;
 		}
 		else {
