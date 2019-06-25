@@ -111,6 +111,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="IDeadZoneHandler.h" />
     <ClInclude Include="IRules.h" />
     <ClInclude Include="ISegmenter.h" />
     <ClInclude Include="ISimulator.h" />
@@ -120,8 +121,11 @@
     <ClInclude Include="SimulatorCPU.h" />
     <ClInclude Include="SimulatorSequential.h" />
     <ClInclude Include="Stopwatch.h" />
+    <ClInclude Include="ZonerPixels.h" />
+    <ClInclude Include="ZonerRectangles.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="IDeadZoneHandler.cpp" />
     <ClCompile Include="ISegmenter.cpp" />
     <ClCompile Include="ISimulator.cpp" />
     <ClCompile Include="main.cpp" />
@@ -130,6 +134,8 @@
     <ClCompile Include="SegmenterStrips.cpp" />
     <ClCompile Include="SimulatorCPU.cpp" />
     <ClCompile Include="SimulatorSequential.cpp" />
+    <ClCompile Include="ZonerPixels.cpp" />
+    <ClCompile Include="ZonerRectangles.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

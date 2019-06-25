@@ -6,6 +6,10 @@
 
 #include "SegmenterStrips.h"
 #include "Stopwatch.h"
+
+#include "ZonerPixels.h"
+#include "ZonerRectangles.h"
+
 #include <iostream>
 
 
