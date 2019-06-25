@@ -11,4 +11,5 @@ public:
 	~ZonerPixels();
 	bool virtual updateDeadZones(std::vector<std::vector<std::vector<int>>> frames) override;
 	bool virtual isLive(int y, int x) override;
+	std::vector<std::vector<bool>> getCellActivities();
 };
