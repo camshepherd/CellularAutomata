@@ -21,6 +21,7 @@ double SimulatorSequentialZoning::stepForward(int steps) {
 			copyFrame();
 			for (int y = 0; y < y_dim; ++y) {
 				for (int x = 0; x < x_dim; ++x) {
+					// only calculate a different state if the cell is near any other changes
 					if (zoner.isLive(y, x)) {
 						// calculate the new cell value based on the old one
 						setCell(y, x, rules.getNextState(*(cellStore.end() - 2), y, x));
