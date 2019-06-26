@@ -1,3 +1,4 @@
+#include "SimulatorVector.h"
 #include "SimulatorSequential.h"
 #include "SimulatorCPU.h"
 
