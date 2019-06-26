@@ -2,7 +2,7 @@
 #include "SimulatorSequential.h"
 #include "IDeadZoneHandler.h"
 class SimulatorSequentialZoning :
-	SimulatorSequential
+	public SimulatorSequential
 {
 
 protected:
