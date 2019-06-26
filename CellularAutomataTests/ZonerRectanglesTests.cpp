@@ -11,7 +11,7 @@ public:
 		ZonerRectangles deadZone{ 3,3 };
 		deadZone.isLive(3, 4);
 		deadZone.getDeadZones();
-		deadZone.updateDeadZones(std::vector<std::vector<std::vector<int>>>());
+		deadZone.updateDeadZones(std::vector<std::vector<int>>(),std::vector<std::vector<int>>());
 		Assert::IsTrue(true);
 	}
 	};

@@ -122,3 +122,8 @@ int SimulatorCPU::getXDim() {
 int SimulatorCPU::getYDim() {
 	return y_dim;
 }
+
+bool SimulatorCPU::copyFrame() {
+	cellStore.push_back(std::vector<std::vector<int>>(cellStore.back().begin(), cellStore.back().end()));
+	return true;
+}

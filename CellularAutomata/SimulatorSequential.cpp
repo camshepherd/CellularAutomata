@@ -104,3 +104,8 @@ int SimulatorSequential::getYDim() {
 int SimulatorSequential::getXDim() {
 	return x_dim;
 }
+
+bool SimulatorSequential::copyFrame() {
+	cellStore.push_back(std::vector<std::vector<int>>(cellStore.back().begin(), cellStore.back().end()));
+	return true;
+}

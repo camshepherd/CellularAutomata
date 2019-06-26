@@ -12,7 +12,7 @@ ZonerRectangles::~ZonerRectangles()
 {
 }
 
-bool ZonerRectangles::updateDeadZones(std::vector<std::vector<std::vector<int>>> frames) {
+bool ZonerRectangles::updateDeadZones(std::vector<std::vector<int>> frame1, std::vector<std::vector<int>> frame2) {
 	return true;
 }
 std::vector<std::tuple<int, int, int, int>> ZonerRectangles::getDeadZones() {

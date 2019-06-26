@@ -7,12 +7,11 @@
 class SimulatorSequential :
 	public ISimulator
 {
-private:
+protected:
 	std::vector<std::vector<std::vector<int>>> cellStore;
 	const int y_dim, x_dim;
 
 	const IRules& rules;
-
 public:
 	SimulatorSequential(const int y, const int x, const IRules& _rules);
 	~SimulatorSequential();
@@ -27,5 +26,6 @@ public:
 	double stepForward(int steps = 1) override;
 	int getYDim() override;
 	int getXDim() override;
+	bool copyFrame() override;
 };
 

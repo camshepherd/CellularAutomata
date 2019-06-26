@@ -12,7 +12,7 @@ ZonerPixels::~ZonerPixels()
 {
 }
 
-bool ZonerPixels::updateDeadZones(std::vector<std::vector<std::vector<int>>> frames) {
+bool ZonerPixels::updateDeadZones(std::vector<std::vector<int>> frame1, std::vector<std::vector<int>> frame2) {
 	// get all cells that are different between the cells
 	// mark all differing cell locations, and their neighbours, as being active
 
@@ -20,7 +20,7 @@ bool ZonerPixels::updateDeadZones(std::vector<std::vector<std::vector<int>>> fra
 	
 	for (int y = 0; y < ydim; ++y) {
 		for (int x = 0; x < xdim; ++x) {
-			rawActivities[y][x] = frames[0][y][x] != frames[1][y][x];
+			rawActivities[y][x] = frame1[y][x] != frame2[y][x];
 			cellActivities[y][x] = false;
 		}
 	}

@@ -7,7 +7,7 @@
 class SegmenterStrips :
 	public ISegmenter
 {
-private:
+protected:
 	int orientation;
 
 public:

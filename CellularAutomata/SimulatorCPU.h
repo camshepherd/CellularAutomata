@@ -9,7 +9,7 @@
 class SimulatorCPU :
 	public ISimulator
 {
-private:
+protected:
 	std::vector<std::vector<std::vector<int>>> cellStore;
 	const int y_dim, x_dim;
 
@@ -23,11 +23,12 @@ public:
 
 	virtual bool setCell(int y, int x, int new_val, int t = -1) override;
 	virtual bool blankFrame() override;
-
+	virtual bool copyFrame() override;
 	virtual int getCell(int y, int x, int t = -1) const override;
 
 	bool stepForwardRegion(int y_min, int y_max, int x_min, int x_max);
 	double stepForward(int steps = 1) override;
 	int getYDim() override;
 	int getXDim() override;
+	
 };

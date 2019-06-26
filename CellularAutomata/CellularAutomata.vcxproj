@@ -120,6 +120,7 @@
     <ClInclude Include="SegmenterStrips.h" />
     <ClInclude Include="SimulatorCPU.h" />
     <ClInclude Include="SimulatorSequential.h" />
+    <ClInclude Include="SimulatorSequentialZoning.h" />
     <ClInclude Include="Stopwatch.h" />
     <ClInclude Include="ZonerPixels.h" />
     <ClInclude Include="ZonerRectangles.h" />
@@ -134,6 +135,7 @@
     <ClCompile Include="SegmenterStrips.cpp" />
     <ClCompile Include="SimulatorCPU.cpp" />
     <ClCompile Include="SimulatorSequential.cpp" />
+    <ClCompile Include="SimulatorSequentialZoning.cpp" />
     <ClCompile Include="ZonerPixels.cpp" />
     <ClCompile Include="ZonerRectangles.cpp" />
   </ItemGroup>

@@ -11,7 +11,7 @@ protected:
 public:
 	ZonerRectangles(int stepsForDeath, int distanceForDeath, bool deadOrAlive = 0);
 	~ZonerRectangles();
-	bool virtual updateDeadZones(std::vector<std::vector<std::vector<int>>> frames) override;
+	bool virtual updateDeadZones(std::vector<std::vector<int>> frame1, std::vector<std::vector<int>> frame2) override;
 	bool virtual isLive(int y, int x) override;
 	std::vector<std::tuple<int, int, int, int>> ZonerRectangles::getDeadZones();
 };
