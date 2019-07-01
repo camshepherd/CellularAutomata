@@ -1,3 +1,4 @@
+#include "SimulatorVector.h"
 #include "SimulatorSequential.h"
 #include "SimulatorCPU.h"
 
@@ -6,6 +7,10 @@
 
 #include "SegmenterStrips.h"
 #include "Stopwatch.h"
+
+#include "ZonerPixels.h"
+#include "ZonerRectangles.h"
+
 #include <iostream>
 
 
@@ -25,7 +30,6 @@ int main() {
 	//seq.writeData("seqOutput.txt");
 
 	std::cout << "Sequential: " << seqTime << ", Parallelised: " << cpuTime << std::endl;
-
 
 	getchar();
 }

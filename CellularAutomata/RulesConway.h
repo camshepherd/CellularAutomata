@@ -6,7 +6,7 @@
 class RulesConway :
 	public IRules
 {
-private:
+protected:
 	const int live_min, live_max, birth_min, birth_max;
 	const int cell_min, cell_max;
 	int countNeighours(const std::vector<std::vector<int>>& cells, int y, int x) const;

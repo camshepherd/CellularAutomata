@@ -18,6 +18,7 @@ public:
 	virtual double stepForward(int steps = 1) = 0;
 	double stepForwardTime(double seconds);
 	virtual bool blankFrame() = 0;
+	virtual bool copyFrame() = 0;
 
 	virtual int getCell(int y, int x, int t = -1) const = 0;
 	virtual int getNumFrames() const = 0;

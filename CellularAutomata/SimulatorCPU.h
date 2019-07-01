@@ -1,33 +1,21 @@
 #pragma once
-#include "ISimulator.h"
-#include "IRules.h"
+#include "SimulatorVector.h"
+
 #include "ISegmenter.h"
 #include <thread>
 #include <vector>
 
 // ISimulator implementation to allow for the utilisation of multiple CPU threads
 class SimulatorCPU :
-	public ISimulator
+	public SimulatorVector
 {
-private:
-	std::vector<std::vector<std::vector<int>>> cellStore;
-	const int y_dim, x_dim;
+protected:
 
-	const IRules& rules;
 	const ISegmenter& segmenter;
 public:
 	SimulatorCPU(int ydim, int xdim, IRules& rules, ISegmenter& segmenter);
 	~SimulatorCPU();
-	virtual bool clear(bool addBlankFirstFrame = true) override;
-	virtual int getNumFrames() const override;
-
-	virtual bool setCell(int y, int x, int new_val, int t = -1) override;
-	virtual bool blankFrame() override;
-
-	virtual int getCell(int y, int x, int t = -1) const override;
 
 	bool stepForwardRegion(int y_min, int y_max, int x_min, int x_max);
 	double stepForward(int steps = 1) override;
-	int getYDim() override;
-	int getXDim() override;
 };
