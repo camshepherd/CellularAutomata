@@ -29,3 +29,7 @@ double SimulatorSequential::stepForward(int steps) {
 	elapsedTime += elapsed;
 	return elapsed;
 }
+
+int SimulatorSequential::getMaxValidState() {
+	return rules.getMaxValidState();
+}

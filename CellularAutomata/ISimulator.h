@@ -24,7 +24,7 @@ public:
 	virtual int getNumFrames() const = 0;
 	virtual int getYDim() = 0;
 	virtual int getXDim() = 0;
-
+	virtual int getMaxValidState() = 0;
 
 	virtual bool setCell(int y, int x, int new_val, int t = -1) = 0;
 
@@ -32,7 +32,6 @@ public:
 	virtual bool clear(bool addBlankFirstFrame=true) = 0;
 	
 	bool writeData(std::string filename);
-
 };
 
 #endif

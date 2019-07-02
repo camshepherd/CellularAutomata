@@ -12,10 +12,21 @@
 #include "ZonerRectangles.h"
 
 #include <iostream>
-
+#include <memory>
 
 bool initialiseFrame(ISimulator& sim, float density) {
 	// density is the proportion of cells that start non-empty
+	int xdim = sim.getXDim();
+	int ydim = sim.getYDim();
+	int maxVal = sim.getMaxValidState();
+	int numCells = xdim * ydim;
+	int numPopulated = static_cast<int>(numCells * density);
+
+	for (int k = 0; k < numPopulated; ++k) {
+		int y = std::rand() % ydim;
+		int x = std::rand() % xdim;
+		sim.setCell(y, x, rand() % (maxVal + 1));
+	}
 	return true;
 }
 

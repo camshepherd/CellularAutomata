@@ -11,5 +11,6 @@ public:
 	SimulatorSequential(const int y, const int x, const IRules& _rules);
 	~SimulatorSequential();
 	virtual double stepForward(int steps = 1) override;
+	virtual int getMaxValidState() override;
 };
 

@@ -18,4 +18,5 @@ public:
 
 	virtual bool stepForwardRegion(int y_min, int y_max, int x_min, int x_max);
 	virtual double stepForward(int steps = 1) override;
+	virtual int getMaxValidState() override;
 };

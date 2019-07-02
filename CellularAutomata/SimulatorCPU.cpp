@@ -45,3 +45,7 @@ double SimulatorCPU::stepForward(int steps) {
 	elapsedTime += elapsed;
 	return elapsed;
 }
+
+int SimulatorCPU::getMaxValidState() {
+	return rules.getMaxValidState();
+}
