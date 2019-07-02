@@ -16,6 +16,6 @@ public:
 	SimulatorCPU(int ydim, int xdim, IRules& rules, ISegmenter& segmenter);
 	~SimulatorCPU();
 
-	bool stepForwardRegion(int y_min, int y_max, int x_min, int x_max);
-	double stepForward(int steps = 1) override;
+	virtual bool stepForwardRegion(int y_min, int y_max, int x_min, int x_max);
+	virtual double stepForward(int steps = 1) override;
 };

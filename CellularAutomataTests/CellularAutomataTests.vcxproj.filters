@@ -53,5 +53,8 @@
     <ClCompile Include="SimulatorSequentialZoningTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SimulatorCPUZoningTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

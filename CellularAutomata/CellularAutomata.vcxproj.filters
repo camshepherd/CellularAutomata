@@ -57,6 +57,9 @@
     <ClInclude Include="SimulatorVector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SimulatorCPUZoning.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -96,6 +99,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SimulatorVector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SimulatorCPUZoning.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
