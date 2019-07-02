@@ -5,6 +5,7 @@
 
 class IRules {
 public:
+	virtual int getMaxValidState() const = 0;
 	virtual bool isValid(int cellState) const = 0;
 	virtual int getNextState(const std::vector<std::vector<int>>& cells, int y, int x) const = 0;
 };

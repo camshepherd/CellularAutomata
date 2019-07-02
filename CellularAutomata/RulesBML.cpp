@@ -69,3 +69,7 @@ int RulesBML::getNextState(const std::vector<std::vector<int>>& cells, int y, in
 		throw std::runtime_error("An invalid state got into the cell store");
 	};
 }
+
+int RulesBML::getMaxValidState() const {
+	return 2;
+}

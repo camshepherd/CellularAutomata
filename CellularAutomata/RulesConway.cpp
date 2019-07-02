@@ -60,3 +60,7 @@ int RulesConway::countNeighours(const std::vector<std::vector<int>>& cells, int 
 	}
 	return count;
 }
+
+int RulesConway::getMaxValidState() const {
+	return 1;
+}

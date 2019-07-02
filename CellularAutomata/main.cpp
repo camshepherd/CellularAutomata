@@ -14,6 +14,13 @@
 #include <iostream>
 
 
+bool initialiseFrame(ISimulator& sim, float density) {
+	// density is the proportion of cells that start non-empty
+	return true;
+}
+
+
+
 int main() {
 	std::cout << "The system compiles!" << std::endl;
 	

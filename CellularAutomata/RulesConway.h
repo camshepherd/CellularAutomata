@@ -16,5 +16,6 @@ public:
 	~RulesConway();
 	virtual bool isValid(int cellState) const override;
 	virtual int getNextState(const std::vector<std::vector<int>>& cells, int y, int x) const override;
+	virtual int getMaxValidState() const override;
 };
 
