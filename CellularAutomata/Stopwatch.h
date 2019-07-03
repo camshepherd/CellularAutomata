@@ -1,7 +1,8 @@
 #pragma once
 #include <chrono>
 
-// A set of minimal stopwatch behaviour for timing code
+/** Very simple stopwatch, based on std::chrono, to enable timing of operations. Taken from https://www.learncpp.com/cpp-tutorial/8-16-timing-your-code/
+*/
 class Stopwatch
 {
 protected:

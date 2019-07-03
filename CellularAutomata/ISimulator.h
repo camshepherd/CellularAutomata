@@ -50,7 +50,7 @@ public:
 	*/
 	virtual int getYDim() = 0;
 
-	/** Get the size of the simulatoin in the x-direction
+	/** Get the size of the simulation in the x-direction
 	*/
 	virtual int getXDim() = 0;
 
