@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
-#include "../CellularAutomata/RulesConway.h"
-#include "../CellularAutomata/SimulatorSequential.h"
-#include "../CellularAutomata/RulesBML.h"
+#include "RulesConway.h"
+#include "SimulatorSequential.h"
+#include "RulesBML.h"
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace SimulatorTesting {

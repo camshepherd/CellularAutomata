@@ -3,11 +3,11 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
-#include "../CellularAutomata/RulesConway.h"
-#include "../CellularAutomata/SimulatorCPUZoning.h"
-#include "../CellularAutomata/SimulatorSequential.h"
-#include "../CellularAutomata/SegmenterStrips.h"
-#include "../CellularAutomata/ZonerPixels.h"
+#include "RulesConway.h"
+#include "SimulatorCPUZoning.h"
+#include "SimulatorSequential.h"
+#include "SegmenterStrips.h"
+#include "ZonerPixels.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
-#include "../CellularAutomata/ZonerPixels.h"
+#include "ZonerPixels.h"
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace ZonerTesting {
