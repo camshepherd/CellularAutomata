@@ -37,12 +37,15 @@ int main() {
 	
 	RulesConway rules{};
 	SegmenterStrips strips{ 0 };
+	
+	
 	SimulatorCPU cpu{5, 3, rules, strips};
 
 	SimulatorSequential seq{ 90,4,rules };
 
 	double cpuTime = cpu.stepForwardTime(3);
 	double seqTime = seq.stepForwardTime(3);
+	std::cout << "Are they equal?" << (cpu == seq) << std::endl;
 	std::cout << "Has " << cpu.getNumFrames() << std::endl;
 	//cpu.writeData("cpuOutput.txt");
 	//seq.writeData("seqOutput.txt");

@@ -4,7 +4,7 @@
 #include "Stopwatch.h"
 #include <string>
 #include <fstream>
-
+#include <algorithm>
 
 /** Interface defining the behaviour of any class to simulate synchronous cellular automata models
 */
@@ -75,6 +75,28 @@ public:
 	@param filename: The path of the file that is to be written to 
 	*/
 	bool writeData(std::string filename);
+
+	bool friend operator==(ISimulator& a, ISimulator& b) {
+		if (a.getXDim() != b.getXDim()) {
+			return false;
+		}
+		else if (a.getYDim() != b.getYDim()) {
+			return false;
+		}
+		else {
+			for (int y = 0; y < a.getYDim(); ++y) {
+				for (int x = 0; x < a.getXDim(); ++x) {
+					for (int t = 0; t < std::min<int>(a.getNumFrames(), b.getNumFrames()); ++t) {
+						if (a.getCell(y, x, t) != b.getCell(y, x, t)) {
+							return false;
+						}
+					}
+					
+				}
+			}
+			return true;
+		}
+	}
 };
 
 #endif
