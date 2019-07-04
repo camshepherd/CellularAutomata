@@ -8,6 +8,7 @@
 
 /** Interface defining the behaviour of any class to simulate synchronous cellular automata models
 */
+template <typename T>
 class ISimulator {
 protected:
 	Stopwatch timer;
@@ -40,7 +41,7 @@ public:
 	@param x: The x-coordinate of the target cell
 	@param t: The timestep of the frame to read the data from. A value of -1 uses the most-recent
 	*/
-	virtual int getCell(int y, int x, int t = -1) const = 0;
+	virtual T getCell(int y, int x, int t = -1) const = 0;
 
 	/** Get the number of frames that exist in the simulation
 	*/
@@ -56,7 +57,7 @@ public:
 
 	/** Get the maximum state representation value that can be used in the current model
 	*/
-	virtual int getMaxValidState() = 0;
+	virtual T getMaxValidState() = 0;
 
 	/** Set the value of a specific cell
 	@param y: The y-coordinate of the target cell
@@ -64,7 +65,7 @@ public:
 	@param new_val: The new value to be assigned to the cell
 	@param t: The timestep of the frame that is to be altered. A value of -1 uses the most recent
 	*/
-	virtual bool setCell(int y, int x, int new_val, int t = -1) = 0;
+	virtual bool setCell(int y, int x, T new_val, int t = -1) = 0;
 
 	/** Wipe all data from the stored simulation
 	@param addBlankFirstFrame: Whether to leave the cellStore empty or for it to have an empty first frame. Default is true: add a blank frame

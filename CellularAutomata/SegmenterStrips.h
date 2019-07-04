@@ -7,13 +7,13 @@ class SegmenterStrips :
 	public ISegmenter
 {
 protected:
-	int orientation;
+	bool orientation;
 
 public:
 	/** Constructor 1. Create the segmenter to split on the specified orientation
 	@param orientation: Whether rows(0) or columns(1) are split. Defaults to 0: 
 	*/
-	SegmenterStrips(int orientation = 0);
+	SegmenterStrips(bool orientation = 0);
 
 	/** Destructor 1. Default destructor
 	*/

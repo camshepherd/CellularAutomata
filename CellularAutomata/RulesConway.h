@@ -3,8 +3,9 @@
 
 /** A model implementing the rules of Conway's Game of Life
 */
+template <typename T>
 class RulesConway :
-	public IRules
+	public IRules<T>
 {
 protected:
 	const int live_min, live_max, birth_min, birth_max;
@@ -15,7 +16,7 @@ protected:
 	@param y: The y-coordinate of the target cell
 	@param x: The x-coordinate of the target cell
 	*/
-	int countNeighours(const std::vector<std::vector<int>>& cells, int y, int x) const;
+	int countNeighours(const std::vector<std::vector<T>>& cells, int y, int x) const;
 public:
 	/** Constructor 1. Default constructor - uses Conway's own parameters for the model
 	*/
@@ -36,17 +37,17 @@ public:
 	/** Whether the given cell state is valid in the model
 	@param cellState: The cell state to be evaluated
 	*/
-	virtual bool isValid(int cellState) const override;
+	virtual bool isValid(T cellState) const override;
 
 	/** Calculate the next state for the specified cell 
 	@param cells: The frame in which the cell is to be evaluated
 	@param y: The y-coordinate of the target cell
 	@param x: The x-coordinate of the target cell
 	*/
-	virtual int getNextState(const std::vector<std::vector<int>>& cells, int y, int x) const override;
+	virtual T getNextState(const std::vector<std::vector<T>>& cells, int y, int x) const override;
 
 	/** Get the maximum value that can be used to represent a state in the model
 	*/
-	virtual int getMaxValidState() const override;
+	virtual T getMaxValidState() const override;
 };
 

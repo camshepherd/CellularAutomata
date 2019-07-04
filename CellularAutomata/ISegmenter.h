@@ -5,6 +5,7 @@
 
 /** Interface defining functionality for any class to generate split up a rectangular region into consituent, non-overlapping parts
 */
+template <typename T>
 class ISegmenter
 {
 public:

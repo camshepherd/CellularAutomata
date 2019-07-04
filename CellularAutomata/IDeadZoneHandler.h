@@ -6,6 +6,7 @@
 /** Interface definition for classes that keep track of whether cells
 	have the potential to change on each step.
 	*/
+template <typename T>
 class IDeadZoneHandler
 {
 public:
@@ -21,7 +22,7 @@ public:
 	@param frame1: The first frame; to be compared against frame2
 	@param frame2: The second frame; to be compared against frame1
 	*/
-	bool virtual updateDeadZones(std::vector<std::vector<int>> frame1, std::vector<std::vector<int>> frame2) = 0;
+	bool virtual updateDeadZones(std::vector<std::vector<T>> frame1, std::vector<std::vector<T>> frame2) = 0;
 	
 	/** Whether the targeted cell has the potential to change state in the next frame
 	@param y: The cell's y-coordinate
