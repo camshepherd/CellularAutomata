@@ -14,6 +14,7 @@
 #include <iostream>
 #include <memory>
 #include <map>
+#include <fstream>
 
 bool initialiseFrame(ISimulator& sim, float density) {
 	// density is the proportion of cells that start non-empty
@@ -40,7 +41,7 @@ int main() {
 	SegmenterStrips strips{ 0 };
 
 	std::map<int, std::string> simNames{};
-
+	std::string log_suffix = "PC";
 
 	std::vector<ISimulator*> sims;
 	int ydim = 1200, xdim = 1200;
@@ -53,21 +54,32 @@ int main() {
 	sims.push_back(new SimulatorCPU{ ydim, xdim, rules, strips });
 	simNames[1] = "CPU Parallelised";
 
+	std::ofstream log{ "results_" + log_suffix + ".out" };
+
 	int numFrames;
 	float meanFrames;
-	for (int r = 0; r < sims.size(); ++r){
-		numFrames = 0;
-		for (int e = 0; e < repeats; ++e) {
+	try {
+		for (int r = 0; r < sims.size(); ++r) {
+			numFrames = 0;
+			for (int e = 0; e < repeats; ++e) {
+				sims[r]->clear();
+				sims[r]->stepForwardTime(simTime);
+				numFrames += sims[r]->getNumFrames();
+			}
+			// clear up the space that the simulation is taking up
 			sims[r]->clear();
-			sims[r]->stepForwardTime(simTime);
-			numFrames += sims[r]->getNumFrames();
+			meanFrames = numFrames / repeats;
+			std::cout << simNames[r] << ", " << meanFrames << std::endl;
+			log << simNames[r] << ", " << meanFrames << "\n";
+			// TODO: append line to the output file
 		}
-		// clear up the space that the simulation is taking up
-		sims[r]->clear();
-		meanFrames = numFrames / repeats;
-		std::cout << simNames[r] << ", " << meanFrames << std::endl;
-		// TODO: append line to the output file
+		log.close();
 	}
-	
+	catch (std::exception e) {
+		log.close();
+		std::cout << "Got an error: " << e.what() << std::endl;
+		return 1;
+	}
 	getchar();
+	return 0;
 }
