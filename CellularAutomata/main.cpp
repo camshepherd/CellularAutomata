@@ -1,6 +1,8 @@
 #include "SimulatorVector.h"
 #include "SimulatorSequential.h"
 #include "SimulatorCPU.h"
+#include "SimulatorSequentialZoning.h"
+#include "SimulatorCPUZoning.h"
 
 #include "RulesConway.h"
 #include "RulesBML.h"
@@ -37,41 +39,64 @@ bool initialiseFrame(ISimulator& sim, float density) {
 int main() {
 	std::cout << "The system compiles!" << std::endl;
 
-	RulesConway rules{};
-	SegmenterStrips strips{ 0 };
+	int ydim = 800, xdim = 800;
 
+	RulesConway rules{};
+	SegmenterStrips stripsHor{ 0 };
+	SegmenterStrips stripsVer{ 1 };
 	std::map<int, std::string> simNames{};
 	std::string log_suffix = "PC";
+	std::string ruleset = "Conway";
+	ZonerPixels zoner{ ydim,xdim };
 
 	std::vector<ISimulator*> sims;
-	int ydim = 1200, xdim = 1200;
-	float simTime = 3;
+	
+	float simTime = 0.1;
 	int repeats = 3;
-
+	float density = 0.3;
 	sims.push_back(new SimulatorSequential{ ydim, xdim, rules });
 	simNames[0] = "Sequential";
 
-	sims.push_back(new SimulatorCPU{ ydim, xdim, rules, strips });
-	simNames[1] = "CPU Parallelised";
+	sims.push_back(new SimulatorCPU{ ydim, xdim, rules, stripsHor });
+	simNames[1] = "CPU Parallelised Horizontal";
+
+	sims.push_back(new SimulatorCPU{ ydim, xdim, rules, stripsVer });
+	simNames[2] = "CPU Parallelised Vertical";
+
+	sims.push_back(new SimulatorSequentialZoning(ydim, xdim, rules, zoner));
+	simNames[3] = "Sequential with pixel zoning";
+
+	sims.push_back(new SimulatorCPUZoning{ ydim,xdim,rules,stripsHor,zoner });
+	simNames[4] = "Parallelised horizontal segmentation with pixel zoning";
+
+	sims.push_back(new SimulatorCPUZoning{ ydim,xdim,rules,stripsVer,zoner });
+	simNames[5] = "Parallelised vertical segmentation with pixel zoning";
 
 	std::ofstream log{ "results_" + log_suffix + ".out" };
-
+	log << "Simulator, Ruleset, Y Dimension, X Dimension, Density, Mean frames simulated \n";
 	int numFrames;
 	float meanFrames;
 	try {
 		for (int r = 0; r < sims.size(); ++r) {
-			numFrames = 0;
-			for (int e = 0; e < repeats; ++e) {
-				sims[r]->clear();
-				sims[r]->stepForwardTime(simTime);
-				numFrames += sims[r]->getNumFrames();
+			for (ydim = 10; ydim < 1000; ydim *= 10) {
+				for (xdim = 10; xdim < 1000; xdim *= 10) {
+					for (float density = 0; density < 1; density += 0.2) {
+						numFrames = 0;
+						for (int e = 0; e < repeats; ++e) {
+							sims[r]->clear();
+							initialiseFrame(*sims[r], density);
+							sims[r]->stepForwardTime(simTime);
+							numFrames += sims[r]->getNumFrames();
+						}
+						// clear up the space that the simulation is taking up
+						sims[r]->clear();
+						meanFrames = numFrames / repeats;
+						std::cout << simNames[r] << ", " << meanFrames << std::endl;
+						log << simNames[r] << ", " << ruleset << "," << ydim << "," << xdim << "," << density << "," << meanFrames << "\n";
+					}
+				}
 			}
-			// clear up the space that the simulation is taking up
-			sims[r]->clear();
-			meanFrames = numFrames / repeats;
-			std::cout << simNames[r] << ", " << meanFrames << std::endl;
-			log << simNames[r] << ", " << meanFrames << "\n";
-			// TODO: append line to the output file
+			
 		}
 		log.close();
 	}
@@ -80,6 +105,7 @@ int main() {
 		std::cout << "Got an error: " << e.what() << std::endl;
 		return 1;
 	}
+	std::cout << "Finished testing" << std::endl;
 	getchar();
 	return 0;
 }
