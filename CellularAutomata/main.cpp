@@ -13,6 +13,7 @@
 
 #include <iostream>
 #include <memory>
+#include <map>
 
 bool initialiseFrame(ISimulator& sim, float density) {
 	// density is the proportion of cells that start non-empty
@@ -34,40 +35,39 @@ bool initialiseFrame(ISimulator& sim, float density) {
 
 int main() {
 	std::cout << "The system compiles!" << std::endl;
-	
+
 	RulesConway rules{};
 	SegmenterStrips strips{ 0 };
-	
-	
-	SimulatorCPU cpu{5, 3, rules, strips};
 
-	SimulatorSequential seq{ 90,4,rules };
+	std::map<int, std::string> simNames{};
 
-	double cpuTime = cpu.stepForwardTime(3);
-	double seqTime = seq.stepForwardTime(3);
-	std::cout << "Are they equal?" << (cpu == seq) << std::endl;
-	std::cout << "Has " << cpu.getNumFrames() << std::endl;
-	//cpu.writeData("cpuOutput.txt");
-	//seq.writeData("seqOutput.txt");
 
-	std::cout << "Sequential: " << seqTime << ", Parallelised: " << cpuTime << std::endl;
+	std::vector<ISimulator*> sims;
+	int ydim = 1200, xdim = 1200;
+	float simTime = 3;
+	int repeats = 3;
 
-	seq.clear();
-	initialiseFrame(seq,0.3);
-	
-	int liveCount = 0, deadCount = 0;
-	for (int y = 0; y < 5; ++y) {
-		for (int x = 0; x < 3; ++x) {
-			if (seq.getCell(y, x)) {
-				++liveCount;
-			}
-			else {
-				++deadCount;
-			}
+	sims.push_back(new SimulatorSequential{ ydim, xdim, rules });
+	simNames[0] = "Sequential";
+
+	sims.push_back(new SimulatorCPU{ ydim, xdim, rules, strips });
+	simNames[1] = "CPU Parallelised";
+
+	int numFrames;
+	float meanFrames;
+	for (int r = 0; r < sims.size(); ++r){
+		numFrames = 0;
+		for (int e = 0; e < repeats; ++e) {
+			sims[r]->clear();
+			sims[r]->stepForwardTime(simTime);
+			numFrames += sims[r]->getNumFrames();
 		}
+		// clear up the space that the simulation is taking up
+		sims[r]->clear();
+		meanFrames = numFrames / repeats;
+		std::cout << simNames[r] << ", " << meanFrames << std::endl;
+		// TODO: append line to the output file
 	}
-
-	std::cout << "There are " << liveCount << " live cells and " << deadCount << " dead cells!";
-
+	
 	getchar();
 }
