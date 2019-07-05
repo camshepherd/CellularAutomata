@@ -65,44 +65,43 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RulesConway.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SimulatorSequential.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RulesBML.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SimulatorCPU.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ISegmenter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SegmenterStrips.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ISimulator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="IDeadZoneHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ZonerRectangles.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ZonerPixels.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SimulatorSequentialZoning.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SimulatorVector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SimulatorCPUZoning.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="IDeadZoneHandler.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="ISimulator.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="RulesBML.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="RulesConway.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="SegmenterStrips.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="SimulatorCPU.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="SimulatorCPUZoning.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="SimulatorSequential.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="SimulatorSequentialZoning.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="SimulatorVector.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="ZonerPixels.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="ZonerRectangles.inl">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

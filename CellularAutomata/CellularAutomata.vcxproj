@@ -130,20 +130,21 @@
     <ClInclude Include="ZonerRectangles.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="IDeadZoneHandler.cpp" />
-    <ClCompile Include="ISegmenter.cpp" />
-    <ClCompile Include="ISimulator.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="RulesBML.cpp" />
-    <ClCompile Include="RulesConway.cpp" />
-    <ClCompile Include="SegmenterStrips.cpp" />
-    <ClCompile Include="SimulatorCPU.cpp" />
-    <ClCompile Include="SimulatorCPUZoning.cpp" />
-    <ClCompile Include="SimulatorSequential.cpp" />
-    <ClCompile Include="SimulatorSequentialZoning.cpp" />
-    <ClCompile Include="SimulatorVector.cpp" />
-    <ClCompile Include="ZonerPixels.cpp" />
-    <ClCompile Include="ZonerRectangles.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="IDeadZoneHandler.inl" />
+    <None Include="ISimulator.inl" />
+    <None Include="RulesBML.inl" />
+    <None Include="RulesConway.inl" />
+    <None Include="SegmenterStrips.inl" />
+    <None Include="SimulatorCPU.inl" />
+    <None Include="SimulatorCPUZoning.inl" />
+    <None Include="SimulatorSequential.inl" />
+    <None Include="SimulatorSequentialZoning.inl" />
+    <None Include="SimulatorVector.inl" />
+    <None Include="ZonerPixels.inl" />
+    <None Include="ZonerRectangles.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
