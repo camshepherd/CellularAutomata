@@ -3,14 +3,14 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
-#include "RulesConway.h"
-#include "SimulatorCPUZoning.h"
-#include "SimulatorSequential.h"
-#include "SegmenterStrips.h"
-#include "ZonerPixels.h"
+#include <RulesConway.h>
+#include <SimulatorCPUZoning.h>
+#include <SimulatorSequential.h>
+#include <SegmenterStrips.h>
+#include <ZonerPixels.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-
+using namespace CellularAutomata;
 
 namespace SimulatorTesting{
 	TEST_CLASS(SimulatorCPUZoningTesting) {

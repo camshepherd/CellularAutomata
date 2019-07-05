@@ -18,6 +18,8 @@
 #include <map>
 #include <fstream>
 
+using namespace CellularAutomata;
+
 bool initialiseFrame(ISimulator<int>& sim, float density) {
 	// density is the proportion of cells that start non-empty
 	int xdim = sim.getXDim();

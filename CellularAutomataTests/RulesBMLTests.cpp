@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
-#include "RulesBML.h"
+#include <RulesBML.h>
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-
+using namespace CellularAutomata;
 namespace RulesTesting
 {
 	TEST_CLASS(RulesBMLTesting)

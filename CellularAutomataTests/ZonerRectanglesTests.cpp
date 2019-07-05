@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
-#include "ZonerRectangles.h"
+#include <ZonerRectangles.h>
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-
+using namespace CellularAutomata;
 namespace ZonerTesting {
 	TEST_CLASS(ZonerRectanglesTesting) {
 public:

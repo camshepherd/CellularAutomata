@@ -1,11 +1,11 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
-#include "RulesConway.h"
-#include "SimulatorSequential.h"
-#include "RulesBML.h"
+#include <RulesConway.h>
+#include <SimulatorSequential.h>
+#include <RulesBML.h>
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-
+using namespace CellularAutomata;
 namespace SimulatorTesting {
 	TEST_CLASS(SimulatorSequentialTesting) {
 	public:
