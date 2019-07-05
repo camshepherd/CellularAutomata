@@ -1,121 +1,121 @@
 Simulator, Ruleset, Y Dimension, X Dimension, Density, Mean frames simulated 
-Sequential, Conway,10,10,0,5
-Sequential, Conway,10,10,0.2,5
+Sequential, Conway,10,10,0,4
+Sequential, Conway,10,10,0.2,4
 Sequential, Conway,10,10,0.4,4
 Sequential, Conway,10,10,0.6,4
-Sequential, Conway,10,10,0.8,3
-Sequential, Conway,10,100,0,5
-Sequential, Conway,10,100,0.2,5
+Sequential, Conway,10,10,0.8,4
+Sequential, Conway,10,100,0,4
+Sequential, Conway,10,100,0.2,4
 Sequential, Conway,10,100,0.4,4
 Sequential, Conway,10,100,0.6,4
 Sequential, Conway,10,100,0.8,4
-Sequential, Conway,100,10,0,5
-Sequential, Conway,100,10,0.2,5
+Sequential, Conway,100,10,0,4
+Sequential, Conway,100,10,0.2,4
 Sequential, Conway,100,10,0.4,4
 Sequential, Conway,100,10,0.6,4
-Sequential, Conway,100,10,0.8,4
-Sequential, Conway,100,100,0,5
-Sequential, Conway,100,100,0.2,5
+Sequential, Conway,100,10,0.8,3
+Sequential, Conway,100,100,0,4
+Sequential, Conway,100,100,0.2,4
 Sequential, Conway,100,100,0.4,4
-Sequential, Conway,100,100,0.6,4
-Sequential, Conway,100,100,0.8,4
-CPU Parallelised Horizontal, Conway,10,10,0,10
-CPU Parallelised Horizontal, Conway,10,10,0.2,10
-CPU Parallelised Horizontal, Conway,10,10,0.4,9
-CPU Parallelised Horizontal, Conway,10,10,0.6,8
-CPU Parallelised Horizontal, Conway,10,10,0.8,8
-CPU Parallelised Horizontal, Conway,10,100,0,10
-CPU Parallelised Horizontal, Conway,10,100,0.2,10
-CPU Parallelised Horizontal, Conway,10,100,0.4,10
-CPU Parallelised Horizontal, Conway,10,100,0.6,9
-CPU Parallelised Horizontal, Conway,10,100,0.8,8
-CPU Parallelised Horizontal, Conway,100,10,0,10
-CPU Parallelised Horizontal, Conway,100,10,0.2,10
-CPU Parallelised Horizontal, Conway,100,10,0.4,9
-CPU Parallelised Horizontal, Conway,100,10,0.6,8
-CPU Parallelised Horizontal, Conway,100,10,0.8,8
-CPU Parallelised Horizontal, Conway,100,100,0,10
-CPU Parallelised Horizontal, Conway,100,100,0.2,10
-CPU Parallelised Horizontal, Conway,100,100,0.4,9
-CPU Parallelised Horizontal, Conway,100,100,0.6,8
-CPU Parallelised Horizontal, Conway,100,100,0.8,8
-CPU Parallelised Vertical, Conway,10,10,0,11
-CPU Parallelised Vertical, Conway,10,10,0.2,11
-CPU Parallelised Vertical, Conway,10,10,0.4,9
-CPU Parallelised Vertical, Conway,10,10,0.6,9
-CPU Parallelised Vertical, Conway,10,10,0.8,8
-CPU Parallelised Vertical, Conway,10,100,0,10
-CPU Parallelised Vertical, Conway,10,100,0.2,10
-CPU Parallelised Vertical, Conway,10,100,0.4,9
-CPU Parallelised Vertical, Conway,10,100,0.6,8
-CPU Parallelised Vertical, Conway,10,100,0.8,8
-CPU Parallelised Vertical, Conway,100,10,0,10
-CPU Parallelised Vertical, Conway,100,10,0.2,10
-CPU Parallelised Vertical, Conway,100,10,0.4,10
-CPU Parallelised Vertical, Conway,100,10,0.6,9
-CPU Parallelised Vertical, Conway,100,10,0.8,8
-CPU Parallelised Vertical, Conway,100,100,0,11
-CPU Parallelised Vertical, Conway,100,100,0.2,10
-CPU Parallelised Vertical, Conway,100,100,0.4,10
-CPU Parallelised Vertical, Conway,100,100,0.6,8
-CPU Parallelised Vertical, Conway,100,100,0.8,8
-Sequential with pixel zoning, Conway,10,10,0,18
-Sequential with pixel zoning, Conway,10,10,0.2,19
-Sequential with pixel zoning, Conway,10,10,0.4,20
-Sequential with pixel zoning, Conway,10,10,0.6,20
-Sequential with pixel zoning, Conway,10,10,0.8,20
-Sequential with pixel zoning, Conway,10,100,0,20
-Sequential with pixel zoning, Conway,10,100,0.2,19
-Sequential with pixel zoning, Conway,10,100,0.4,19
-Sequential with pixel zoning, Conway,10,100,0.6,20
-Sequential with pixel zoning, Conway,10,100,0.8,20
-Sequential with pixel zoning, Conway,100,10,0,20
-Sequential with pixel zoning, Conway,100,10,0.2,20
-Sequential with pixel zoning, Conway,100,10,0.4,20
-Sequential with pixel zoning, Conway,100,10,0.6,20
-Sequential with pixel zoning, Conway,100,10,0.8,20
-Sequential with pixel zoning, Conway,100,100,0,20
-Sequential with pixel zoning, Conway,100,100,0.2,21
-Sequential with pixel zoning, Conway,100,100,0.4,21
-Sequential with pixel zoning, Conway,100,100,0.6,21
-Sequential with pixel zoning, Conway,100,100,0.8,20
-Parallelised horizontal segmentation with pixel zoning, Conway,10,10,0,12
-Parallelised horizontal segmentation with pixel zoning, Conway,10,10,0.2,11
-Parallelised horizontal segmentation with pixel zoning, Conway,10,10,0.4,12
-Parallelised horizontal segmentation with pixel zoning, Conway,10,10,0.6,12
-Parallelised horizontal segmentation with pixel zoning, Conway,10,10,0.8,12
-Parallelised horizontal segmentation with pixel zoning, Conway,10,100,0,12
-Parallelised horizontal segmentation with pixel zoning, Conway,10,100,0.2,12
-Parallelised horizontal segmentation with pixel zoning, Conway,10,100,0.4,11
-Parallelised horizontal segmentation with pixel zoning, Conway,10,100,0.6,11
-Parallelised horizontal segmentation with pixel zoning, Conway,10,100,0.8,12
-Parallelised horizontal segmentation with pixel zoning, Conway,100,10,0,12
-Parallelised horizontal segmentation with pixel zoning, Conway,100,10,0.2,12
-Parallelised horizontal segmentation with pixel zoning, Conway,100,10,0.4,12
-Parallelised horizontal segmentation with pixel zoning, Conway,100,10,0.6,12
-Parallelised horizontal segmentation with pixel zoning, Conway,100,10,0.8,12
-Parallelised horizontal segmentation with pixel zoning, Conway,100,100,0,12
-Parallelised horizontal segmentation with pixel zoning, Conway,100,100,0.2,12
-Parallelised horizontal segmentation with pixel zoning, Conway,100,100,0.4,12
-Parallelised horizontal segmentation with pixel zoning, Conway,100,100,0.6,12
-Parallelised horizontal segmentation with pixel zoning, Conway,100,100,0.8,11
-Parallelised vertical segmentation with pixel zoning, Conway,10,10,0,12
-Parallelised vertical segmentation with pixel zoning, Conway,10,10,0.2,11
-Parallelised vertical segmentation with pixel zoning, Conway,10,10,0.4,12
-Parallelised vertical segmentation with pixel zoning, Conway,10,10,0.6,12
-Parallelised vertical segmentation with pixel zoning, Conway,10,10,0.8,12
-Parallelised vertical segmentation with pixel zoning, Conway,10,100,0,12
-Parallelised vertical segmentation with pixel zoning, Conway,10,100,0.2,12
-Parallelised vertical segmentation with pixel zoning, Conway,10,100,0.4,12
-Parallelised vertical segmentation with pixel zoning, Conway,10,100,0.6,12
-Parallelised vertical segmentation with pixel zoning, Conway,10,100,0.8,12
-Parallelised vertical segmentation with pixel zoning, Conway,100,10,0,12
-Parallelised vertical segmentation with pixel zoning, Conway,100,10,0.2,12
-Parallelised vertical segmentation with pixel zoning, Conway,100,10,0.4,12
-Parallelised vertical segmentation with pixel zoning, Conway,100,10,0.6,12
-Parallelised vertical segmentation with pixel zoning, Conway,100,10,0.8,11
-Parallelised vertical segmentation with pixel zoning, Conway,100,100,0,12
-Parallelised vertical segmentation with pixel zoning, Conway,100,100,0.2,12
-Parallelised vertical segmentation with pixel zoning, Conway,100,100,0.4,11
-Parallelised vertical segmentation with pixel zoning, Conway,100,100,0.6,12
-Parallelised vertical segmentation with pixel zoning, Conway,100,100,0.8,12
+Sequential, Conway,100,100,0.6,3
+Sequential, Conway,100,100,0.8,3
+CPU Parallelised Horizontal, Conway,10,10,0,7
+CPU Parallelised Horizontal, Conway,10,10,0.2,8
+CPU Parallelised Horizontal, Conway,10,10,0.4,8
+CPU Parallelised Horizontal, Conway,10,10,0.6,7
+CPU Parallelised Horizontal, Conway,10,10,0.8,7
+CPU Parallelised Horizontal, Conway,10,100,0,8
+CPU Parallelised Horizontal, Conway,10,100,0.2,8
+CPU Parallelised Horizontal, Conway,10,100,0.4,8
+CPU Parallelised Horizontal, Conway,10,100,0.6,7
+CPU Parallelised Horizontal, Conway,10,100,0.8,7
+CPU Parallelised Horizontal, Conway,100,10,0,8
+CPU Parallelised Horizontal, Conway,100,10,0.2,8
+CPU Parallelised Horizontal, Conway,100,10,0.4,8
+CPU Parallelised Horizontal, Conway,100,10,0.6,7
+CPU Parallelised Horizontal, Conway,100,10,0.8,7
+CPU Parallelised Horizontal, Conway,100,100,0,7
+CPU Parallelised Horizontal, Conway,100,100,0.2,8
+CPU Parallelised Horizontal, Conway,100,100,0.4,8
+CPU Parallelised Horizontal, Conway,100,100,0.6,7
+CPU Parallelised Horizontal, Conway,100,100,0.8,7
+CPU Parallelised Vertical, Conway,10,10,0,8
+CPU Parallelised Vertical, Conway,10,10,0.2,8
+CPU Parallelised Vertical, Conway,10,10,0.4,7
+CPU Parallelised Vertical, Conway,10,10,0.6,7
+CPU Parallelised Vertical, Conway,10,10,0.8,7
+CPU Parallelised Vertical, Conway,10,100,0,8
+CPU Parallelised Vertical, Conway,10,100,0.2,8
+CPU Parallelised Vertical, Conway,10,100,0.4,7
+CPU Parallelised Vertical, Conway,10,100,0.6,7
+CPU Parallelised Vertical, Conway,10,100,0.8,7
+CPU Parallelised Vertical, Conway,100,10,0,8
+CPU Parallelised Vertical, Conway,100,10,0.2,8
+CPU Parallelised Vertical, Conway,100,10,0.4,7
+CPU Parallelised Vertical, Conway,100,10,0.6,7
+CPU Parallelised Vertical, Conway,100,10,0.8,7
+CPU Parallelised Vertical, Conway,100,100,0,8
+CPU Parallelised Vertical, Conway,100,100,0.2,8
+CPU Parallelised Vertical, Conway,100,100,0.4,8
+CPU Parallelised Vertical, Conway,100,100,0.6,7
+CPU Parallelised Vertical, Conway,100,100,0.8,7
+Sequential with pixel zoning, Conway,10,10,0,19
+Sequential with pixel zoning, Conway,10,10,0.2,21
+Sequential with pixel zoning, Conway,10,10,0.4,21
+Sequential with pixel zoning, Conway,10,10,0.6,21
+Sequential with pixel zoning, Conway,10,10,0.8,21
+Sequential with pixel zoning, Conway,10,100,0,21
+Sequential with pixel zoning, Conway,10,100,0.2,21
+Sequential with pixel zoning, Conway,10,100,0.4,21
+Sequential with pixel zoning, Conway,10,100,0.6,21
+Sequential with pixel zoning, Conway,10,100,0.8,21
+Sequential with pixel zoning, Conway,100,10,0,23
+Sequential with pixel zoning, Conway,100,10,0.2,22
+Sequential with pixel zoning, Conway,100,10,0.4,22
+Sequential with pixel zoning, Conway,100,10,0.6,21
+Sequential with pixel zoning, Conway,100,10,0.8,22
+Sequential with pixel zoning, Conway,100,100,0,23
+Sequential with pixel zoning, Conway,100,100,0.2,23
+Sequential with pixel zoning, Conway,100,100,0.4,24
+Sequential with pixel zoning, Conway,100,100,0.6,23
+Sequential with pixel zoning, Conway,100,100,0.8,22
+Parallelised horizontal segmentation with pixel zoning, Conway,10,10,0,8
+Parallelised horizontal segmentation with pixel zoning, Conway,10,10,0.2,9
+Parallelised horizontal segmentation with pixel zoning, Conway,10,10,0.4,9
+Parallelised horizontal segmentation with pixel zoning, Conway,10,10,0.6,9
+Parallelised horizontal segmentation with pixel zoning, Conway,10,10,0.8,9
+Parallelised horizontal segmentation with pixel zoning, Conway,10,100,0,9
+Parallelised horizontal segmentation with pixel zoning, Conway,10,100,0.2,9
+Parallelised horizontal segmentation with pixel zoning, Conway,10,100,0.4,9
+Parallelised horizontal segmentation with pixel zoning, Conway,10,100,0.6,9
+Parallelised horizontal segmentation with pixel zoning, Conway,10,100,0.8,9
+Parallelised horizontal segmentation with pixel zoning, Conway,100,10,0,9
+Parallelised horizontal segmentation with pixel zoning, Conway,100,10,0.2,9
+Parallelised horizontal segmentation with pixel zoning, Conway,100,10,0.4,9
+Parallelised horizontal segmentation with pixel zoning, Conway,100,10,0.6,9
+Parallelised horizontal segmentation with pixel zoning, Conway,100,10,0.8,9
+Parallelised horizontal segmentation with pixel zoning, Conway,100,100,0,9
+Parallelised horizontal segmentation with pixel zoning, Conway,100,100,0.2,9
+Parallelised horizontal segmentation with pixel zoning, Conway,100,100,0.4,9
+Parallelised horizontal segmentation with pixel zoning, Conway,100,100,0.6,8
+Parallelised horizontal segmentation with pixel zoning, Conway,100,100,0.8,9
+Parallelised vertical segmentation with pixel zoning, Conway,10,10,0,9
+Parallelised vertical segmentation with pixel zoning, Conway,10,10,0.2,9
+Parallelised vertical segmentation with pixel zoning, Conway,10,10,0.4,9
+Parallelised vertical segmentation with pixel zoning, Conway,10,10,0.6,9
+Parallelised vertical segmentation with pixel zoning, Conway,10,10,0.8,8
+Parallelised vertical segmentation with pixel zoning, Conway,10,100,0,8
+Parallelised vertical segmentation with pixel zoning, Conway,10,100,0.2,9
+Parallelised vertical segmentation with pixel zoning, Conway,10,100,0.4,9
+Parallelised vertical segmentation with pixel zoning, Conway,10,100,0.6,9
+Parallelised vertical segmentation with pixel zoning, Conway,10,100,0.8,9
+Parallelised vertical segmentation with pixel zoning, Conway,100,10,0,9
+Parallelised vertical segmentation with pixel zoning, Conway,100,10,0.2,9
+Parallelised vertical segmentation with pixel zoning, Conway,100,10,0.4,9
+Parallelised vertical segmentation with pixel zoning, Conway,100,10,0.6,9
+Parallelised vertical segmentation with pixel zoning, Conway,100,10,0.8,8
+Parallelised vertical segmentation with pixel zoning, Conway,100,100,0,8
+Parallelised vertical segmentation with pixel zoning, Conway,100,100,0.2,8
+Parallelised vertical segmentation with pixel zoning, Conway,100,100,0.4,9
+Parallelised vertical segmentation with pixel zoning, Conway,100,100,0.6,9
+Parallelised vertical segmentation with pixel zoning, Conway,100,100,0.8,8

@@ -134,6 +134,7 @@
     <ClCompile Include="SegmenterStrips.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="CellularAutomata.def" />
     <None Include="ISimulator.inl" />
     <None Include="RulesBML.inl" />
     <None Include="RulesConway.inl" />

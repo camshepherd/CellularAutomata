@@ -103,5 +103,8 @@
     <None Include="SimulatorCPUZoning.inl">
       <Filter>Inline Files</Filter>
     </None>
+    <None Include="CellularAutomata.def">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

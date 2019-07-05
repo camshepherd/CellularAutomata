@@ -1,0 +1,5 @@
+LIBRARY cellular_automata
+DESCRIPTION "DLL to export various methods of simulating cellular automata"
+EXPORTS
+    Add @1
+    Function @2
