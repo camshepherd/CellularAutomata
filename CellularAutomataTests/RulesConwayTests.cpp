@@ -12,15 +12,15 @@ namespace RulesTesting
 		
 		TEST_METHOD(CanInstantiate)
 		{
-			RulesConway thing = RulesConway();
+			RulesConway<int> thing = RulesConway<int>();
 			Assert::AreEqual(1, 1);
 			Assert::IsTrue(thing.isValid(1));
 		}
 
 
 		TEST_METHOD(HandlesStateValidity) {
-			RulesConway con01(2, 3, 4, 5, 0, 1);
-			RulesConway con02(3, 5, 4, 6, 2, 2);
+			RulesConway<int> con01(2, 3, 4, 5, 0, 1);
+			RulesConway<int> con02(3, 5, 4, 6, 2, 2);
 			
 			Assert::IsTrue(con01.isValid(0));
 			Assert::IsTrue(con01.isValid(1));
@@ -37,7 +37,7 @@ namespace RulesTesting
 		TEST_METHOD(CorrectlyAppliesStepRuleWithWrapAround) {
 			std::vector<std::vector<int>> frame(3, std::vector<int>(3,0));
 			//using default Conway rules: stay alive with 2 or 3 neighbours, be born if dead and have three neighbours
-			RulesConway con{};
+			RulesConway<int> con{};
 
 			// make sure that the test frame was created correctly
 			Assert::AreEqual(frame[0][0], 0);

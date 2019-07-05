@@ -8,7 +8,7 @@ namespace ZonerTesting {
 	TEST_CLASS(ZonerPixelsTesting) {
 public:
 	TEST_METHOD(CanInstantiate) {
-		ZonerPixels deadZone{ 3,3 };
+		ZonerPixels<int> deadZone{ 3,3 };
 		deadZone.isLive(1,1);
 		Assert::IsTrue(true);
 	}
@@ -16,7 +16,7 @@ public:
 	TEST_METHOD(UpdateMinDimensions) {
 		
 		// no changes
-		ZonerPixels zoner{ 3,3 };
+		ZonerPixels<int> zoner{ 3,3 };
 		std::vector<std::vector<int>> frame1(3, std::vector<int>(3, 0));
 		std::vector<std::vector<int>> frame2(frame1.begin(), frame1.end());
 
@@ -49,7 +49,7 @@ public:
 	TEST_METHOD(UpdateMoreDimensions) {
 		// single change
 
-		ZonerPixels zoner{ 6,4 };
+		ZonerPixels<int> zoner{ 6,4 };
 		std::vector<std::vector<int>> frame1(6, std::vector<int>(4, 0));
 		std::vector<std::vector<int>> frame2(frame1.begin(), frame1.end());
 

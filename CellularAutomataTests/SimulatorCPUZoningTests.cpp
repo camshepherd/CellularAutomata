@@ -16,21 +16,21 @@ namespace SimulatorTesting{
 	TEST_CLASS(SimulatorCPUZoningTesting) {
 public:
 	TEST_METHOD(CanInstantiate) {
-		RulesConway con{};
-		ZonerPixels zoner{ 8,3 };
+		RulesConway<int> con{};
+		ZonerPixels<int> zoner{ 8,3 };
 		SegmenterStrips seg{};
-		SimulatorCPUZoning sim{ 8,3,con, seg, zoner };
+		SimulatorCPUZoning<int> sim{ 8,3,con, seg, zoner };
 		sim.stepForward();
 		sim.stepForwardTime(1.2f);
 		Assert::IsTrue(true);
 	}
 
 	TEST_METHOD(StepsSingle) {
-		RulesConway con{};
-		ZonerPixels zoner{ 7,5 };
+		RulesConway<int> con{};
+		ZonerPixels<int> zoner{ 7,5 };
 		SegmenterStrips seg{};
-		SimulatorCPUZoning sim{ 7,5, con, seg, zoner };
-		SimulatorSequential comp{ 7,5, con };
+		SimulatorCPUZoning<int> sim{ 7,5, con, seg, zoner };
+		SimulatorSequential<int> comp{ 7,5, con };
 
 		sim.setCell(1, 1, 1);
 		comp.setCell(1, 1, 1);
@@ -45,11 +45,11 @@ public:
 	}
 
 	TEST_METHOD(StepsMany) {
-		RulesConway con{};
-		ZonerPixels zoner{ 9,11 };
+		RulesConway<int> con{};
+		ZonerPixels<int> zoner{ 9,11 };
 		SegmenterStrips seg{};
-		SimulatorCPUZoning sim{ 9,11, con, seg, zoner };
-		SimulatorSequential comp{ 9,11, con };
+		SimulatorCPUZoning<int> sim{ 9,11, con, seg, zoner };
+		SimulatorSequential<int> comp{ 9,11, con };
 
 		sim.setCell(1, 1, 1);
 		comp.setCell(1, 1, 1);

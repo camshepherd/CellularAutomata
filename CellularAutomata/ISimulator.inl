@@ -1,7 +1,5 @@
-#include "ISimulator.h"
-
-
-bool ISimulator::writeData(std::string fileName) {
+template<typename T>
+bool ISimulator<T>::writeData(std::string fileName) {
 	std::ofstream file;
 	try {
 		file.open(fileName);
@@ -24,7 +22,8 @@ bool ISimulator::writeData(std::string fileName) {
 	return true;
 }
 
-double ISimulator::stepForwardTime(double seconds) {
+template <typename T>
+double ISimulator<T>::stepForwardTime(double seconds) {
 	double elapsed = 0;
 	while (elapsed <= seconds) {
 		elapsed += stepForward();

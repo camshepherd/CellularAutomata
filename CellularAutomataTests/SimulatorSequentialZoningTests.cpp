@@ -10,19 +10,19 @@ namespace SimulatorTesting {
 	TEST_CLASS(SimulatorSequentialZoningTesting) {
 public:
 	TEST_METHOD(CanInstantiate) {
-		RulesConway con{};
-		ZonerPixels zoner{ 8,3 };
-		SimulatorSequentialZoning sim{ 8,3,con,zoner };
+		RulesConway<int> con{};
+		ZonerPixels<int> zoner{ 8,3 };
+		SimulatorSequentialZoning<int> sim{ 8,3,con,zoner };
 		sim.stepForward();
 		sim.stepForwardTime(1.2f);
 		Assert::IsTrue(true);
 	}
 
 	TEST_METHOD(StepsSingle) {
-		RulesConway con{};
-		ZonerPixels zoner{ 7,5 };
-		SimulatorSequentialZoning sim{ 7,5, con, zoner};
-		SimulatorSequential comp{ 7,5, con};
+		RulesConway<int> con{};
+		ZonerPixels<int> zoner{ 7,5 };
+		SimulatorSequentialZoning<int> sim{ 7,5, con, zoner};
+		SimulatorSequential<int> comp{ 7,5, con};
 
 		sim.setCell(1, 1, 1);
 		comp.setCell(1, 1, 1);
@@ -37,10 +37,10 @@ public:
 	}
 
 	TEST_METHOD(StepsMany) {
-		RulesConway con{};
-		ZonerPixels zoner{ 9,11 };
-		SimulatorSequentialZoning sim{ 9,11, con, zoner };
-		SimulatorSequential comp{ 9,11, con };
+		RulesConway<int> con{};
+		ZonerPixels<int> zoner{ 9,11 };
+		SimulatorSequentialZoning<int> sim{ 9,11, con, zoner };
+		SimulatorSequential<int> comp{ 9,11, con };
 
 		sim.setCell(1, 1, 1);
 		comp.setCell(1, 1, 1);

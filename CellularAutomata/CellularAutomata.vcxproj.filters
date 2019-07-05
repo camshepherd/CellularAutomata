@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Inline Files">
+      <UniqueIdentifier>{7828ac4d-2e5f-42e1-a989-12c291aad6ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISimulator.h">
@@ -65,43 +68,40 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SegmenterStrips.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="IDeadZoneHandler.inl">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="ISimulator.inl">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="RulesBML.inl">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="RulesConway.inl">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="SegmenterStrips.inl">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="SimulatorCPU.inl">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="SimulatorCPUZoning.inl">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="SimulatorSequential.inl">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="SimulatorSequentialZoning.inl">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="SimulatorVector.inl">
-      <Filter>Header Files</Filter>
+    <None Include="ZonerRectangles.inl">
+      <Filter>Inline Files</Filter>
     </None>
     <None Include="ZonerPixels.inl">
-      <Filter>Header Files</Filter>
+      <Filter>Inline Files</Filter>
     </None>
-    <None Include="ZonerRectangles.inl">
-      <Filter>Header Files</Filter>
+    <None Include="SimulatorVector.inl">
+      <Filter>Inline Files</Filter>
+    </None>
+    <None Include="SimulatorSequentialZoning.inl">
+      <Filter>Inline Files</Filter>
+    </None>
+    <None Include="SimulatorSequential.inl">
+      <Filter>Inline Files</Filter>
+    </None>
+    <None Include="ISimulator.inl">
+      <Filter>Inline Files</Filter>
+    </None>
+    <None Include="RulesBML.inl">
+      <Filter>Inline Files</Filter>
+    </None>
+    <None Include="RulesConway.inl">
+      <Filter>Inline Files</Filter>
+    </None>
+    <None Include="SimulatorCPU.inl">
+      <Filter>Inline Files</Filter>
+    </None>
+    <None Include="SimulatorCPUZoning.inl">
+      <Filter>Inline Files</Filter>
     </None>
   </ItemGroup>
 </Project>

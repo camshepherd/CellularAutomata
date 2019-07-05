@@ -1,17 +1,15 @@
-#include "SimulatorSequentialZoning.h"
-
-
-
-SimulatorSequentialZoning::SimulatorSequentialZoning(int y, int x, IRules& rules, IDeadZoneHandler& zoner) : SimulatorSequential(y,x,rules), zoner(zoner)
+template <typename T>
+SimulatorSequentialZoning<T>::SimulatorSequentialZoning(int y, int x, IRules<T>& rules, IDeadZoneHandler<T>& zoner) : SimulatorSequential<T>(y,x,rules), zoner(zoner)
 {
 }
 
-
-SimulatorSequentialZoning::~SimulatorSequentialZoning()
+template <typename T>
+SimulatorSequentialZoning<T>::~SimulatorSequentialZoning()
 {
 }
 
-double SimulatorSequentialZoning::stepForward(int steps) {
+template <typename T>
+double SimulatorSequentialZoning<T>::stepForward(int steps) {
 	timer.reset();
 	if (steps < 0) {
 		throw std::runtime_error("The simulation cannnot work backwards");

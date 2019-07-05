@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{B5B9B469-B94F-4E97-BDA6-5B04D5FCA60F}</ProjectGuid>
     <RootNamespace>CellularAutomata</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -131,13 +131,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SegmenterStrips.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="IDeadZoneHandler.inl" />
     <None Include="ISimulator.inl" />
     <None Include="RulesBML.inl" />
     <None Include="RulesConway.inl" />
-    <None Include="SegmenterStrips.inl" />
     <None Include="SimulatorCPU.inl" />
     <None Include="SimulatorCPUZoning.inl" />
     <None Include="SimulatorSequential.inl" />

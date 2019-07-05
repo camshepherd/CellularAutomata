@@ -10,11 +10,11 @@ class SimulatorSequentialZoning :
 {
 
 protected:
-	IDeadZoneHandler& zoner;
+	IDeadZoneHandler<T>& zoner;
 public:
 	/** Constructor 1. Construct the simulator from the injected dependencies
 	*/
-	SimulatorSequentialZoning(int y, int x, IRules<T>& rules, IDeadZoneHandler& zoner);
+	SimulatorSequentialZoning(int y, int x, IRules<T>& rules, IDeadZoneHandler<T>& zoner);
 
 	/** Destructor 1. Default destructor
 	*/

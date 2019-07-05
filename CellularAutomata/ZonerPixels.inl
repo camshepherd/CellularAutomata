@@ -1,18 +1,16 @@
-#include "ZonerPixels.h"
-
-
-
-ZonerPixels::ZonerPixels(int y, int x) : ydim(y),xdim(x)
+template <typename T>
+ZonerPixels<T>::ZonerPixels(int y, int x) : ydim(y),xdim(x)
 {
 	cellActivities = std::vector<std::vector<bool>>(y, std::vector<bool>(x, 1));
 }
 
-
-ZonerPixels::~ZonerPixels()
+template <typename T>
+ZonerPixels<T>::~ZonerPixels()
 {
 }
 
-bool ZonerPixels::updateDeadZones(std::vector<std::vector<int>> frame1, std::vector<std::vector<int>> frame2) {
+template <typename T>
+bool ZonerPixels<T>::updateDeadZones(std::vector<std::vector<T>> frame1, std::vector<std::vector<T>> frame2) {
 	// get all cells that are different between the cells
 	// mark all differing cell locations, and their neighbours, as being active
 
@@ -39,10 +37,12 @@ bool ZonerPixels::updateDeadZones(std::vector<std::vector<int>> frame1, std::vec
 	return true;
 };
 
-bool ZonerPixels::isLive(int y, int x) {
+template <typename T>
+bool ZonerPixels<T>::isLive(int y, int x) {
 	return cellActivities[y][x];
 };
 
-std::vector<std::vector<bool>> ZonerPixels::getCellActivities() {
+template <typename T>
+std::vector<std::vector<bool>> ZonerPixels<T>::getCellActivities() {
 	return cellActivities;
 }

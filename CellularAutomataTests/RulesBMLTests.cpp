@@ -12,13 +12,13 @@ namespace RulesTesting
 
 		TEST_METHOD(CanInstantiate)
 		{
-			RulesBML thing = RulesBML();
+			RulesBML<int> thing = RulesBML<int>();
 			Assert::AreEqual(1, 1);
 			Assert::IsTrue(thing.isValid(1));
 		}
 
 		TEST_METHOD(HandlesStateValidity) {
-			RulesBML bml = RulesBML();
+			RulesBML<int> bml = RulesBML<int>();
 			Assert::IsTrue(bml.isValid(0));
 			Assert::IsTrue(bml.isValid(1));
 			Assert::IsTrue(bml.isValid(2));
@@ -29,7 +29,7 @@ namespace RulesTesting
 		TEST_METHOD(AppliesStepRule) {
 			std::vector<std::vector<int>> frame(3, std::vector<int>(3, 0));
 			//using default Conway rules: stay alive with 2 or 3 neighbours, be born if dead and have three neighbours
-			RulesBML bml{};
+			RulesBML<int> bml{};
 
 			// make sure that the test frame was created correctly
 			Assert::AreEqual(frame[0][0], 0);

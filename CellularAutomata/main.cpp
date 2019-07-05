@@ -18,7 +18,7 @@
 #include <map>
 #include <fstream>
 
-bool initialiseFrame(ISimulator& sim, float density) {
+bool initialiseFrame(ISimulator<int>& sim, float density) {
 	// density is the proportion of cells that start non-empty
 	int xdim = sim.getXDim();
 	int ydim = sim.getYDim();
@@ -41,35 +41,35 @@ int main() {
 
 	int ydim = 800, xdim = 800;
 
-	RulesConway rules{};
+	RulesConway<int> rules{};
 	SegmenterStrips stripsHor{ 0 };
 	SegmenterStrips stripsVer{ 1 };
 	std::map<int, std::string> simNames{};
 	std::string log_suffix = "PC";
 	std::string ruleset = "Conway";
-	ZonerPixels zoner{ ydim,xdim };
+	ZonerPixels<int> zoner{ ydim,xdim };
 
-	std::vector<ISimulator*> sims;
+	std::vector<ISimulator<int>*> sims;
 	
 	float simTime = 0.1;
 	int repeats = 3;
 	float density = 0.3;
-	sims.push_back(new SimulatorSequential{ ydim, xdim, rules });
+	sims.push_back(new SimulatorSequential<int>{ ydim, xdim, rules });
 	simNames[0] = "Sequential";
 
-	sims.push_back(new SimulatorCPU{ ydim, xdim, rules, stripsHor });
+	sims.push_back(new SimulatorCPU<int>{ ydim, xdim, rules, stripsHor });
 	simNames[1] = "CPU Parallelised Horizontal";
 
-	sims.push_back(new SimulatorCPU{ ydim, xdim, rules, stripsVer });
+	sims.push_back(new SimulatorCPU<int>{ ydim, xdim, rules, stripsVer });
 	simNames[2] = "CPU Parallelised Vertical";
 
-	sims.push_back(new SimulatorSequentialZoning(ydim, xdim, rules, zoner));
+	sims.push_back(new SimulatorSequentialZoning<int>(ydim, xdim, rules, zoner));
 	simNames[3] = "Sequential with pixel zoning";
 
-	sims.push_back(new SimulatorCPUZoning{ ydim,xdim,rules,stripsHor,zoner });
+	sims.push_back(new SimulatorCPUZoning<int>{ ydim,xdim,rules,stripsHor,zoner });
 	simNames[4] = "Parallelised horizontal segmentation with pixel zoning";
 
-	sims.push_back(new SimulatorCPUZoning{ ydim,xdim,rules,stripsVer,zoner });
+	sims.push_back(new SimulatorCPUZoning<int>{ ydim,xdim,rules,stripsVer,zoner });
 	simNames[5] = "Parallelised vertical segmentation with pixel zoning";
 
 	std::ofstream log{ "results_" + log_suffix + ".out" };

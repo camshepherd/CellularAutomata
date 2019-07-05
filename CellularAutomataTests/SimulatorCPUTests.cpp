@@ -11,16 +11,16 @@ namespace SimulatorTesting {
 	TEST_CLASS(SimulatorCPUTesting) {
 	public:
 		TEST_METHOD(CanInstantiate) {
-			RulesConway con = RulesConway();
+			RulesConway<int> con = RulesConway<int>();
 			SegmenterStrips strips{};
-			SimulatorCPU sim{6,4, con, strips};
+			SimulatorCPU<int> sim{6,4, con, strips};
 			Assert::IsTrue(true);
 		}
 
 		TEST_METHOD(CanStepForward) {
-			RulesConway con = RulesConway();
+			RulesConway<int> con = RulesConway<int>();
 			SegmenterStrips seg{};
-			SimulatorCPU sim{ 4, 4, con, seg };
+			SimulatorCPU<int> sim{ 4, 4, con, seg };
 
 			sim.stepForward();
 			Assert::AreEqual(sim.getNumFrames(), 2);

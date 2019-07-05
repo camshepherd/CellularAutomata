@@ -2,7 +2,7 @@
 
 
 
-SegmenterStrips::SegmenterStrips(int orientation) : orientation(orientation)
+SegmenterStrips::SegmenterStrips(bool orientation) : orientation(orientation)
 {
 }
 

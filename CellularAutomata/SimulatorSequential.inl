@@ -1,15 +1,15 @@
-#include "SimulatorSequential.h"
-
-SimulatorSequential::SimulatorSequential(const int y, const int x, const IRules& _rules) : SimulatorVector(y,x,_rules)
+template <typename T>
+SimulatorSequential<T>::SimulatorSequential(const int y, const int x, const IRules<T>& _rules) : SimulatorVector<T>(y,x,_rules)
 {
 }
 
-
-SimulatorSequential::~SimulatorSequential()
+template <typename T>
+SimulatorSequential<T>::~SimulatorSequential()
 {
 }
 
-double SimulatorSequential::stepForward(int steps) {
+template <typename T>
+double SimulatorSequential<T>::stepForward(int steps) {
 	timer.reset();
 	if (steps < 0) {
 		throw std::runtime_error("The simulation cannnot work backwards");
@@ -30,6 +30,7 @@ double SimulatorSequential::stepForward(int steps) {
 	return elapsed;
 }
 
-int SimulatorSequential::getMaxValidState() {
+template <typename T>
+T SimulatorSequential<T>::getMaxValidState() {
 	return rules.getMaxValidState();
 }

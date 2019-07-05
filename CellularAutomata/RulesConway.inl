@@ -1,23 +1,21 @@
-#include "RulesConway.h"
 
-
-
-RulesConway::RulesConway() : live_min(2), live_max(3), birth_min(3), birth_max(3), cell_min(0), cell_max(1)
+template <typename T>
+RulesConway<T>::RulesConway() : live_min(2), live_max(3), birth_min(3), birth_max(3), cell_min(0), cell_max(1)
 {
 }
 
-RulesConway::RulesConway(int _live_min, int _live_max, int _birth_min, int _birth_max, int _cell_min, int _cell_max) : live_min(_live_min), live_max(_live_max), birth_min(_birth_min), birth_max(_birth_max), cell_min(_cell_min), cell_max(_cell_max)
+template <typename T>
+RulesConway<T>::RulesConway(int _live_min, int _live_max, int _birth_min, int _birth_max, int _cell_min, int _cell_max) : live_min(_live_min), live_max(_live_max), birth_min(_birth_min), birth_max(_birth_max), cell_min(_cell_min), cell_max(_cell_max)
 {
 }
 
-
-RulesConway::~RulesConway()
+template <typename T>
+RulesConway<T>::~RulesConway()
 {
 }
 
-
-
-bool RulesConway::isValid(int cellState) const {
+template <typename T>
+bool RulesConway<T>::isValid(T cellState) const {
 	if (cellState >= cell_min && cellState <= cell_max) {
 		return true;
 	}
@@ -26,7 +24,8 @@ bool RulesConway::isValid(int cellState) const {
 	}
 }
 
-int RulesConway::getNextState(const std::vector<std::vector<int>>& cells, int y, int x) const {
+template <typename T>
+T RulesConway<T>::getNextState(const std::vector<std::vector<T>>& cells, int y, int x) const {
 	int count = countNeighours(cells, y, x);
 	if (cells[y][x]) {
 		//alive
@@ -43,7 +42,8 @@ int RulesConway::getNextState(const std::vector<std::vector<int>>& cells, int y,
 	return 0;
 }
 
-int RulesConway::countNeighours(const std::vector<std::vector<int>>& cells, int y, int x) const {
+template <typename T>
+int RulesConway<T>::countNeighours(const std::vector<std::vector<T>>& cells, int y, int x) const {
 	int count = 0;
 	// assumed that the world will be a rectangle
 	int y_dim = cells.size();
@@ -61,6 +61,7 @@ int RulesConway::countNeighours(const std::vector<std::vector<int>>& cells, int 
 	return count;
 }
 
-int RulesConway::getMaxValidState() const {
+template <typename T>
+T RulesConway<T>::getMaxValidState() const {
 	return 1;
 }

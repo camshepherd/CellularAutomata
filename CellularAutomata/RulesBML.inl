@@ -1,18 +1,17 @@
-#include "RulesBML.h"
 
-
-
-RulesBML::RulesBML()
+template <typename T>
+RulesBML<T>::RulesBML()
 {
 	// doesn't need to do anything as there is no customisation of this simulation is static.
 }
 
-
-RulesBML::~RulesBML()
+template <typename T>
+RulesBML<T>::~RulesBML()
 {
 }
 
-bool RulesBML::isValid(int cellState) const {
+template <typename T>
+bool RulesBML<T>::isValid(T cellState) const {
 	switch (cellState) {
 	case 0:
 		return true;
@@ -29,7 +28,8 @@ bool RulesBML::isValid(int cellState) const {
 	}
 }
 
-int RulesBML::getNextState(const std::vector<std::vector<int>>& cells, int y, int x) const {
+template <typename T>
+T RulesBML<T>::getNextState(const std::vector<std::vector<T>>& cells, int y, int x) const {
 	int y_dim = cells.size();
 	int x_dim = cells[0].size();
 	switch (cells[y][x]) {
@@ -70,6 +70,7 @@ int RulesBML::getNextState(const std::vector<std::vector<int>>& cells, int y, in
 	};
 }
 
-int RulesBML::getMaxValidState() const {
+template <typename T>
+T RulesBML<T>::getMaxValidState() const {
 	return 2;
 }

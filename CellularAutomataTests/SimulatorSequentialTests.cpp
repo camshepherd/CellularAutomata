@@ -10,29 +10,29 @@ namespace SimulatorTesting {
 	TEST_CLASS(SimulatorSequentialTesting) {
 	public:
 		TEST_METHOD(CanInstantiate) {
-			RulesConway con = RulesConway();
-			SimulatorSequential sim = SimulatorSequential(5,5,con);
+			RulesConway<int> con = RulesConway<int>();
+			SimulatorSequential<int> sim = SimulatorSequential<int>(5,5,con);
 			Assert::IsTrue(true);
 
 
 			// nonSquare
-			SimulatorSequential sim2 = SimulatorSequential(4, 8, con);
+			SimulatorSequential<int> sim2 = SimulatorSequential<int>(4, 8, con);
 			Assert::IsTrue(true);
 		}
 
 		TEST_METHOD(CanCreateFrames) {
-			RulesConway con = RulesConway();
-			SimulatorSequential sim = SimulatorSequential(5, 5, con);
-			Assert::AreEqual(sim.getNumFrames(), 1);
+			RulesConway<int> con = RulesConway<int>();
+			SimulatorSequential<int> sim = SimulatorSequential<int>(5, 5, con);
+			Assert::AreEqual<int>(sim.getNumFrames(), 1);
 
 			sim.blankFrame();
-			Assert::AreEqual(sim.getNumFrames(), 2);
+			Assert::AreEqual<int>(sim.getNumFrames(), 2);
 
 			sim.blankFrame();
-			Assert::AreEqual(sim.getNumFrames(), 3);
+			Assert::AreEqual<int>(sim.getNumFrames(), 3);
 
 			//Test on non-square simulation
-			SimulatorSequential sim2 = SimulatorSequential(4, 5, con);
+			SimulatorSequential<int> sim2 = SimulatorSequential<int>(4, 5, con);
 			Assert::AreEqual(sim2.getNumFrames(), 1);
 
 			sim2.blankFrame();
@@ -43,8 +43,8 @@ namespace SimulatorTesting {
 		}
 
 		TEST_METHOD(CanEditCells) {
-			RulesConway con = RulesConway();
-			SimulatorSequential sim = SimulatorSequential(5, 5, con);
+			RulesConway<int> con = RulesConway<int>();
+			SimulatorSequential<int> sim = SimulatorSequential<int>(5, 5, con);
 
 			Assert::AreEqual(sim.getCell(2, 2),0);
 			Assert::AreEqual(sim.getCell(2, 2, 0), 0);
@@ -68,7 +68,7 @@ namespace SimulatorTesting {
 			Assert::AreEqual(sim.getCell(4, 3, 1), 1);
 
 			// rectangular simulation
-			SimulatorSequential sim2 = SimulatorSequential(2,5, con);
+			SimulatorSequential<int> sim2 = SimulatorSequential<int>(2,5, con);
 			Assert::AreEqual(sim2.getCell(1, 2), 0);
 			Assert::AreEqual(sim2.getCell(1, 2, 0), 0);
 
@@ -81,8 +81,8 @@ namespace SimulatorTesting {
 		}
 
 		TEST_METHOD(CanClearCells) {
-			RulesConway con = RulesConway();
-			SimulatorSequential sim = SimulatorSequential(5, 5, con);
+			RulesConway<int> con = RulesConway<int>();
+			SimulatorSequential<int> sim = SimulatorSequential<int>(5, 5, con);
 			sim.blankFrame();
 			sim.blankFrame();
 			sim.blankFrame();
@@ -105,7 +105,7 @@ namespace SimulatorTesting {
 
 
 			// test with non-square board
-			SimulatorSequential sim2 = SimulatorSequential(6, 3, con);
+			SimulatorSequential<int> sim2 = SimulatorSequential<int>(6, 3, con);
 
 			sim2.blankFrame();
 			sim2.blankFrame();
@@ -118,8 +118,8 @@ namespace SimulatorTesting {
 		}
 
 		TEST_METHOD(CanStepCorrectly) {
-			RulesConway con = RulesConway();
-			SimulatorSequential sim = SimulatorSequential(4,4, con);
+			RulesConway<int> con = RulesConway<int>();
+			SimulatorSequential<int> sim = SimulatorSequential<int>(4,4, con);
 
 			sim.stepForward();
 			Assert::AreEqual(sim.getNumFrames(), 2);
@@ -149,8 +149,8 @@ namespace SimulatorTesting {
 		}
 
 		TEST_METHOD(WorksWithBML) {
-			RulesBML bml{};
-			SimulatorSequential sim{ 5, 4, bml };
+			RulesBML<int> bml{};
+			SimulatorSequential<int> sim{ 5, 4, bml };
 
 			sim.setCell(3, 2, 1);
 			sim.setCell(2, 1, 2);

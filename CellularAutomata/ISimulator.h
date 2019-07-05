@@ -75,7 +75,7 @@ public:
 	*/
 	bool writeData(std::string filename);
 
-	bool friend operator==(ISimulator& a, ISimulator& b) {
+	bool friend operator==(ISimulator<T>& a, ISimulator<T>& b) {
 		if (a.getXDim() != b.getXDim()) {
 			return false;
 		}
