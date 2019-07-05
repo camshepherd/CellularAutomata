@@ -1,6 +1,4 @@
-#ifndef ISIMULATOR_H
-#define ISIMULATOR_H
-
+#pragma once
 #include "Stopwatch.h"
 #include <string>
 #include <fstream>
@@ -100,4 +98,4 @@ public:
 	}
 };
 
-#endif
+#include "ISimulator.inl"

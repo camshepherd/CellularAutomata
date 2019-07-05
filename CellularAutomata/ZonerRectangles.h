@@ -4,8 +4,9 @@
 
 /** Class to keep track of how rectangular portions of the map may change from frame to frame in the simulation.
 */
+template <typename T>
 class ZonerRectangles :
-	public IDeadZoneHandler
+	public IDeadZoneHandler<T>
 {
 protected:
 	std::vector < std::tuple<int, int, int, int >> Zones;
@@ -25,7 +26,7 @@ public:
 	@param frame1: y*x frame to be compared against frame2
 	@param frame2: y*x frame of cell state to be compared against frame1
 	*/
-	bool virtual updateDeadZones(std::vector<std::vector<int>> frame1, std::vector<std::vector<int>> frame2) override;
+	bool virtual updateDeadZones(std::vector<std::vector<T>> frame1, std::vector<std::vector<T>> frame2) override;
 
 	/** Get whether the target cell is live (may change in the next frame)
 	@param y: The y-coordinate of the target cell
@@ -38,3 +39,4 @@ public:
 	std::vector<std::tuple<int, int, int, int>> ZonerRectangles::getDeadZones();
 };
 
+#include "ZonerRectangles.inl"

@@ -31,3 +31,4 @@ public:
 	bool virtual isLive(int y, int x) = 0;
 };
 
+#include "IDeadZoneHandler.inl"

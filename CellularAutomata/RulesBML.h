@@ -33,3 +33,4 @@ public:
 	virtual T getMaxValidState() const override;
 };
 
+#include "RulesBML.inl"

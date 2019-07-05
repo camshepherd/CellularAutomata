@@ -51,3 +51,4 @@ public:
 	virtual T getMaxValidState() const override;
 };
 
+#include "RulesConway.inl"

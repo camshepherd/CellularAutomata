@@ -7,8 +7,9 @@
 
 /** Simulator to simulate the given model while making full use of multiple threads on the CPU
 */
+template <typename T>
 class SimulatorCPU :
-	public SimulatorVector
+	public SimulatorVector<T>
 {
 protected:
 	const ISegmenter& segmenter;
@@ -19,7 +20,7 @@ public:
 	@param rules: The rules to use to simulate the model
 	@param segmenter: The class to use to segment up the frame to the individual CPU threads
 	*/
-	SimulatorCPU(int ydim, int xdim, IRules& rules, ISegmenter& segmenter);
+	SimulatorCPU(int ydim, int xdim, IRules<T>& rules, ISegmenter& segmenter);
 
 	/** Destructor 1. Default destructor
 	*/
@@ -40,5 +41,7 @@ public:
 
 	/** Get the maximum valid value to represent states in the model
 	*/
-	virtual int getMaxValidState() override;
+	virtual T getMaxValidState() override;
 };
+
+#include "SimulatorCPU.inl"

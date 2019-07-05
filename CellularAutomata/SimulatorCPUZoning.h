@@ -6,13 +6,14 @@
 
 /** Extension of SimulatorCPU to keep track of which parts of the frame could change in each timestep, avoiding computations on those that are static
 */
-class SimulatorCPUZoning : public SimulatorCPU {
+template <typename T>
+class SimulatorCPUZoning : public SimulatorCPU<T> {
 protected:
-	IDeadZoneHandler& zoner;
+	IDeadZoneHandler<T>& zoner;
 public:
 	/** Constructor 1. Create the simulator utilising the given dependencies
 	*/
-	SimulatorCPUZoning(int y, int x, IRules& rules, ISegmenter& segmenter, IDeadZoneHandler& zoner);
+	SimulatorCPUZoning(int y, int x, IRules<T>& rules, ISegmenter& segmenter, IDeadZoneHandler<T>& zoner);
 
 	/** Destructor 1. Default destructor
 	*/
@@ -30,3 +31,5 @@ public:
 	*/
 	virtual bool stepForwardRegion(int y_min, int y_max, int x_min, int x_max) override;
 };
+
+#include "SimulatorCPUZoning.inl"

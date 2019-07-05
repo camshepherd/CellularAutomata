@@ -4,8 +4,9 @@
 
 /** Extension of SimulatorSequential that keeps track of which regions have the potential for change and hence require simulation
 */
+template <typename T>
 class SimulatorSequentialZoning :
-	public SimulatorSequential
+	public SimulatorSequential<T>
 {
 
 protected:
@@ -13,7 +14,7 @@ protected:
 public:
 	/** Constructor 1. Construct the simulator from the injected dependencies
 	*/
-	SimulatorSequentialZoning(int y, int x, IRules& rules, IDeadZoneHandler& zoner);
+	SimulatorSequentialZoning(int y, int x, IRules<T>& rules, IDeadZoneHandler& zoner);
 
 	/** Destructor 1. Default destructor
 	*/
@@ -25,3 +26,4 @@ public:
 	double stepForward(int steps = 1) override;
 };
 
+#include "SimulatorSequentialZoning.inl"
