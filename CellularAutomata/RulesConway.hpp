@@ -1,5 +1,5 @@
 #pragma once
-#include "IRules.h"
+#include "IRules.hpp"
 
 namespace CellularAutomata {
 	/** A model implementing the rules of Conway's Game of Life

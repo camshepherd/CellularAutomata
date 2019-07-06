@@ -1,5 +1,5 @@
 #pragma once
-#include "IRules.h"
+#include "IRules.hpp"
 
 namespace CellularAutomata {
 	/** A model to simulate the Biham-Middleton-Levine Trafic model. The model is hard-coded and parameters of it cannot be altered

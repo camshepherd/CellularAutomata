@@ -1,6 +1,6 @@
 #pragma once
-#include "SimulatorVector.h"
-#include "IRules.h"
+#include "SimulatorVector.hpp"
+#include "IRules.hpp"
 #include <vector>
 
 namespace CellularAutomata {

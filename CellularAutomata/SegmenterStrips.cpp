@@ -1,4 +1,4 @@
-#include "SegmenterStrips.h"
+#include "SegmenterStrips.hpp"
 
 
 namespace CellularAutomata {

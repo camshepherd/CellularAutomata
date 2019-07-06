@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
-#include <SegmenterStrips.h>
+#include <SegmenterStrips.hpp>
 using namespace CellularAutomata;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

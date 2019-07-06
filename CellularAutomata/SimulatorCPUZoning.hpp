@@ -1,8 +1,8 @@
 #pragma once
 
-#include "SimulatorCPU.h"
-#include "IDeadZoneHandler.h"
-#include "ISegmenter.h"
+#include "SimulatorCPU.hpp"
+#include "IDeadZoneHandler.hpp"
+#include "ISegmenter.hpp"
 
 namespace CellularAutomata {
 	/** Extension of SimulatorCPU to keep track of which parts of the frame could change in each timestep, avoiding computations on those that are static

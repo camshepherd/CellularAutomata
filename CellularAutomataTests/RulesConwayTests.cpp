@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
-#include <RulesConway.h>
+#include <RulesConway.hpp>
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace CellularAutomata;
 namespace RulesTesting

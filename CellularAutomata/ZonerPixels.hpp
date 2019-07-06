@@ -1,5 +1,5 @@
 #pragma once
-#include "IDeadZoneHandler.h"
+#include "IDeadZoneHandler.hpp"
 
 namespace CellularAutomata {
 	/** Class to keep track of which pixels may change from frame to frame, and hence require simulation

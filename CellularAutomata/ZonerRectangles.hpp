@@ -1,5 +1,5 @@
 #pragma once
-#include "IDeadZoneHandler.h"
+#include "IDeadZoneHandler.hpp"
 
 namespace CellularAutomata {
 	/** Class to keep track of how rectangular portions of the map may change from frame to frame in the simulation.

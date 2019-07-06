@@ -1,6 +1,6 @@
 #pragma once
-#include "SimulatorSequential.h"
-#include "IDeadZoneHandler.h"
+#include "SimulatorSequential.hpp"
+#include "IDeadZoneHandler.hpp"
 
 namespace CellularAutomata {
 	/** Extension of SimulatorSequential that keeps track of which regions have the potential for change and hence require simulation

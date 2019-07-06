@@ -1,5 +1,5 @@
 #pragma once
-#include "Stopwatch.h"
+#include "Stopwatch.hpp"
 #include <string>
 #include <fstream>
 #include <algorithm>

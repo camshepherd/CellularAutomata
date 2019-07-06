@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
-#include <RulesConway.h>
-#include <SimulatorCPU.h>
-#include <SimulatorSequential.h>
-#include <SegmenterStrips.h>
+#include <RulesConway.hpp>
+#include <SimulatorCPU.hpp>
+#include <SimulatorSequential.hpp>
+#include <SegmenterStrips.hpp>
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace CellularAutomata;
 namespace SimulatorTesting {

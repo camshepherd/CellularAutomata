@@ -1,5 +1,5 @@
 #pragma once
-#include "ISegmenter.h"
+#include "ISegmenter.hpp"
 
 namespace CellularAutomata {
 	/** Segmenter which will split up the region keeping rows and columns intact and contiguous

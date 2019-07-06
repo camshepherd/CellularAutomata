@@ -1,7 +1,7 @@
 #pragma once
-#include "SimulatorVector.h"
+#include "SimulatorVector.hpp"
 
-#include "ISegmenter.h"
+#include "ISegmenter.hpp"
 #include <thread>
 #include <vector>
 

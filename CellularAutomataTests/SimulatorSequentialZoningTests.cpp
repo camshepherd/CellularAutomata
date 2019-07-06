@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
-#include <SimulatorSequentialZoning.h>
-#include <RulesConway.h>
-#include <ZonerPixels.h>
+#include <SimulatorSequentialZoning.hpp>
+#include <RulesConway.hpp>
+#include <ZonerPixels.hpp>
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace CellularAutomata;
 namespace SimulatorTesting {

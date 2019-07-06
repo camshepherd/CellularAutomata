@@ -113,23 +113,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="IDeadZoneHandler.h" />
-    <ClInclude Include="IRules.h" />
-    <ClInclude Include="ISegmenter.h" />
-    <ClInclude Include="ISimulator.h" />
-    <ClInclude Include="RulesBML.h" />
-    <ClInclude Include="RulesConway.h" />
-    <ClInclude Include="SegmenterStrips.h" />
-    <ClInclude Include="SimulatorCPU.h" />
-    <ClInclude Include="SimulatorCPUZoning.h" />
-    <ClInclude Include="SimulatorSequential.h" />
-    <ClInclude Include="SimulatorSequentialZoning.h" />
-    <ClInclude Include="SimulatorVector.h" />
-    <ClInclude Include="Stopwatch.h" />
-    <ClInclude Include="ZonerPixels.h" />
-    <ClInclude Include="ZonerRectangles.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="SegmenterStrips.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +126,23 @@
     <None Include="SimulatorVector.inl" />
     <None Include="ZonerPixels.inl" />
     <None Include="ZonerRectangles.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="IDeadZoneHandler.hpp" />
+    <ClInclude Include="IRules.hpp" />
+    <ClInclude Include="ISegmenter.hpp" />
+    <ClInclude Include="ISimulator.hpp" />
+    <ClInclude Include="RulesBML.hpp" />
+    <ClInclude Include="RulesConway.hpp" />
+    <ClInclude Include="SegmenterStrips.hpp" />
+    <ClInclude Include="SimulatorCPU.hpp" />
+    <ClInclude Include="SimulatorCPUZoning.hpp" />
+    <ClInclude Include="SimulatorSequential.hpp" />
+    <ClInclude Include="SimulatorSequentialZoning.hpp" />
+    <ClInclude Include="SimulatorVector.hpp" />
+    <ClInclude Include="Stopwatch.hpp" />
+    <ClInclude Include="ZonerPixels.hpp" />
+    <ClInclude Include="ZonerRectangles.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
