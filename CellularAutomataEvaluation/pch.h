@@ -9,6 +9,20 @@
 #ifndef PCH_H
 #define PCH_H
 
+#include <SimulatorVector.h>
+#include <SimulatorSequential.h>
+#include <SimulatorCPU.h>
+#include <SimulatorSequentialZoning.h>
+#include <SimulatorCPUZoning.h>
+
+#include <RulesConway.h>
+#include <RulesBML.h>
+
+#include <SegmenterStrips.h>
+#include <Stopwatch.h>
+
+#include <ZonerPixels.h>
+#include <ZonerRectangles.h>
 // TODO: add headers that you want to pre-compile here
 
 #endif //PCH_H

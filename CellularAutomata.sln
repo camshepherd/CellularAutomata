@@ -7,6 +7,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CellularAutomata", "Cellula
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CellularAutomataTests", "CellularAutomataTests\CellularAutomataTests.vcxproj", "{CBB97C18-6D8E-48FF-925A-251610B3E00F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CellularAutomataEvaluation", "CellularAutomataEvaluation\CellularAutomataEvaluation.vcxproj", "{BFCF1D96-96D2-4D83-9560-DAEDB435BE4C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B5B9B469-B94F-4E97-BDA6-5B04D5FCA60F} = {B5B9B469-B94F-4E97-BDA6-5B04D5FCA60F}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +36,14 @@ Global
 		{CBB97C18-6D8E-48FF-925A-251610B3E00F}.Release|x64.Build.0 = Release|x64
 		{CBB97C18-6D8E-48FF-925A-251610B3E00F}.Release|x86.ActiveCfg = Release|Win32
 		{CBB97C18-6D8E-48FF-925A-251610B3E00F}.Release|x86.Build.0 = Release|Win32
+		{BFCF1D96-96D2-4D83-9560-DAEDB435BE4C}.Debug|x64.ActiveCfg = Debug|x64
+		{BFCF1D96-96D2-4D83-9560-DAEDB435BE4C}.Debug|x64.Build.0 = Debug|x64
+		{BFCF1D96-96D2-4D83-9560-DAEDB435BE4C}.Debug|x86.ActiveCfg = Debug|Win32
+		{BFCF1D96-96D2-4D83-9560-DAEDB435BE4C}.Debug|x86.Build.0 = Debug|Win32
+		{BFCF1D96-96D2-4D83-9560-DAEDB435BE4C}.Release|x64.ActiveCfg = Release|x64
+		{BFCF1D96-96D2-4D83-9560-DAEDB435BE4C}.Release|x64.Build.0 = Release|x64
+		{BFCF1D96-96D2-4D83-9560-DAEDB435BE4C}.Release|x86.ActiveCfg = Release|Win32
+		{BFCF1D96-96D2-4D83-9560-DAEDB435BE4C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

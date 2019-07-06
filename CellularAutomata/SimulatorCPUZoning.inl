@@ -1,6 +1,6 @@
 namespace CellularAutomata {
 	template <typename T>
-	SimulatorCPUZoning<T>::SimulatorCPUZoning(int y, int x, IRules<T>& rules, ISegmenter& segmenter, IDeadZoneHandler<T>& zoner) : SimulatorCPU(y, x, rules, segmenter), zoner(zoner)
+	SimulatorCPUZoning<T>::SimulatorCPUZoning(int y, int x, IRules<T>& rules, ISegmenter& segmenter, IDeadZoneHandler<T>& zoner) : SimulatorCPU<T>(y, x, rules, segmenter), zoner(zoner)
 	{
 
 	};
@@ -10,13 +10,13 @@ namespace CellularAutomata {
 
 	template <typename T>
 	double SimulatorCPUZoning<T>::stepForward(int steps) {
-		timer.reset();
+		this->timer.reset();
 		for (int u = 0; u < steps; ++u) {
-			copyFrame();
+			this->copyFrame();
 			std::vector<std::thread> threads{};
 			int num_threads = std::thread::hardware_concurrency();
 
-			std::vector<std::tuple<int, int, int, int>> segments = segmenter.segment(y_dim, x_dim, num_threads);
+			std::vector<std::tuple<int, int, int, int>> segments = this->segmenter.segment(SimulatorVector<T>::y_dim, SimulatorVector<T>::x_dim, num_threads);
 
 			for (int k = 0; k < num_threads; ++k) {
 				int y_min, y_max, x_min, x_max;
@@ -28,9 +28,9 @@ namespace CellularAutomata {
 				threads[ref].join();
 			}
 		}
-		zoner.updateDeadZones(*(cellStore.end() - 2), *(cellStore.end() - 1));
-		double elapsed = timer.elapsed();
-		elapsedTime += elapsed;
+		zoner.updateDeadZones(*(this->cellStore.end() - 2), *(this->cellStore.end() - 1));
+		double elapsed = this->timer.elapsed();
+		this->elapsedTime += elapsed;
 		return elapsed;
 	}
 
@@ -39,7 +39,7 @@ namespace CellularAutomata {
 		for (int y = y_min; y <= y_max; ++y) {
 			for (int x = x_min; x <= x_max; ++x) {
 				if (zoner.isLive(y, x)) {
-					setCell(y, x, rules.getNextState(*(cellStore.end() - 2), y, x));
+					this->setCell(y, x, this->rules.getNextState(*(this->cellStore.end() - 2), y, x));
 				}
 			}
 		}

@@ -1,18 +1,4 @@
-#include "SimulatorVector.h"
-#include "SimulatorSequential.h"
-#include "SimulatorCPU.h"
-#include "SimulatorSequentialZoning.h"
-#include "SimulatorCPUZoning.h"
-
-#include "RulesConway.h"
-#include "RulesBML.h"
-
-#include "SegmenterStrips.h"
-#include "Stopwatch.h"
-
-#include "ZonerPixels.h"
-#include "ZonerRectangles.h"
-
+#include "pch.h"
 #include <iostream>
 #include <memory>
 #include <map>
