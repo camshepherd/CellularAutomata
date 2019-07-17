@@ -1,39 +1,48 @@
 #pragma once
-#include "IRules.hpp"
+#include "IRulesArray.hpp"
 
 namespace CellularAutomata {
-	/** A model implementing the rules of Conway's Game of Life with an underlying data structure of a 3D vector
+	/** A model implementing the rules of Conway's Game of Life with
+	an underlying data structure of a 1D C-style array
 	*/
 	template <typename T>
-	class RulesConway :
-		public IRules<T>
+	class RulesArrayConway :
+		public IRulesArray<T>
 	{
 	protected:
 		const int live_min, live_max, birth_min, birth_max;
 		const int cell_min, cell_max;
-
+		const int y_dim, x_dim;
 		/** Count the number of neighbours that the targeted cell has
 		@param cells: The frame to be used
 		@param y: The y-coordinate of the target cell
 		@param x: The x-coordinate of the target cell
 		*/
-		int countNeighours(const std::vector<std::vector<T>>& cells, int y, int x) const;
+		int countNeighours(const T* cells, int y, int x) const;
 	public:
 		/** Constructor 1. Default constructor - uses Conway's own parameters for the model
 		*/
-		RulesConway();
+		RulesArrayConway();
 
-		/** Constructor 2. Explicit declarations of the states of the birth and death values
+		/** Constructor 2. Only specify the size of the frames
+		@param y_dim: The size of the frame in the y direction
+		@param x_dim: The size of the frame in the x direction
+		*/
+		RulesArrayConway(int y_dim, int x_dim);
+
+		/** Constructor 3. Explicit declarations of the states of the birth and death values
 		@param live_min: The minimum number of neighbours with which a cell will remain alive
 		@param live_max: The maximum number of neighbours with which a cell will remain alive
 		@param birth_min: The minimum number of neighbours with which a dead cell will be born
 		@param birth_max: The maximum number of neighbours with which a dead cell will be born
+		@param y_dim: The size of the frame in the y direction
+		@param x_dim: The size of the frame in the x direction
 		*/
-		RulesConway(int live_min, int live_max, int birth_min, int birth_max, int cell_min, int cell_max);
+		RulesArrayConway(int live_min, int live_max, int birth_min, int birth_max, int cell_min, int cell_max, int y_dim, int x_dim);
 
 		/** Destructor 1. Default destructor
 		*/
-		~RulesConway();
+		~RulesArrayConway();
 
 		/** Whether the given cell state is valid in the model
 		@param cellState: The cell state to be evaluated
@@ -45,11 +54,11 @@ namespace CellularAutomata {
 		@param y: The y-coordinate of the target cell
 		@param x: The x-coordinate of the target cell
 		*/
-		virtual T getNextState(const std::vector<std::vector<T>>& cells, int y, int x) const override;
+		virtual T getNextState(T* cells, int y, int x) const override;
 
 		/** Get the maximum value that can be used to represent a state in the model
 		*/
 		virtual T getMaxValidState() const override;
 	};
 }
-#include "RulesConway.inl"
+#include "RulesArrayConway.inl"

@@ -164,6 +164,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="RulesArrayConwayTests.cpp" />
     <ClCompile Include="RulesBMLTests.cpp" />
     <ClCompile Include="SegmenterStripsTests.cpp" />
     <ClCompile Include="SimulatorCPUTests.cpp" />

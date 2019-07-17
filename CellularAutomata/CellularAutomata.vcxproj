@@ -53,6 +53,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.1.props" />
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
@@ -83,6 +84,10 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -111,14 +116,20 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="SegmenterStrips.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ISimulator.inl" />
+    <None Include="RulesArrayConway.inl" />
     <None Include="RulesBML.inl" />
     <None Include="RulesConway.inl" />
+    <None Include="SimulatorArray.inl" />
     <None Include="SimulatorCPU.inl" />
     <None Include="SimulatorCPUZoning.inl" />
     <None Include="SimulatorSequential.inl" />
@@ -130,11 +141,14 @@
   <ItemGroup>
     <ClInclude Include="IDeadZoneHandler.hpp" />
     <ClInclude Include="IRules.hpp" />
+    <ClInclude Include="IRulesArray.hpp" />
     <ClInclude Include="ISegmenter.hpp" />
     <ClInclude Include="ISimulator.hpp" />
+    <ClInclude Include="RulesArrayConway.hpp" />
     <ClInclude Include="RulesBML.hpp" />
     <ClInclude Include="RulesConway.hpp" />
     <ClInclude Include="SegmenterStrips.hpp" />
+    <ClInclude Include="SimulatorArray.hpp" />
     <ClInclude Include="SimulatorCPU.hpp" />
     <ClInclude Include="SimulatorCPUZoning.hpp" />
     <ClInclude Include="SimulatorSequential.hpp" />
@@ -146,5 +160,6 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 10.1.targets" />
   </ImportGroup>
 </Project>

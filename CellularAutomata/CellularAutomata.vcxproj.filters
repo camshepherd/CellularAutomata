@@ -16,6 +16,9 @@
     <Filter Include="Inline Files">
       <UniqueIdentifier>{7828ac4d-2e5f-42e1-a989-12c291aad6ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CUDA Files">
+      <UniqueIdentifier>{4a6a662a-b1d2-452f-a8b4-01760184bd93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SegmenterStrips.cpp">
@@ -51,6 +54,12 @@
       <Filter>Inline Files</Filter>
     </None>
     <None Include="SimulatorCPUZoning.inl">
+      <Filter>Inline Files</Filter>
+    </None>
+    <None Include="SimulatorArray.inl">
+      <Filter>Inline Files</Filter>
+    </None>
+    <None Include="RulesArrayConway.inl">
       <Filter>Inline Files</Filter>
     </None>
   </ItemGroup>
@@ -98,6 +107,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ZonerRectangles.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SimulatorArray.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IRulesArray.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RulesArrayConway.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
