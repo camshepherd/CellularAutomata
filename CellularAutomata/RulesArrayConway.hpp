@@ -12,7 +12,6 @@ namespace CellularAutomata {
 	protected:
 		const int live_min, live_max, birth_min, birth_max;
 		const int cell_min, cell_max;
-		const int y_dim, x_dim;
 		/** Count the number of neighbours that the targeted cell has
 		@param cells: The frame to be used
 		@param y: The y-coordinate of the target cell
@@ -20,7 +19,7 @@ namespace CellularAutomata {
 		*/
 		int countNeighours(const T* cells, int y, int x) const;
 	public:
-		/** Constructor 1. Default constructor - uses Conway's own parameters for the model
+		/** Constructor 1. Default constructor - uses Conway's own parameters for the model. Defaults to 3x3 frame
 		*/
 		RulesArrayConway();
 
@@ -59,6 +58,7 @@ namespace CellularAutomata {
 		/** Get the maximum value that can be used to represent a state in the model
 		*/
 		virtual T getMaxValidState() const override;
+
 	};
 }
 #include "RulesArrayConway.inl"

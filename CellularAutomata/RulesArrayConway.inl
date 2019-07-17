@@ -1,17 +1,20 @@
 namespace CellularAutomata {
 	template <typename T>
-	RulesArrayConway<T>::RulesArrayConway() : live_min(2), live_max(3), birth_min(3), birth_max(3), cell_min(0), cell_max(1), y_dim(1), x_dim(1)
+	RulesArrayConway<T>::RulesArrayConway() : live_min(2), live_max(3), birth_min(3), birth_max(3), cell_min(0), cell_max(1)
 	{
+		this->setFrameDimensions(y_dim, x_dim);
 	}
 
 	template <typename T>
-	RulesArrayConway<T>::RulesArrayConway(int y_dim, int x_dim) : live_min(2), live_max(3), birth_min(3), birth_max(3), cell_min(0), cell_max(1), y_dim(y_dim), x_dim(x_dim)
+	RulesArrayConway<T>::RulesArrayConway(int y_dim, int x_dim) : RulesArrayConway()
 	{
+		this->setFrameDimensions(y_dim, x_dim);
 	}
 
 	template <typename T>
-	RulesArrayConway<T>::RulesArrayConway(int _live_min, int _live_max, int _birth_min, int _birth_max, int _cell_min, int _cell_max, int y_dim, int x_dim) : live_min(_live_min), live_max(_live_max), birth_min(_birth_min), birth_max(_birth_max), cell_min(_cell_min), cell_max(_cell_max), y_dim(y_dim), x_dim(x_dim)
+	RulesArrayConway<T>::RulesArrayConway(int _live_min, int _live_max, int _birth_min, int _birth_max, int _cell_min, int _cell_max, int y_dim, int x_dim) : live_min(_live_min), live_max(_live_max), birth_min(_birth_min), birth_max(_birth_max), cell_min(_cell_min), cell_max(_cell_max)
 	{
+		this->setFrameDimensions(y_dim, x_dim);
 	}
 
 	template <typename T>
@@ -64,8 +67,11 @@ namespace CellularAutomata {
 		return count;
 	}
 
+
 	template <typename T>
 	T RulesArrayConway<T>::getMaxValidState() const {
 		return 1;
 	}
+
+
 }

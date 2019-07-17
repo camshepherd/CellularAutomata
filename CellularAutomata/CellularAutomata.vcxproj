@@ -126,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ISimulator.inl" />
+    <None Include="RulesArrayBML.inl" />
     <None Include="RulesArrayConway.inl" />
     <None Include="RulesBML.inl" />
     <None Include="RulesConway.inl" />
@@ -144,6 +145,7 @@
     <ClInclude Include="IRulesArray.hpp" />
     <ClInclude Include="ISegmenter.hpp" />
     <ClInclude Include="ISimulator.hpp" />
+    <ClInclude Include="RulesArrayBML.hpp" />
     <ClInclude Include="RulesArrayConway.hpp" />
     <ClInclude Include="RulesBML.hpp" />
     <ClInclude Include="RulesConway.hpp" />

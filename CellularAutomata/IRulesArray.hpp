@@ -5,6 +5,8 @@ namespace CellularAutomata {
 	*/
 	template <typename T>
 	class IRulesArray {
+	protected:
+		int y_dim, x_dim;
 	public:
 		/** Get the highest state that can represent a valid state
 		*/
@@ -22,5 +24,12 @@ namespace CellularAutomata {
 		*/
 		virtual T getNextState(T* cells, int y, int x) const = 0;
 
+		/** Set the frame dimensions to be used
+		*/
+		virtual bool setFrameDimensions(int y, int x){
+			y_dim = y;
+			x_dim = x;
+			return true;
+		}
 	};
 }

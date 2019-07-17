@@ -62,6 +62,9 @@
     <None Include="RulesArrayConway.inl">
       <Filter>Inline Files</Filter>
     </None>
+    <None Include="RulesArrayBML.inl">
+      <Filter>Inline Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IDeadZoneHandler.hpp">
@@ -116,6 +119,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RulesArrayConway.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RulesArrayBML.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

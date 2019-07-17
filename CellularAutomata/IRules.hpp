@@ -21,5 +21,6 @@ namespace CellularAutomata {
 		@param x: The x-coordinate of the target cell
 		*/
 		virtual int getNextState(const std::vector<std::vector<T>>& cells, int y, int x) const = 0;
+
 	};
 }
