@@ -1,4 +1,4 @@
 Simulator, Ruleset, Y Dimension, X Dimension, Density, Mean frames simulated 
-Sequential, Conway,10,10,0,4
-Sequential, Conway,10,10,0.2,4
-Sequential, Conway,10,10,0.4,4
+Sequential, Conway,10,10,0,3
+Sequential, Conway,10,10,0.2,3
+Sequential, Conway,10,10,0.4,3
