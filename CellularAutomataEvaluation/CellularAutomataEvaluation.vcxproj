@@ -23,7 +23,7 @@
     <ProjectGuid>{BFCF1D96-96D2-4D83-9560-DAEDB435BE4C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>CellularAutomataEvaluation</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
