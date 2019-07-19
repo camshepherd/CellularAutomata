@@ -33,7 +33,9 @@ int main() {
 	SegmenterStrips stripsHor{ 0 };
 	SegmenterStrips stripsVer{ 1 };
 	std::map<int, std::string> simNames{};
-	std::string log_suffix = "PC";
+	std::string ID;
+	std::cout << "Please enter the Computer ID (single digit): " << std::endl;
+	std::cin >> ID;
 	std::string ruleset = "Conway";
 	ZonerPixels<int> zoner{ ydim,xdim };
 
@@ -43,25 +45,25 @@ int main() {
 	int repeats = 3;
 	float density = 0.3;
 	sims.push_back(new SimulatorSequential<int>{ ydim, xdim, rules });
-	simNames[0] = "Sequential";
+	simNames[0] = "Seq";
 
 	sims.push_back(new SimulatorCPU<int>{ ydim, xdim, rules, stripsHor });
-	simNames[1] = "CPU Parallelised Horizontal";
+	simNames[1] = "CPUHor";
 
 	sims.push_back(new SimulatorCPU<int>{ ydim, xdim, rules, stripsVer });
-	simNames[2] = "CPU Parallelised Vertical";
+	simNames[2] = "CPUVer";
 
 	sims.push_back(new SimulatorSequentialZoning<int>(ydim, xdim, rules, zoner));
-	simNames[3] = "Sequential with pixel zoning";
+	simNames[3] = "SeqZon";
 
 	sims.push_back(new SimulatorCPUZoning<int>{ ydim,xdim,rules,stripsHor,zoner });
-	simNames[4] = "Parallelised horizontal segmentation with pixel zoning";
+	simNames[4] = "CPUHorZon";
 
 	sims.push_back(new SimulatorCPUZoning<int>{ ydim,xdim,rules,stripsVer,zoner });
-	simNames[5] = "Parallelised vertical segmentation with pixel zoning";
+	simNames[5] = "CPUVerZon";
 
-	std::ofstream log{ "results_" + log_suffix + ".out" };
-	log << "Simulator, Ruleset, Y Dimension, X Dimension, Density, Mean frames simulated \n";
+	std::ofstream log{ "results_" + ID + ".out" };
+	log << "Simulator,Ruleset,YDimension,XDimension,Density,MeanFramesSimulated\n";
 	int numFrames;
 	float meanFrames;
 	try {
