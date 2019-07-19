@@ -10,6 +10,7 @@
 #define PCH_H
 
 #include <SimulatorVector.hpp>
+#include <SimulatorArray.hpp>
 #include <SimulatorSequential.hpp>
 #include <SimulatorCPU.hpp>
 #include <SimulatorSequentialZoning.hpp>

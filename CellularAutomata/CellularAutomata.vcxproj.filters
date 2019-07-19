@@ -65,6 +65,9 @@
     <None Include="RulesArrayBML.inl">
       <Filter>Inline Files</Filter>
     </None>
+    <None Include="SimulatorGPU.inl">
+      <Filter>Inline Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IDeadZoneHandler.hpp">
@@ -124,5 +127,13 @@
     <ClInclude Include="RulesArrayBML.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SimulatorGPU.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="SimulatorGPU.cu">
+      <Filter>CUDA Files</Filter>
+    </CudaCompile>
   </ItemGroup>
 </Project>
