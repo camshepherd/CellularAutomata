@@ -13,7 +13,6 @@ namespace RulesTesting
 		TEST_METHOD(CanInstantiate)
 		{
 			RulesArrayBML<int> thing{};
-			RulesArrayBML<bool> thing2{};
 			Assert::AreEqual(1, 1);
 			Assert::IsTrue(thing.isValid(1));
 		}

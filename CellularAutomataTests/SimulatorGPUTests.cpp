@@ -44,7 +44,7 @@ namespace SimulatorTesting {
 			Assert::AreEqual(sim.getCell(0, 1), 1);
 
 			Assert::AreEqual(sim.getNumFrames(), 4);
-			int numFrames = 3;
+			const int numFrames = 3;
 			sim.stepForward(numFrames);
 			Assert::AreEqual(sim.getNumFrames(), 7);
 		}

@@ -135,5 +135,8 @@
     <CudaCompile Include="SimulatorGPU.cu">
       <Filter>CUDA Files</Filter>
     </CudaCompile>
+    <CudaCompile Include="RulesArrayConway.cu">
+      <Filter>CUDA Files</Filter>
+    </CudaCompile>
   </ItemGroup>
 </Project>

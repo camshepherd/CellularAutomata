@@ -1,5 +1,12 @@
 #pragma once
 #include "IRulesArray.hpp"
+#ifdef __CUDACC__
+#define CUDA_FUNCTION __host__ __device__
+#endif
+#ifndef __CUDACC__
+#define CUDA_FUNCTION 
+#endif
+
 
 namespace CellularAutomata {
 	/** A model to simulate the Biham-Middleton-Levine Traffic model. The model is hard-coded and parameters of it cannot be altered
@@ -31,7 +38,7 @@ namespace CellularAutomata {
 		@param y: The y-coordinate of the target cell
 		@param x: The x-coordinate of the target cell
 		*/
-		virtual T getNextState(T* cells, int y, int x) const override;
+		CUDA_FUNCTION virtual T getNextState(T* cells, int y, int x) const override;
 
 		/** Get the maximum value that can be used to represent a cell's state
 		*/

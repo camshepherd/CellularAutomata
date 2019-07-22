@@ -3,6 +3,8 @@
 #include <memory>
 #include <map>
 #include <fstream>
+#include "RulesArrayConway.hpp"
+#include "SimulatorGPU.hpp"
 
 using namespace CellularAutomata;
 
@@ -29,6 +31,67 @@ int main() {
 
 	int ydim = 800, xdim = 800;
 
+	RulesArrayConway<int> con2{};
+	SegmenterStrips seg2{};
+	
+	
+	SimulatorGPU<int> sim2{ ydim, xdim,con2,seg2 };
+	sim2.setLaunchParams(2, 32);
+	for(int y = 0; y < 2; ++y)
+	{
+		std::cout << std::endl;
+		for(int x = 0; x < 2; ++x)
+		{
+			sim2.setCell(y, x, 0);
+		}
+	}
+	sim2.setCell(2, 2, 1);
+	sim2.setCell(2, 1, 1);
+	sim2.setCell(1, 2, 1);
+	sim2.setCell(1, 1, 1);
+	sim2.setCell(0, 1, 1);
+	sim2.setCell(1, 0, 1);
+	for (int y = 0; y < 3; ++y)
+	{
+		std::cout << std::endl;
+		for (int x = 0; x < 3; ++x)
+		{
+			std::cout << sim2.getCell(y, x);
+		}
+	}
+	std::cout << std::endl;
+	sim2.stepForward(1);
+	
+
+	for(int y = 0; y < 3; ++y)
+	{
+		std::cout << std::endl;
+		for (int x = 0; x < 3; ++x)
+		{
+			std::cout << sim2.getCell(y, x);
+		}
+	}
+	std::cout << std::endl;
+	sim2.stepForward();
+	for (int y = 0; y < 3; ++y)
+	{
+		std::cout << std::endl;
+		for (int x = 0; x < 3; ++x)
+		{
+			std::cout << sim2.getCell(y, x);
+		}
+	}
+	std::cout << std::endl;
+	sim2.stepForward(1);
+	for (int y = 0; y < 3; ++y)
+	{
+		std::cout << std::endl;
+		for (int x = 0; x < 3; ++x)
+		{
+			std::cout << sim2.getCell(y, x);
+		}
+	}
+	std::cout << "Finished initial stuff" << std::endl;
 	RulesConway<int> rules{};
 	SegmenterStrips stripsHor{ 0 };
 	SegmenterStrips stripsVer{ 1 };

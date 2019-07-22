@@ -1,8 +1,10 @@
+#include <cuda_runtime_api.h>
+
 namespace CellularAutomata {
 	template <typename T>
 	RulesArrayConway<T>::RulesArrayConway() : live_min(2), live_max(3), birth_min(3), birth_max(3), cell_min(0), cell_max(1)
 	{
-		this->setFrameDimensions(y_dim, x_dim);
+		this->setFrameDimensions(this->y_dim, this->x_dim);
 	}
 
 	template <typename T>
@@ -32,40 +34,7 @@ namespace CellularAutomata {
 		}
 	}
 
-	template <typename T>
-	T RulesArrayConway<T>::getNextState(T* cells, int y, int x) const {
-		int count = countNeighours(cells, y, x);
-		if (cells[y*x_dim + x]) {
-			//alive
-			if (count >= live_min && count <= live_max) {
-				return 1;
-			}
-		}
-		else {
-			//dead
-			if (count >= birth_min && count <= birth_max) {
-				return 1;
-			}
-		}
-		return 0;
-	}
-
-	template <typename T>
-	int RulesArrayConway<T>::countNeighours(const T* cells, int y, int x) const {
-		int count = 0;
-		// assumed that the world will be a rectangle
-		for (int _y = y - 1; _y <= y + 1; ++_y) {
-			for (int _x = x - 1; _x <= x + 1; ++_x) {
-				if (_y == y && _x == x) {
-					continue;
-				}
-				else if (cells[(((_y + y_dim) % y_dim) * x_dim)+((_x + x_dim) % x_dim)]) {
-					count += 1;
-				}
-			}
-		}
-		return count;
-	}
+	
 
 
 	template <typename T>

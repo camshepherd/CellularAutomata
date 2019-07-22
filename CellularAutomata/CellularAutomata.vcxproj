@@ -173,6 +173,7 @@
     <ClInclude Include="ZonerRectangles.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <CudaCompile Include="RulesArrayConway.cu" />
     <CudaCompile Include="SimulatorGPU.cu" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

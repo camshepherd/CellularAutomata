@@ -1,3 +1,5 @@
+#include <cuda_runtime_api.h>
+
 namespace CellularAutomata {
 	template <typename T>
 	RulesArrayBML<T>::RulesArrayBML()
@@ -35,13 +37,13 @@ namespace CellularAutomata {
 	}
 
 	template <typename T>
-	T RulesArrayBML<T>::getNextState(T* cells, int y, int x) const {
-		switch (cells[x + y*x_dim]) {
+	__host__ __device__ T RulesArrayBML<T>::getNextState(T* cells, int y, int x) const {
+		switch (cells[x + y*this->x_dim]) {
 		case 0:
-			if (cells[(y*x_dim) + ((x - 1 + x_dim) % x_dim)] == 1) {
+			if (cells[(y*this->x_dim) + ((x - 1 + this->x_dim) % this->x_dim)] == 1) {
 				return 1;
 			}
-			else if (cells[(((y - 1 + y_dim) % y_dim) * x_dim) + x] == 2) {
+			else if (cells[(((y - 1 + this->y_dim) % this->y_dim) * this->x_dim) + x] == 2) {
 				return 2;
 			}
 			else {
@@ -49,8 +51,8 @@ namespace CellularAutomata {
 			}
 			break;
 		case 1:
-			if (cells[(y * x_dim) + ((x + 1) % x_dim)] == 0) {
-				if (cells[(((y - 1 + y_dim) % y_dim) * x_dim) + x] == 2) {
+			if (cells[(y * this->x_dim) + ((x + 1) % this->x_dim)] == 0) {
+				if (cells[(((y - 1 + this->y_dim) % this->y_dim) * this->x_dim) + x] == 2) {
 					return 2;
 				}
 				else {
@@ -62,7 +64,7 @@ namespace CellularAutomata {
 			}
 			break;
 		case 2:
-			if (cells[(((y + 1 + y_dim) % y_dim) * x_dim) + x] == 0) {
+			if (cells[(((y + 1 + this->y_dim) % this->y_dim) * this->x_dim) + x] == 0) {
 				return 0;
 			}
 			else {
