@@ -18,20 +18,20 @@ namespace CellularAutomata {
 	public:
 		/** Constructor 1. Default Constructor
 		*/
-		RulesArrayBML();
+		CUDA_FUNCTION RulesArrayBML();
 
 		/** Constructor 2. Specify the dimensions of the frames to be used
 		*/
-		RulesArrayBML(int y_dim, int x_dim);
+		CUDA_FUNCTION RulesArrayBML(int y_dim, int x_dim);
 
 		/** Destructor 1. Default destructor
 		*/
-		~RulesArrayBML();
+		CUDA_FUNCTION ~RulesArrayBML();
 
 		/** Whether the given state is valid or not
 		@param cellState: The cell state representation to be evaluated
 		*/
-		virtual bool isValid(T cellState) const override;
+		CUDA_FUNCTION virtual bool isValid(T cellState) const override;
 
 		/** Calculate the next state of the specified cell
 		@param cells: The frame in which the cell is to be evaluated
@@ -42,7 +42,7 @@ namespace CellularAutomata {
 
 		/** Get the maximum value that can be used to represent a cell's state
 		*/
-		virtual T getMaxValidState() const override;
+		CUDA_FUNCTION virtual T getMaxValidState() const override;
 		
 	};
 }

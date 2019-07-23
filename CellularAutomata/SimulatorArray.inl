@@ -1,6 +1,7 @@
+#pragma once
 namespace CellularAutomata {
 	template <typename T>
-	SimulatorArray<T>::SimulatorArray(const int y, const int x, const IRulesArray<T>& _rules) : y_dim(y), x_dim(x), rules(_rules)
+	SimulatorArray<T>::SimulatorArray(const int y, const int x, IRulesArray<T>& _rules) : y_dim(y), x_dim(x), rules(_rules)
 	{
 		// Initialise the blank cellStore
 		cellStore = std::vector<T*>();

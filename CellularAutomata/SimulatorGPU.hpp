@@ -22,7 +22,7 @@ namespace CellularAutomata {
 		@param rules: The rules to use to simulate the model
 		@param segmenter: The class to use to segment up the frame to the individual CPU threads
 		*/
-		SimulatorGPU(int ydim, int xdim, const IRulesArray<T>& rules, ISegmenter& segmenter);
+		SimulatorGPU(int ydim, int xdim, IRulesArray<T>& rules, ISegmenter& segmenter);
 
 		/** Constructor 2. Create the simulator using the injected dependencies, and specify the numbers of blocks and threads to use
 		@param ydim: The size of the simulation in the y-axis
@@ -30,7 +30,7 @@ namespace CellularAutomata {
 		@param rules: The rules to use to simulate the model
 		@param segmenter: The class to use to segment up the frame to the individual CPU threads
 		*/
-		SimulatorGPU(int ydim, int xdim, const IRulesArray<T>& rules, ISegmenter& segmenter, int nBlocks, int nThreads);
+		SimulatorGPU(int ydim, int xdim, IRulesArray<T>& rules, ISegmenter& segmenter, int nBlocks, int nThreads);
 
 		/** Destructor 1. Default destructor
 		*/

@@ -6,7 +6,7 @@
 
 namespace CellularAutomata {
 	template <typename T>
-	__device__ __host__ T RulesArrayConway<T>::getNextState(T* cells, int y, int x) const {
+	CUDA_FUNCTION T RulesArrayConway<T>::getNextState(T* cells, int y, int x) const {
 		int count = countNeighours(cells, y, x);
 		printf("Count: %d\n", count);
 		if (cells[y*this->x_dim + x]) {
@@ -26,7 +26,7 @@ namespace CellularAutomata {
 
 
 	template <typename T>
-	__device__ __host__ int RulesArrayConway<T>::countNeighours(const T* cells, int y, int x) const {
+	CUDA_FUNCTION int RulesArrayConway<T>::countNeighours(const T* cells, int y, int x) const {
 		int count = 0;
 		// assumed that the world will be a rectangle
 		for (int _y = y - 1; _y <= y + 1; ++_y) {

@@ -14,14 +14,14 @@ namespace CellularAutomata {
 		// The store of all frames in all timesteps
 		std::vector<T*> cellStore;
 		const int y_dim, x_dim;
-		const IRulesArray<T>& rules;
+		IRulesArray<T>& rules;
 	public:
 		/** Constructor 1. Construct the simulator from the given dependencies
 		@param y: Size of the simulation in the y direction
 		@param x: Size of the simulation in the x direction
 		@param rules: The rules to govern the simulation
 		*/
-		SimulatorArray(const int y, const int x, const IRulesArray<T>& rules);
+		SimulatorArray(const int y, const int x, IRulesArray<T>& rules);
 
 
 		/** Destructor 1. Default destructor

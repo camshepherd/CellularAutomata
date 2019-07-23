@@ -24,23 +24,23 @@ bool initialiseFrame(ISimulator<int>& sim, float density) {
 	return true;
 }
 
-
+// TODO: add frame initialisation for ISimulatorArrays.
 
 int main() {
 	std::cout << "The system compiles!" << std::endl;
 
-	int ydim = 800, xdim = 800;
+	int ydim = 100, xdim = 100;
 
 	RulesArrayConway<int> con2{};
 	SegmenterStrips seg2{};
 	
 	
-	SimulatorGPU<int> sim2{ ydim, xdim,con2,seg2 };
-	sim2.setLaunchParams(2, 32);
-	for(int y = 0; y < 2; ++y)
+	SimulatorGPU<int> sim2{ 3,3,con2,seg2 };
+	sim2.setLaunchParams(2, 2);
+	for(int y = 0; y < 3; ++y)
 	{
 		std::cout << std::endl;
-		for(int x = 0; x < 2; ++x)
+		for(int x = 0; x < 3; ++x)
 		{
 			sim2.setCell(y, x, 0);
 		}
@@ -51,6 +51,7 @@ int main() {
 	sim2.setCell(1, 1, 1);
 	sim2.setCell(0, 1, 1);
 	sim2.setCell(1, 0, 1);
+	std::cout << "\nPrint out frame" << std::endl;
 	for (int y = 0; y < 3; ++y)
 	{
 		std::cout << std::endl;
@@ -62,7 +63,7 @@ int main() {
 	std::cout << std::endl;
 	sim2.stepForward(1);
 	
-
+	std::cout << "\nPrinting stored frame in the simulator" << std::endl;
 	for(int y = 0; y < 3; ++y)
 	{
 		std::cout << std::endl;
@@ -72,7 +73,10 @@ int main() {
 		}
 	}
 	std::cout << std::endl;
+	getchar();
+
 	sim2.stepForward();
+	
 	for (int y = 0; y < 3; ++y)
 	{
 		std::cout << std::endl;

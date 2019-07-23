@@ -20,6 +20,10 @@ namespace CellularAutomata {
 		else if (orientation == 1) {
 			partitionSize = x_dim / numSegments;
 		}
+		else
+		{
+			throw std::runtime_error("Invalid orientation encountered");
+		}
 		excess = orientation ? x_dim % numSegments : y_dim % numSegments;
 
 		for (int k = 0; k < numSegments; ++k) {
@@ -35,11 +39,9 @@ namespace CellularAutomata {
 	}
 
 	int* SegmenterStrips::segmentToArray(int y_dim, int x_dim, int numSegments) const {
-		int* partitions = static_cast<int*>(malloc(sizeof(int) * (numSegments * 4 + 2)));
+		int* partitions = static_cast<int*>(malloc(sizeof(int) * (numSegments * 4)));
+		bool ended = false;
 		// store in the array the dimensions of it
-		partitions[0] = numSegments;
-		partitions[1] = y_dim;
-		partitions[2] = x_dim;
 		int partitionSize, excess;
 		if (orientation == 0) {
 			partitionSize = y_dim / numSegments; // implicit cast to integer just throws away data after the decimal point
@@ -54,10 +56,20 @@ namespace CellularAutomata {
 		excess = orientation ? x_dim % numSegments : y_dim % numSegments;
 
 		for (int k = 0; k < numSegments; ++k) {
-			partitions[k*4 + 3] = orientation ? 0 : k * partitionSize + (k < excess ? k : excess);
-			partitions[k*4 + 4] = orientation ? y_dim - 1 : ((k + 1) * partitionSize) - 1 + (k < excess ? k + 1 : excess);
-			partitions[k*4 + 5] = orientation ? k * partitionSize + (k < excess ? k : excess) : 0;
-			partitions[k*4 + 6] = orientation ? ((k + 1) * partitionSize) - 1 + (k < excess ? k + 1 : excess) : x_dim - 1;
+			partitions[k*4] = orientation ? 0 : k * partitionSize + (k < excess ? k : excess);
+			partitions[k*4 + 1] = orientation ? y_dim - 1 : ((k + 1) * partitionSize) - 1 + (k < excess ? k + 1 : excess);
+			partitions[k*4 + 2] = orientation ? k * partitionSize + (k < excess ? k : excess) : 0;
+			partitions[k*4 + 3] = orientation ? ((k + 1) * partitionSize) - 1 + (k < excess ? k + 1 : excess) : x_dim - 1;
+
+			if(ended || partitions[k*4] == partitions[(k-1) * 4])
+			{
+				ended = true;
+				// if it is not feasible to use all segments, then end
+				partitions[k * 4] = -1;
+				partitions[k * 4 + 1] = -1;
+				partitions[k * 4 + 2] = -1;
+				partitions[k * 4 + 3] = -1;
+			}
 		}
 
 		printf("Segmenter: \n");
@@ -65,7 +77,7 @@ namespace CellularAutomata {
 		{
 			for(int n = 0; n < 4; ++n)
 			{
-				printf("%d,", partitions[3 + m + n]);
+				printf("%d,", partitions[m + n]);
 			}
 		}
 

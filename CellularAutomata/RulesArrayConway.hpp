@@ -26,15 +26,16 @@ namespace CellularAutomata {
 		*/
 		CUDA_FUNCTION int countNeighours(const T* cells, int y, int x) const;
 	public:
+		int k = 1;
 		/** Constructor 1. Default constructor - uses Conway's own parameters for the model. Defaults to 3x3 frame
 		*/
-		RulesArrayConway();
+		CUDA_FUNCTION RulesArrayConway();
 
 		/** Constructor 2. Only specify the size of the frames
 		@param y_dim: The size of the frame in the y direction
 		@param x_dim: The size of the frame in the x direction
 		*/
-		RulesArrayConway(int y_dim, int x_dim);
+		CUDA_FUNCTION RulesArrayConway(int y_dim, int x_dim);
 
 		/** Constructor 3. Explicit declarations of the states of the birth and death values
 		@param live_min: The minimum number of neighbours with which a cell will remain alive
@@ -44,16 +45,16 @@ namespace CellularAutomata {
 		@param y_dim: The size of the frame in the y direction
 		@param x_dim: The size of the frame in the x direction
 		*/
-		RulesArrayConway(int live_min, int live_max, int birth_min, int birth_max, int cell_min, int cell_max, int y_dim, int x_dim);
+		CUDA_FUNCTION RulesArrayConway(int live_min, int live_max, int birth_min, int birth_max, int cell_min, int cell_max, int y_dim, int x_dim);
 
 		/** Destructor 1. Default destructor
 		*/
-		~RulesArrayConway();
+		CUDA_FUNCTION ~RulesArrayConway();
 
 		/** Whether the given cell state is valid in the model
 		@param cellState: The cell state to be evaluated
 		*/
-		virtual bool isValid(T cellState) const override;
+		CUDA_FUNCTION virtual bool isValid(T cellState) const override;
 
 		/** Calculate the next state for the specified cell
 		@param cells: The frame in which the cell is to be evaluated
@@ -64,7 +65,7 @@ namespace CellularAutomata {
 
 		/** Get the maximum value that can be used to represent a state in the model
 		*/
-		virtual T getMaxValidState() const override;
+		CUDA_FUNCTION virtual T getMaxValidState() const override;
 
 	};
 }

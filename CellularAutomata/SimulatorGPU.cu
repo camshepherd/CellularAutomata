@@ -7,28 +7,72 @@
 #include "helper_cuda.h"
 #include <cuda_runtime_api.h>
 
+#define Y_DIM context[0]
+#define X_DIM context[1]
+#define NUM_SEGMENTS context[2]
+
+
 namespace CellularAutomata {
 
 	template <typename T>
-	__global__ void stepForwardRegion(T* A, T* B, int* regions, const RulesArrayConway<T>* rules) {
-		int y_dim = A[1];
-		int x_dim = A[2];
-		int tid = threadIdx.x + blockDim.x * blockIdx.x;
-		for (int y = regions[tid * 4 + 2]; y < regions[tid * 4 + 3]; ++y) {
-			for (int x = regions[tid * 4 + 4]; x < regions[tid * 4 + 5]; ++x) {
-				//B[x + y * x_dim] = rules->l;
-				B[x + y * x_dim] = rules->getNextState(A, y, x);
-				if(B[x+y*x_dim] == 1)
+	SimulatorGPU<T>::~SimulatorGPU()
+	{
+		checkCudaErrors(cudaDeviceReset());
+	}
+
+	template <typename T>
+	__global__ void constructConway(RulesArrayConway<T>* dest, int* args)
+	{
+		new (dest) RulesArrayConway<T>(args[0], args[1]);
+	}
+
+	template <typename T>
+	__global__ void stepForwardRegion(T* A, T* B, int* regions, int* context, RulesArrayConway<T>* rules) {
+		printf("\nStarting kernel");
+		printf("numSegments: %d", NUM_SEGMENTS);
+
+		
+		// context: y_dim, x_dim, numSegments
+		const int tid = threadIdx.x + blockDim.x * blockIdx.x;
+
+		//print out segments
+		if (tid == 0) {
+			printf("Printing A:\n");
+			for (int u = 0; u < Y_DIM * X_DIM; ++u)
+			{
+				printf("\n%d: %d", u, A[u]);
+			}
+		}
+		if(tid >= NUM_SEGMENTS)
+		{
+			printf("Returning %d", tid);
+			// if there isn't the data for the thread to read, end
+			return;
+		}
+		for (int y = regions[tid * 4]; y <= regions[tid * 4 + 1]; ++y) {
+			for (int x = regions[tid * 4 + 2]; x <= regions[tid * 4 + 3]; ++x) {
+				printf("STUFF");
+				if(y == -1 && x == -1)
+				{
+					return;
+				}
+				//B[x + y * X_DIM] = rules->k;
+				rules->getNextState(A, y, x);
+				return;
+				printf("\nPrinting to %d, %d", y, x);
+				B[x + y * X_DIM] = 1;
+				//B[x + y * X_DIM] = rules->getNextState(A, y, x);
+				if(B[x+y*X_DIM] == 1)
 				{
 					printf("****Found one!******");
+					printf("%d", B[x + y * X_DIM]);
 				}
-				printf("%d",B[x + y * x_dim]);
 			}
 		}
 	}
 
 	template <typename T>
-	__global__ void stepForwardRegion(T* A, T* B, int* regions, const RulesArrayBML<T>* rules) {
+	__global__ void stepForwardRegion(T* A, T* B, int* regions, int* context, RulesArrayBML<T>* rules) {
 		int y_dim = A[0];
 		int x_dim = A[1];
 		int tid = threadIdx.x + blockDim.x * blockIdx.x;
@@ -43,45 +87,91 @@ namespace CellularAutomata {
 
 	template <typename T>
 	double SimulatorGPU<T>::stepForward(int steps) {
+		const int orientation = 1;
+		int numSegments = this->nBlocks * this->nThreads;
+		printf("\nnBlocks: %d, nThreads: %d", this->nBlocks, this->nThreads);
+		//int numSegments = std::min<int>(this->nBlocks * this->nThreads, orientation ? x_dim : y_dim);
 		this->timer.reset();
-		T *currFrame, *newFrame;
+		T *h_currFrame, *h_newFrame, *d_currFrame, *d_newFrame;
+		int *h_segments, *d_segments;
+		int *h_context = static_cast<int*>(malloc(sizeof(int) * 3));
+		int *d_context;
 		int frameSize = this->x_dim * this->y_dim;
+
+		h_segments = this->segmenter.segmentToArray(this->y_dim, this->x_dim, numSegments);
+
 		
 
-		checkCudaErrors(cudaMallocManaged(&currFrame, sizeof(T) * frameSize + 2));
-		checkCudaErrors(cudaMallocManaged(&newFrame, sizeof(T) * frameSize + 2));
 
-		currFrame = this->cellStore.back();
-		this->blankFrame();
-		newFrame = this->cellStore.back();
+		h_context[0] = this->y_dim;
+		h_context[1] = this->x_dim;
+		h_context[2] = numSegments;
 
-		int* segments, *tempSegments;
-		tempSegments = this->segmenter.segmentToArray(this->y_dim, this->x_dim, this->nBlocks * this->nThreads);
-		checkCudaErrors(cudaMallocManaged(&segments, sizeof(int) * 4 * tempSegments[0] + 3));
-		segments = tempSegments;
+		// allocate host memory
+		h_currFrame = this->cellStore.back();
+		// no need to set h_currFrame explicitly after the first run
 
-		std::cout << std::endl;
-		const RulesArrayConway<T>* con = dynamic_cast<const RulesArrayConway<T>*>(&(this->rules));
-		const RulesArrayBML<T>* bml = dynamic_cast<const RulesArrayBML<T>*>(&(this->rules));
-		if(con != nullptr)
+		// allocate the device memory
+		checkCudaErrors(cudaMalloc(&d_currFrame, sizeof(T) * frameSize));
+		checkCudaErrors(cudaMalloc(&d_newFrame, sizeof(T) * frameSize));
+		checkCudaErrors(cudaMalloc(&d_segments, sizeof(int) * 4 * numSegments));
+		checkCudaErrors(cudaMalloc(&d_context, sizeof(int) * 3));
+
+
+		checkCudaErrors(cudaMemcpy(d_currFrame, h_currFrame, sizeof(T) * frameSize, cudaMemcpyHostToDevice));
+
+		checkCudaErrors(cudaMemcpy(d_context, h_context, sizeof(int) * 3, cudaMemcpyHostToDevice));
+		
+		printf("\nHOST\n");
+		for (int u = 0; u < numSegments * 4; ++u)
 		{
-			checkCudaErrors(cudaMallocManaged(&con, sizeof(RulesArrayConway<T>)));
-			con = dynamic_cast<const RulesArrayConway<T>*>(&(this->rules));
-			stepForwardRegion<int> << <nBlocks, nThreads >> > (currFrame, newFrame, segments, con);
+			printf("\n%d: %d", u, h_segments[u]);
 		}
-		else if(bml != nullptr)
+		
+		checkCudaErrors(cudaMemcpy(d_segments, h_segments, sizeof(int) * 4 * numSegments, cudaMemcpyHostToDevice));
+
+		RulesArrayConway<T>* h_con = dynamic_cast<RulesArrayConway<T>*>(&(this->rules));
+		RulesArrayBML<T>* h_bml = dynamic_cast<RulesArrayBML<T>*>(&(this->rules));
+
+		int* h_dimensions = static_cast<int*>(malloc(sizeof(int) * 2));
+		h_dimensions[0] = this->x_dim;
+		h_dimensions[1] = this->y_dim;
+		int* d_dimensions = static_cast<int*>(malloc(sizeof(int) * 2));
+		cudaMemcpy(d_dimensions, h_dimensions, sizeof(int) * 2, cudaMemcpyHostToDevice);
+
+		if (h_con != nullptr)
 		{
-			checkCudaErrors(cudaMallocManaged(&bml, sizeof(RulesArrayBML<T>)));
-			bml = dynamic_cast<const RulesArrayBML<T>*>(&(this->rules));
-			stepForwardRegion<int> << <nBlocks, nThreads >> > (currFrame, newFrame, segments, bml);
+			printf("\nCreating Conway ruleset");
+			printf("\nSize of conway ruleset: %llu\n", sizeof(RulesArrayConway<T>));
+			RulesArrayConway<T>* d_con;
+			checkCudaErrors(cudaMalloc(&d_con, sizeof(RulesArrayConway<T>)));
+			constructConway<T><<<1,1>>>(d_con, d_dimensions);
+			printf("\nAllocated memory for ruleset");
+			printf("Copied across ruleset");
+			for (int step = 0; step < steps; ++step)
+			{
+				this->blankFrame();
+				h_newFrame = this->cellStore.back();
+				//no need to copy the new frame to the device, as every value will be replaced during the step process
+				//checkCudaErrors(cudaMemcpy(d_newFrame, h_newFrame, sizeof(T) * frameSize, cudaMemcpyHostToDevice));
+				stepForwardRegion<int> << <nBlocks, nThreads >> > (d_currFrame, d_newFrame, d_segments, d_context, d_con);
+				// copy back the data 
+				cudaMemcpy(h_newFrame, d_newFrame, sizeof(T) * frameSize, cudaMemcpyDeviceToHost);
+
+				// swap the pointers, ready for next iteration
+				T *temp = d_currFrame;
+				d_currFrame = d_newFrame;
+				d_newFrame = temp;
+			}
+			
 		}
-		checkCudaErrors(cudaDeviceSynchronize());
-		checkCudaErrors(cudaFree(newFrame));
-		checkCudaErrors(cudaFree(currFrame));
-		checkCudaErrors(cudaFree(segments));
-		//checkCudaErrors(cudaFree(con));
-		//checkCudaErrors(cudaFree(bml));
-		checkCudaErrors(cudaDeviceReset()),stderr;
+
+		checkCudaErrors(cudaFree(d_currFrame));
+		checkCudaErrors(cudaFree(d_newFrame));
+		checkCudaErrors(cudaFree(d_context));
+		checkCudaErrors(cudaFree(d_segments));
+
+		//checkCudaErrors(cudaDeviceReset());
 		double elapsed = this->timer.elapsed();
 		this->elapsedTime += elapsed;
 		return elapsed;

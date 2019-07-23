@@ -2,24 +2,24 @@
 
 namespace CellularAutomata {
 	template <typename T>
-	RulesArrayBML<T>::RulesArrayBML()
+	CUDA_FUNCTION RulesArrayBML<T>::RulesArrayBML()
 	{
 		// make sure that the frame dimensions are valid
 		this->setFrameDimensions(3, 3);
 	}
 
 	template <typename T>
-	RulesArrayBML<T>::RulesArrayBML(int y_dim, int x_dim) : RulesArrayBML<T>::RulesArrayBML(){
+	CUDA_FUNCTION RulesArrayBML<T>::RulesArrayBML(int y_dim, int x_dim) : RulesArrayBML<T>::RulesArrayBML(){
 		this->setFrameDimensions(y_dim, x_dim);
 	}
 
 	template <typename T>
-	RulesArrayBML<T>::~RulesArrayBML()
+	CUDA_FUNCTION RulesArrayBML<T>::~RulesArrayBML()
 	{
 	}
 
 	template <typename T>
-	bool RulesArrayBML<T>::isValid(T cellState) const {
+	CUDA_FUNCTION bool RulesArrayBML<T>::isValid(T cellState) const {
 		switch (cellState) {
 		case 0:
 			return true;
@@ -37,7 +37,7 @@ namespace CellularAutomata {
 	}
 
 	template <typename T>
-	__host__ __device__ T RulesArrayBML<T>::getNextState(T* cells, int y, int x) const {
+	CUDA_FUNCTION T RulesArrayBML<T>::getNextState(T* cells, int y, int x) const {
 		switch (cells[x + y*this->x_dim]) {
 		case 0:
 			if (cells[(y*this->x_dim) + ((x - 1 + this->x_dim) % this->x_dim)] == 1) {
@@ -77,7 +77,7 @@ namespace CellularAutomata {
 	}
 
 	template <typename T>
-	T RulesArrayBML<T>::getMaxValidState() const {
+	CUDA_FUNCTION T RulesArrayBML<T>::getMaxValidState() const {
 		return 2;
 	}
 
