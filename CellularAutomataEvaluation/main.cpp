@@ -5,6 +5,7 @@
 #include <fstream>
 #include "RulesArrayConway.hpp"
 #include "SimulatorGPU.hpp"
+#include "RulesArrayBML.hpp"
 
 using namespace CellularAutomata;
 
@@ -92,6 +93,35 @@ int main() {
 			std::cout << sim2.getCell(y, x);
 		}
 	}
+
+	RulesArrayBML<int> bml3{ 20,20 };
+	SimulatorGPU<int> sim3{ 20,20,bml3,seg2,2,32 };
+	
+	sim3.setCell(0, 0,1);
+	sim3.setCell(0, 1, 1);
+	sim3.setCell(4, 7, 2);
+	
+	int count = 0;
+	std::string input = "";
+	while(input != "end")
+	{
+		std::cout << "Input = " << input << std::endl;
+		std::getline(std::cin, input);
+		
+		++count;
+		sim3.stepForward();
+		std::cout << "Output frame" << count << ": " << std::endl;
+		for (int y = 0; y < 20; ++y)
+		{
+			for (int x = 0; x < 20; ++x)
+			{
+				std::cout << sim3.getCell(y, x) << ",";
+			}
+			std::cout << std::endl;
+		}
+
+	}
+	
 	std::cout << "Finished initial stuff" << std::endl;
 	RulesConway<int> rules{};
 	SegmenterStrips stripsHor{ 0 };

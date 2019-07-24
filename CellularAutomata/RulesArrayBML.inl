@@ -71,8 +71,6 @@ namespace CellularAutomata {
 				return 0;
 			}
 			break;
-		default:
-			throw std::runtime_error("An invalid state got into the cell store");
 		};
 	}
 

@@ -14,46 +14,7 @@
 
 namespace CellularAutomata {
 
-	template <typename T>
-	CUDA_FUNCTION T RulesArrayConway<T>::getNextState(T* cells, int y, int x) const {
-		int count = countNeighours(cells, y, x);
-		printf("Count: %d\n", count);
-		if (cells[y*this->x_dim + x]) {
-			//alive
-			if (count >= live_min && count <= live_max) {
-				return 1;
-			}
-		}
-		else {
-			//dead
-			if (count >= birth_min && count <= birth_max) {
-				return 1;
-			}
-		}
-		return 0;
-	}
-
-
-	template <typename T>
-	CUDA_FUNCTION int RulesArrayConway<T>::countNeighours(T* cells, int y, int x) const {
-		int count = 0;
-		// assumed that the world will be a rectangle
-		for (int _y = y - 1; _y <= y + 1; ++_y) {
-			for (int _x = x - 1; _x <= x + 1; ++_x) {
-				if (_y == y && _x == x) {
-					continue;
-				}
-				else if (cells[(((_y + this->y_dim) % this->y_dim) * this->x_dim) + ((_x + this->x_dim) % this->x_dim)]) {
-					count += 1;
-				}
-			}
-		}
-		return count;
-	}
-
-
-	template class RulesArrayConway<int>;
-	template class RulesArrayConway<bool>;
+	
 
 
 
@@ -74,6 +35,17 @@ namespace CellularAutomata {
 		new (dest) RulesArrayConway<T>(args[0],args[1]);
 	}
 
+	/** Construct an instance of RulesArrayBML on the device
+		@param dest: Destination address for the ruleset. Must already be (cuda)Malloced
+		@param args: 2-element array containing: [y_dim, x_dim] of the frames to be simulated
+	 */
+	template <typename T>
+	__global__ void constructBML(RulesArrayBML<T>* dest, int* args)
+	{
+		printf("\nydim: %d, xdIM: %d\n", args[0], args[1]);
+		new (dest) RulesArrayBML<T>(args[0], args[1]);
+	}
+
 	/** Step forward the given region, using the given ruleset
 		@param A: The previous frame of the simulation
 		@param B: The frame to be simulated from A
@@ -82,7 +54,7 @@ namespace CellularAutomata {
 		@param rules: The ruleset to be used to step forward through the given simulation
 	 */
 	template <typename T>
-	__global__ void stepForwardRegion(T* A, T* B, int* regions, int* context, RulesArrayConway<T>* rules) {
+	__global__ void stepForwardRegion(T* A, T* B, int* regions, int* context, IRulesArray<T>* rules) {
 		// context: y_dim, x_dim, numSegments
 		const int tid = threadIdx.x + blockDim.x * blockIdx.x;
 
@@ -94,27 +66,6 @@ namespace CellularAutomata {
 		for (int y = regions[tid * 4]; y <= regions[tid * 4 + 1]; ++y) {
 			for (int x = regions[tid * 4 + 2]; x <= regions[tid * 4 + 3]; ++x) {
 				if(y == -1 && x == -1)
-				{
-					return;
-				}
-				B[x + y * X_DIM] = rules->getNextState(A, y, x);
-			}
-		}
-	}
-
-	template <typename T>
-	__global__ void stepForwardRegion(T* A, T* B, int* regions, int* context, RulesArrayBML<T>* rules) {
-		// context: y_dim, x_dim, numSegments
-		const int tid = threadIdx.x + blockDim.x * blockIdx.x;
-
-		if (tid >= NUM_SEGMENTS)
-		{
-			// if there isn't the data for the thread to read, end
-			return;
-		}
-		for (int y = regions[tid * 4]; y <= regions[tid * 4 + 1]; ++y) {
-			for (int x = regions[tid * 4 + 2]; x <= regions[tid * 4 + 3]; ++x) {
-				if (y == -1 && x == -1)
 				{
 					return;
 				}
@@ -185,6 +136,31 @@ namespace CellularAutomata {
 			}
 			// Free up the space used by the ruleset
 			checkCudaErrors(cudaFree(d_con));
+		}
+		else if((h_bml != nullptr))
+		{
+			// Rules type is Conway
+			// Get the rules set up on the device
+			RulesArrayBML<T>* d_bml;
+			checkCudaErrors(cudaMalloc(&d_bml, sizeof(RulesArrayBML<T>) * 2));
+			constructBML<T> << <1, 1 >> > (d_bml, d_dimensions);
+
+			for (int step = 0; step < steps; ++step)
+			{
+				this->blankFrame();
+				h_newFrame = this->cellStore.back();
+				//no need to copy the new frame to the device, as every cell's value will be assigned to during the step process
+				stepForwardRegion<int> << <nBlocks, nThreads >> > (d_currFrame, d_newFrame, d_segments, d_context, d_bml);
+				// copy back the data 
+				cudaMemcpy(h_newFrame, d_newFrame, sizeof(T) * frameSize, cudaMemcpyDeviceToHost);
+
+				// swap the pointers, ready for the next iteration
+				T *temp = d_currFrame;
+				d_currFrame = d_newFrame;
+				d_newFrame = temp;
+			}
+			// Free up the space used by the ruleset
+			checkCudaErrors(cudaFree(d_bml));
 		}
 
 		// Free up all the space used by the function call
