@@ -35,7 +35,7 @@ namespace CellularAutomata {
 
 
 	template <typename T>
-	CUDA_FUNCTION int RulesArrayConway<T>::countNeighours(const T* cells, int y, int x) const {
+	CUDA_FUNCTION int RulesArrayConway<T>::countNeighours(T* cells, int y, int x) const {
 		int count = 0;
 		// assumed that the world will be a rectangle
 		for (int _y = y - 1; _y <= y + 1; ++_y) {
@@ -43,9 +43,15 @@ namespace CellularAutomata {
 				if (_y == y && _x == x) {
 					continue;
 				}
-				else if (cells[(((_y + this->y_dim) % this->y_dim) * this->x_dim) + ((_x + this->x_dim) % this->x_dim) + 2]) {
-					count += 1;
+				else
+				{
+					int pos = (((_y + this->y_dim) % this->y_dim) * this->x_dim) + ((_x + this->x_dim) % this->x_dim);
+					printf("Attempting to access position %d",pos) ;
+					if (cells[(((_y + this->y_dim) % this->y_dim) * this->x_dim) + ((_x + this->x_dim) % this->x_dim)]) {
+						count += 1;
+					}
 				}
+				
 			}
 		}
 		printf("Countt: %d", count);
@@ -68,8 +74,8 @@ namespace CellularAutomata {
 	template <typename T>
 	__global__ void constructConway(RulesArrayConway<T>* dest, int* args)
 	{
-		//printf("\nydim: %d, xdIM: %d\n", args[0], args[1]);
-		new (dest) RulesArrayConway<T>();
+		printf("\nydim: %d, xdIM: %d\n", args[0], args[1]);
+		new (dest) RulesArrayConway<T>(args[0],args[1]);
 	}
 
 	template <typename T>
@@ -104,10 +110,9 @@ namespace CellularAutomata {
 				}
 				//B[x + y * X_DIM] = rules->k;
 				//rules->getNextState(A, y, x);
-				return;
 				printf("\nPrinting to %d, %d", y, x);
-				B[x + y * X_DIM] = 1;
-				//B[x + y * X_DIM] = rules->getNextState(A, y, x);
+				//B[x + y * X_DIM] = 1;
+				B[x + y * X_DIM] = rules->getNextState(A, y, x);
 				if(B[x+y*X_DIM] == 1)
 				{
 					printf("****Found one!******");

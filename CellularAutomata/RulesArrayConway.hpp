@@ -24,7 +24,7 @@ namespace CellularAutomata {
 		@param y: The y-coordinate of the target cell
 		@param x: The x-coordinate of the target cell
 		*/
-		CUDA_FUNCTION int countNeighours(const T* cells, int y, int x) const;
+		CUDA_FUNCTION int countNeighours(T* cells, int y, int x) const;
 	public:
 		int k = 1;
 		/** Constructor 1. Default constructor - uses Conway's own parameters for the model. Defaults to 3x3 frame
