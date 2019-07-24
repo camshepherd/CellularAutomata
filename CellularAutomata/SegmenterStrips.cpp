@@ -61,7 +61,7 @@ namespace CellularAutomata {
 			partitions[k*4 + 2] = orientation ? k * partitionSize + (k < excess ? k : excess) : 0;
 			partitions[k*4 + 3] = orientation ? ((k + 1) * partitionSize) - 1 + (k < excess ? k + 1 : excess) : x_dim - 1;
 
-			if(ended || partitions[k*4] == partitions[(k-1) * 4])
+			if(ended || (partitions[k*4] == partitions[(k-1) * 4] && partitions[k*4 + 2] == partitions[(k-1)*4 + 2]))
 			{
 				ended = true;
 				// if it is not feasible to use all segments, then end
