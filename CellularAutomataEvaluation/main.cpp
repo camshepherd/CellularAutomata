@@ -48,9 +48,6 @@ int main() {
 	sim2.setCell(2, 2, 1);
 	sim2.setCell(2, 1, 1);
 	sim2.setCell(1, 2, 1);
-	sim2.setCell(1, 1, 1);
-	sim2.setCell(0, 1, 1);
-	sim2.setCell(1, 0, 1);
 	std::cout << "\nPrint out frame" << std::endl;
 	for (int y = 0; y < 3; ++y)
 	{
