@@ -109,7 +109,7 @@ int main() {
 		std::getline(std::cin, input);
 		
 		++count;
-		sim3.stepForward();
+		sim3.stepForward(5);
 		std::cout << "Output frame" << count << ": " << std::endl;
 		for (int y = 0; y < 20; ++y)
 		{
@@ -119,7 +119,6 @@ int main() {
 			}
 			std::cout << std::endl;
 		}
-
 	}
 	
 	std::cout << "Finished initial stuff" << std::endl;
