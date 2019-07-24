@@ -14,10 +14,6 @@
 
 namespace CellularAutomata {
 
-	
-
-
-
 	template <typename T>
 	SimulatorGPU<T>::~SimulatorGPU()
 	{
@@ -26,25 +22,21 @@ namespace CellularAutomata {
 
 	/** Construct an instance of RulesArrayConway on the device
 		@param dest: Destination address for the ruleset. Must already be (cuda)Malloced
-		@param args: 2-element array containing: [y_dim, x_dim] of the frames to be simulated
+		@param args: 3-element array containing: [y_dim, x_dim, Ruleset type] of the frames to be simulated
 	 */
 	template <typename T>
-	__global__ void constructConway(RulesArrayConway<T>* dest, int* args)
+	__global__ void constructRuleset(IRulesArray<T>* dest, int* args)
 	{
-		printf("\nydim: %d, xdIM: %d\n", args[0], args[1]);
-		new (dest) RulesArrayConway<T>(args[0],args[1]);
+		switch(args[2])
+		{
+		case 0:
+			new (dest) RulesArrayConway<T>(args[0], args[1]);
+		case 1:
+			new (dest) RulesArrayBML<T>(args[0], args[1]);
+		}
+		
 	}
 
-	/** Construct an instance of RulesArrayBML on the device
-		@param dest: Destination address for the ruleset. Must already be (cuda)Malloced
-		@param args: 2-element array containing: [y_dim, x_dim] of the frames to be simulated
-	 */
-	template <typename T>
-	__global__ void constructBML(RulesArrayBML<T>* dest, int* args)
-	{
-		printf("\nydim: %d, xdIM: %d\n", args[0], args[1]);
-		new (dest) RulesArrayBML<T>(args[0], args[1]);
-	}
 
 	/** Step forward the given region, using the given ruleset
 		@param A: The previous frame of the simulation
@@ -96,18 +88,19 @@ namespace CellularAutomata {
 		h_dimensions = static_cast<int*>(malloc(sizeof(int) * 2));
 		h_dimensions[0] = this->x_dim;
 		h_dimensions[1] = this->y_dim;
+		h_dimensions[2] = 0;
 		// allocate the device memory
 		checkCudaErrors(cudaMalloc(&d_currFrame, sizeof(T) * frameSize));
 		checkCudaErrors(cudaMalloc(&d_newFrame, sizeof(T) * frameSize));
 		checkCudaErrors(cudaMalloc(&d_segments, sizeof(int) * 4 * numSegments));
 		checkCudaErrors(cudaMalloc(&d_context, sizeof(int) * 3));
-		checkCudaErrors(cudaMalloc(&d_dimensions, sizeof(int) * 2));
+		checkCudaErrors(cudaMalloc(&d_dimensions, sizeof(int) * 3));
 		
 		// copy over data to the device
 		checkCudaErrors(cudaMemcpy(d_currFrame, h_currFrame, sizeof(T) * frameSize, cudaMemcpyHostToDevice));
 		checkCudaErrors(cudaMemcpy(d_context, h_context, sizeof(int) * 3, cudaMemcpyHostToDevice));
 		checkCudaErrors(cudaMemcpy(d_segments, h_segments, sizeof(int) * 4 * numSegments, cudaMemcpyHostToDevice));
-		cudaMemcpy(d_dimensions, h_dimensions, sizeof(int) * 2, cudaMemcpyHostToDevice);
+		
 		// Get the ruleset 
 		RulesArrayConway<T>* h_con = dynamic_cast<RulesArrayConway<T>*>(&(this->rules));
 		RulesArrayBML<T>* h_bml = dynamic_cast<RulesArrayBML<T>*>(&(this->rules));
@@ -115,10 +108,12 @@ namespace CellularAutomata {
 		if (h_con != nullptr)
 		{
 			// Rules type is Conway
+			h_dimensions = 0;
+			cudaMemcpy(d_dimensions, h_dimensions, sizeof(int) * 3, cudaMemcpyHostToDevice);
 			// Get the rules set up on the device
 			RulesArrayConway<T>* d_con;
 			checkCudaErrors(cudaMalloc(&d_con, sizeof(RulesArrayConway<T>) * 2));
-			constructConway<T><<<1,1>>>(d_con, d_dimensions);
+			constructRuleset<T><<<1,1>>>(d_con, d_dimensions);
 			
 			for (int step = 0; step < steps; ++step)
 			{
@@ -139,11 +134,13 @@ namespace CellularAutomata {
 		}
 		else if((h_bml != nullptr))
 		{
-			// Rules type is Conway
+			// Rules type is BML
+			h_dimensions[2] = 1;
+			cudaMemcpy(d_dimensions, h_dimensions, sizeof(int) * 3, cudaMemcpyHostToDevice);
 			// Get the rules set up on the device
 			RulesArrayBML<T>* d_bml;
 			checkCudaErrors(cudaMalloc(&d_bml, sizeof(RulesArrayBML<T>) * 2));
-			constructBML<T> << <1, 1 >> > (d_bml, d_dimensions);
+			constructRuleset<T> << <1, 1 >> > (d_bml, d_dimensions);
 
 			for (int step = 0; step < steps; ++step)
 			{
