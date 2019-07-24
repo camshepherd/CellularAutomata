@@ -15,6 +15,51 @@
 namespace CellularAutomata {
 
 	template <typename T>
+	CUDA_FUNCTION T RulesArrayConway<T>::getNextState(T* cells, int y, int x) const {
+		int count = countNeighours(cells, y, x);
+		printf("Count: %d\n", count);
+		if (cells[y*this->x_dim + x]) {
+			//alive
+			if (count >= live_min && count <= live_max) {
+				return 1;
+			}
+		}
+		else {
+			//dead
+			if (count >= birth_min && count <= birth_max) {
+				return 1;
+			}
+		}
+		return 0;
+	}
+
+
+	template <typename T>
+	CUDA_FUNCTION int RulesArrayConway<T>::countNeighours(const T* cells, int y, int x) const {
+		int count = 0;
+		// assumed that the world will be a rectangle
+		for (int _y = y - 1; _y <= y + 1; ++_y) {
+			for (int _x = x - 1; _x <= x + 1; ++_x) {
+				if (_y == y && _x == x) {
+					continue;
+				}
+				else if (cells[(((_y + this->y_dim) % this->y_dim) * this->x_dim) + ((_x + this->x_dim) % this->x_dim) + 2]) {
+					count += 1;
+				}
+			}
+		}
+		printf("Countt: %d", count);
+		// TODO: REMOVE HARD CODING
+		return count;
+	}
+
+
+	template class RulesArrayConway<int>;
+	template class RulesArrayConway<bool>;
+
+
+
+	template <typename T>
 	SimulatorGPU<T>::~SimulatorGPU()
 	{
 		checkCudaErrors(cudaDeviceReset());
@@ -23,7 +68,8 @@ namespace CellularAutomata {
 	template <typename T>
 	__global__ void constructConway(RulesArrayConway<T>* dest, int* args)
 	{
-		new (dest) RulesArrayConway<T>(args[0], args[1]);
+		//printf("\nydim: %d, xdIM: %d\n", args[0], args[1]);
+		new (dest) RulesArrayConway<T>();
 	}
 
 	template <typename T>
@@ -57,7 +103,7 @@ namespace CellularAutomata {
 					return;
 				}
 				//B[x + y * X_DIM] = rules->k;
-				rules->getNextState(A, y, x);
+				//rules->getNextState(A, y, x);
 				return;
 				printf("\nPrinting to %d, %d", y, x);
 				B[x + y * X_DIM] = 1;
@@ -79,7 +125,7 @@ namespace CellularAutomata {
 		for (int y = regions[tid * 4]; y < regions[tid * 4 + 1]; ++y) {
 			for (int x = regions[tid * 4 + 2]; x < regions[tid * 4 + 3]; ++x) {
 				//B[x + y * x_dim] = rules->l;
-				B[x + y * x_dim] = rules->getNextState(A, y, x);
+				//B[x + y * x_dim] = rules->getNextState(A, y, x);
 				printf("%d", B[x + y * x_dim]);
 			}
 		}
@@ -136,7 +182,10 @@ namespace CellularAutomata {
 		int* h_dimensions = static_cast<int*>(malloc(sizeof(int) * 2));
 		h_dimensions[0] = this->x_dim;
 		h_dimensions[1] = this->y_dim;
-		int* d_dimensions = static_cast<int*>(malloc(sizeof(int) * 2));
+		printf("h_dimensions are x: %d, y: %d", h_dimensions[0], h_dimensions[1]);
+
+		int* d_dimensions;
+		checkCudaErrors(cudaMalloc(&d_dimensions, sizeof(int) * 2));
 		cudaMemcpy(d_dimensions, h_dimensions, sizeof(int) * 2, cudaMemcpyHostToDevice);
 
 		if (h_con != nullptr)
@@ -144,7 +193,7 @@ namespace CellularAutomata {
 			printf("\nCreating Conway ruleset");
 			printf("\nSize of conway ruleset: %llu\n", sizeof(RulesArrayConway<T>));
 			RulesArrayConway<T>* d_con;
-			checkCudaErrors(cudaMalloc(&d_con, sizeof(RulesArrayConway<T>)));
+			checkCudaErrors(cudaMalloc(&d_con, sizeof(RulesArrayConway<T>) * 2));
 			constructConway<T><<<1,1>>>(d_con, d_dimensions);
 			printf("\nAllocated memory for ruleset");
 			printf("Copied across ruleset");

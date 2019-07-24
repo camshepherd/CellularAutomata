@@ -1,5 +1,7 @@
 #pragma once
 #include <vector>
+
+
 namespace CellularAutomata {
 	/** Interface defining necessary functionality for any model definition
 	*/
