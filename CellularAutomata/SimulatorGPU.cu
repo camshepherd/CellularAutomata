@@ -104,33 +104,16 @@ namespace CellularAutomata {
 		// Get the ruleset 
 		RulesArrayConway<T>* h_con = dynamic_cast<RulesArrayConway<T>*>(&(this->rules));
 		RulesArrayBML<T>* h_bml = dynamic_cast<RulesArrayBML<T>*>(&(this->rules));
-
+		IRulesArray<T>* d_rules;
 		if (h_con != nullptr)
 		{
 			// Rules type is Conway
-			h_dimensions = 0;
+			h_dimensions[2] = 0;
 			cudaMemcpy(d_dimensions, h_dimensions, sizeof(int) * 3, cudaMemcpyHostToDevice);
 			// Get the rules set up on the device
-			RulesArrayConway<T>* d_con;
-			checkCudaErrors(cudaMalloc(&d_con, sizeof(RulesArrayConway<T>) * 2));
-			constructRuleset<T><<<1,1>>>(d_con, d_dimensions);
+			checkCudaErrors(cudaMalloc(&d_rules, sizeof(RulesArrayConway<T>) * 2));
+			constructRuleset<T><<<1,1>>>(d_rules, d_dimensions);
 			
-			for (int step = 0; step < steps; ++step)
-			{
-				this->blankFrame();
-				h_newFrame = this->cellStore.back();
-				//no need to copy the new frame to the device, as every cell's value will be assigned to during the step process
-				stepForwardRegion<int> << <nBlocks, nThreads >> > (d_currFrame, d_newFrame, d_segments, d_context, d_con);
-				// copy back the data 
-				cudaMemcpy(h_newFrame, d_newFrame, sizeof(T) * frameSize, cudaMemcpyDeviceToHost);
-
-				// swap the pointers, ready for the next iteration
-				T *temp = d_currFrame;
-				d_currFrame = d_newFrame;
-				d_newFrame = temp;
-			}
-			// Free up the space used by the ruleset
-			checkCudaErrors(cudaFree(d_con));
 		}
 		else if((h_bml != nullptr))
 		{
@@ -138,26 +121,23 @@ namespace CellularAutomata {
 			h_dimensions[2] = 1;
 			cudaMemcpy(d_dimensions, h_dimensions, sizeof(int) * 3, cudaMemcpyHostToDevice);
 			// Get the rules set up on the device
-			RulesArrayBML<T>* d_bml;
-			checkCudaErrors(cudaMalloc(&d_bml, sizeof(RulesArrayBML<T>) * 2));
-			constructRuleset<T> << <1, 1 >> > (d_bml, d_dimensions);
+			checkCudaErrors(cudaMalloc(&d_rules, sizeof(RulesArrayBML<T>) * 2));
+			constructRuleset<T> << <1, 1 >> > (d_rules, d_dimensions);
+		}
 
-			for (int step = 0; step < steps; ++step)
-			{
-				this->blankFrame();
-				h_newFrame = this->cellStore.back();
-				//no need to copy the new frame to the device, as every cell's value will be assigned to during the step process
-				stepForwardRegion<int> << <nBlocks, nThreads >> > (d_currFrame, d_newFrame, d_segments, d_context, d_bml);
-				// copy back the data 
-				cudaMemcpy(h_newFrame, d_newFrame, sizeof(T) * frameSize, cudaMemcpyDeviceToHost);
+		for (int step = 0; step < steps; ++step)
+		{
+			this->blankFrame();
+			h_newFrame = this->cellStore.back();
+			//no need to copy the new frame to the device, as every cell's value will be assigned to during the step process
+			stepForwardRegion<int> << <nBlocks, nThreads >> > (d_currFrame, d_newFrame, d_segments, d_context, d_rules);
+			// copy back the data 
+			cudaMemcpy(h_newFrame, d_newFrame, sizeof(T) * frameSize, cudaMemcpyDeviceToHost);
 
-				// swap the pointers, ready for the next iteration
-				T *temp = d_currFrame;
-				d_currFrame = d_newFrame;
-				d_newFrame = temp;
-			}
-			// Free up the space used by the ruleset
-			checkCudaErrors(cudaFree(d_bml));
+			// swap the pointers, ready for the next iteration
+			T *temp = d_currFrame;
+			d_currFrame = d_newFrame;
+			d_newFrame = temp;
 		}
 
 		// Free up all the space used by the function call
@@ -166,7 +146,7 @@ namespace CellularAutomata {
 		checkCudaErrors(cudaFree(d_context));
 		checkCudaErrors(cudaFree(d_segments));
 		checkCudaErrors(cudaFree(d_dimensions));
-
+		checkCudaErrors(cudaFree(d_rules));
 		//checkCudaErrors(cudaDeviceReset());
 		double elapsed = this->timer.elapsed();
 		this->elapsedTime += elapsed;
