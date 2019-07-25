@@ -31,8 +31,10 @@ namespace CellularAutomata {
 		{
 		case 0:
 			new (dest) RulesArrayConway<T>(args[0], args[1]);
+			break;
 		case 1:
 			new (dest) RulesArrayBML<T>(args[0], args[1]);
+			break;
 		}
 		
 	}
