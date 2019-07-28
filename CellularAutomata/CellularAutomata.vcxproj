@@ -144,6 +144,7 @@
     <None Include="SimulatorCPU.inl" />
     <None Include="SimulatorCPUZoning.inl" />
     <None Include="SimulatorGPU.inl" />
+    <None Include="SimulatorGPUZoning.inl" />
     <None Include="SimulatorSequential.inl" />
     <None Include="SimulatorSequentialZoning.inl" />
     <None Include="SimulatorVector.inl" />

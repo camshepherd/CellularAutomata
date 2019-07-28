@@ -71,6 +71,9 @@
     <None Include="ZonerArrayPixels.inl">
       <Filter>Inline Files</Filter>
     </None>
+    <None Include="SimulatorGPUZoning.inl">
+      <Filter>Inline Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IDeadZoneHandler.hpp">

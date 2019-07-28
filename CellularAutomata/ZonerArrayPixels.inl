@@ -1,6 +1,6 @@
 namespace CellularAutomata {
 	template <typename T>
-	ZonerArrayPixels<T>::ZonerArrayPixels(int y, int x) : ydim(y), xdim(x)
+	CUDA_FUNCTION ZonerArrayPixels<T>::ZonerArrayPixels(int y, int x) : ydim(y), xdim(x)
 	{
 		cellActivities = static_cast<bool*>(malloc(sizeof(bool) * ydim * xdim));
 		rawActivities = static_cast<bool*>(malloc(sizeof(bool) * ydim * xdim));
@@ -11,12 +11,12 @@ namespace CellularAutomata {
 	}
 
 	template <typename T>
-	ZonerArrayPixels<T>::~ZonerArrayPixels()
+	CUDA_FUNCTION ZonerArrayPixels<T>::~ZonerArrayPixels()
 	{
 	}
 
 	template <typename T>
-	bool ZonerArrayPixels<T>::updateDeadZones(T* frame1, T* frame2) {
+	CUDA_FUNCTION bool ZonerArrayPixels<T>::updateDeadZones(T* frame1, T* frame2) {
 		// get all cells that are different between the cells
 		// mark all differing cell locations, and their neighbours, as being active
 
@@ -48,12 +48,12 @@ namespace CellularAutomata {
 	};
 
 	template <typename T>
-	bool ZonerArrayPixels<T>::isLive(int y, int x) {
+	CUDA_FUNCTION bool ZonerArrayPixels<T>::isLive(int y, int x) {
 		return cellActivities[y*xdim + x];
 	};
 
 	template <typename T>
-	bool* ZonerArrayPixels<T>::getCellActivities() {
+	CUDA_FUNCTION bool* ZonerArrayPixels<T>::getCellActivities() {
 		return cellActivities;
 	}
 }
