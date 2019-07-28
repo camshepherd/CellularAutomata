@@ -65,5 +65,8 @@
     <ClCompile Include="SimulatorGPUTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ZonerArrayPixelsTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

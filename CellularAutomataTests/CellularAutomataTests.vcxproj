@@ -186,6 +186,7 @@
     </ClCompile>
     <ClCompile Include="RulesConwayTests.cpp" />
     <ClCompile Include="StopwatchTests.cpp" />
+    <ClCompile Include="ZonerArrayPixelsTests.cpp" />
     <ClCompile Include="ZonerPixelsTests.cpp" />
     <ClCompile Include="ZonerRectanglesTests.cpp" />
   </ItemGroup>

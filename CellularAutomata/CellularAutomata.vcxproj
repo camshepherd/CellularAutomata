@@ -147,11 +147,13 @@
     <None Include="SimulatorSequential.inl" />
     <None Include="SimulatorSequentialZoning.inl" />
     <None Include="SimulatorVector.inl" />
+    <None Include="ZonerArrayPixels.inl" />
     <None Include="ZonerPixels.inl" />
     <None Include="ZonerRectangles.inl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IDeadZoneHandler.hpp" />
+    <ClInclude Include="IDeadZoneHandlerArray.hpp" />
     <ClInclude Include="IRules.hpp" />
     <ClInclude Include="IRulesArray.hpp" />
     <ClInclude Include="ISegmenter.hpp" />
@@ -165,10 +167,12 @@
     <ClInclude Include="SimulatorCPU.hpp" />
     <ClInclude Include="SimulatorCPUZoning.hpp" />
     <ClInclude Include="SimulatorGPU.hpp" />
+    <ClInclude Include="SimulatorGPUZoning.hpp" />
     <ClInclude Include="SimulatorSequential.hpp" />
     <ClInclude Include="SimulatorSequentialZoning.hpp" />
     <ClInclude Include="SimulatorVector.hpp" />
     <ClInclude Include="Stopwatch.hpp" />
+    <ClInclude Include="ZonerArrayPixels.hpp" />
     <ClInclude Include="ZonerPixels.hpp" />
     <ClInclude Include="ZonerRectangles.hpp" />
   </ItemGroup>

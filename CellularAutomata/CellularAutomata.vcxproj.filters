@@ -68,6 +68,9 @@
     <None Include="SimulatorGPU.inl">
       <Filter>Inline Files</Filter>
     </None>
+    <None Include="ZonerArrayPixels.inl">
+      <Filter>Inline Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IDeadZoneHandler.hpp">
@@ -128,6 +131,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SimulatorGPU.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SimulatorGPUZoning.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IDeadZoneHandlerArray.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ZonerArrayPixels.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
