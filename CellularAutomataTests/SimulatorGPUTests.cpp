@@ -5,6 +5,7 @@
 #include <SimulatorGPU.hpp>
 #include <SimulatorSequential.hpp>
 #include <SegmenterStrips.hpp>
+#include "RulesConway.hpp"
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace CellularAutomata;
 namespace SimulatorTesting {
@@ -49,5 +50,24 @@ namespace SimulatorTesting {
 			Assert::AreEqual(sim.getNumFrames(), 7);
 		}
 
+		TEST_METHOD(StepForwardMultiple)
+		{
+			RulesArrayConway<int> con = RulesArrayConway<int>();
+			RulesConway<int> con2{};
+			SegmenterStrips seg{};
+			SimulatorGPU<int> sim{ 4, 4, con, seg };
+			SimulatorSequential<int> refSim{ 4,4,con2 };
+			refSim.stepForward(5);
+			sim.stepForward(5);
+
+
+			for (int y = 0; y < 4; ++y)
+			{
+				for (int x = 0; x < 4; ++x)
+				{
+					Assert::AreEqual(refSim.getCell(y, x), sim.getCell(y, x));
+				}
+			}
+		}
 	};
 }

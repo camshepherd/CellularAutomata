@@ -13,6 +13,7 @@ namespace CellularAutomata {
 
 	std::vector<std::tuple<int, int, int, int>> SegmenterStrips::segment(int y_dim, int x_dim, int numSegments) const {
 		std::vector<std::tuple<int, int, int, int>> partitions{};
+		bool ended = false;
 		int partitionSize, excess;
 		if (orientation == 0) {
 			partitionSize = y_dim / numSegments; // implicit cast to integer just throws away data after the decimal point
@@ -27,12 +28,20 @@ namespace CellularAutomata {
 		excess = orientation ? x_dim % numSegments : y_dim % numSegments;
 
 		for (int k = 0; k < numSegments; ++k) {
-			partitions.push_back(std::make_tuple(
+			partitions.emplace_back(std::make_tuple(
 				orientation ? 0 : k * partitionSize + (k < excess ? k : excess),
 				orientation ? y_dim - 1 : ((k + 1) * partitionSize) - 1 + (k < excess ? k + 1 : excess),
 				orientation ? k * partitionSize + (k < excess ? k : excess) : 0,
 				orientation ? ((k + 1) * partitionSize) - 1 + (k < excess ? k + 1 : excess) : x_dim - 1)
 			);
+			if(partitions.size() >= 2 && (ended || (std::get<0>(partitions[k]) == std::get<0>(partitions[k-1]) && std::get<2>(partitions[k]) == std::get<2>(partitions[k-1]))))
+			{
+				ended = true;
+				std::get<0>(partitions[k]) = -1;
+				std::get<1>(partitions[k]) = -1;
+				std::get<2>(partitions[k]) = -1;
+				std::get<3>(partitions[k]) = -1;
+			}
 		}
 
 		return partitions;

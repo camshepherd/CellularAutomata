@@ -13,6 +13,10 @@ namespace CellularAutomata {
 
 	template <typename T>
 	bool SimulatorCPU<T>::stepForwardRegion(int y_min, int y_max, int x_min, int x_max) {
+		if(y_min == -1 && x_min == -1)
+		{
+			return true;
+		}
 		for (int y = y_min; y <= y_max; ++y) {
 			for (int x = x_min; x <= x_max; ++x) {
 				this->setCell(y, x, this->rules.getNextState(*(this->cellStore.end() - 2), y, x));
@@ -25,13 +29,12 @@ namespace CellularAutomata {
 	template <typename T>
 	double SimulatorCPU<T>::stepForward(int steps) {
 		this->timer.reset();
+		int num_threads = std::thread::hardware_concurrency();
+		std::vector<std::tuple<int, int, int, int>> segments = segmenter.segment(this->y_dim, this->x_dim, num_threads);
+		std::vector<std::thread> threads{};
+		
 		for (int u = 0; u < steps; ++u) {
 			this->blankFrame();
-			std::vector<std::thread> threads{};
-			int num_threads = std::thread::hardware_concurrency();
-
-			std::vector<std::tuple<int, int, int, int>> segments = segmenter.segment(this->y_dim, this->x_dim, num_threads);
-
 			for (int k = 0; k < num_threads; ++k) {
 				int y_min, y_max, x_min, x_max;
 				std::tie(y_min, y_max, x_min, x_max) = segments[k];
@@ -41,6 +44,7 @@ namespace CellularAutomata {
 			for (int ref = 0; ref < threads.size(); ++ref) {
 				threads[ref].join();
 			}
+			threads.clear();
 		}
 		double elapsed = this->timer.elapsed();
 		this->elapsedTime += elapsed;

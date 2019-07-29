@@ -62,5 +62,25 @@ public:
 			}
 		}
 	}
+
+	TEST_METHOD(StepForwardMultiple)
+	{
+		RulesConway<int> con = RulesConway<int>();
+		SegmenterStrips seg{};
+		ZonerPixels<int> zoner{4, 4};
+		SimulatorCPUZoning<int> sim{ 4, 4, con, seg,zoner };
+		SimulatorSequential<int> refSim{ 4,4,con };
+		refSim.stepForward(5);
+		sim.stepForward(5);
+
+
+		for (int y = 0; y < 4; ++y)
+		{
+			for (int x = 0; x < 4; ++x)
+			{
+				Assert::AreEqual(refSim.getCell(y, x), sim.getCell(y, x));
+			}
+		}
+	}
 };
 }

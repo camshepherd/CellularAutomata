@@ -49,6 +49,11 @@ public:
 		Assert::AreEqual(std::get<1>(splits[0]), 2);
 		Assert::AreEqual(std::get<2>(splits[0]), 0);
 		Assert::AreEqual(std::get<3>(splits[0]), 5);
+
+		// Can handle too many segments
+		splits = seg.segment(10, 6, 12);
+		Assert::AreEqual(std::get<2>(splits[11]), -1);
+		//Assert::AreNotEqual(std::get<0>(splits[10]), -1);
 	}
 
 	TEST_METHOD(CanHandleYSplittingArray) {
@@ -86,6 +91,7 @@ public:
 		Assert::AreEqual(splits[1], 2);
 		Assert::AreEqual(splits[2], 0);
 		Assert::AreEqual(splits[3], 5);
+
 	}
 
 	TEST_METHOD(CanHandleXSplitting) {
@@ -161,6 +167,7 @@ public:
 		Assert::AreEqual(splits[1], 5);
 		Assert::AreEqual(splits[2], 0);
 		Assert::AreEqual(splits[3], 2);
+
 	}
 	};
 }
