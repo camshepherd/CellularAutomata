@@ -6,10 +6,13 @@
 #include "RulesArrayConway.hpp"
 #include "SimulatorGPU.hpp"
 #include "RulesArrayBML.hpp"
+#include "ZonerArrayPixels.hpp"
+#include "SimulatorGPUZoning.hpp"
 
 using namespace CellularAutomata;
 
-bool initialiseFrame(ISimulator<int>& sim, float density) {
+template <typename T>
+bool initialiseFrame(ISimulator<T>& sim, float density) {
 	// density is the proportion of cells that start non-empty
 	int xdim = sim.getXDim();
 	int ydim = sim.getYDim();
@@ -25,157 +28,119 @@ bool initialiseFrame(ISimulator<int>& sim, float density) {
 	return true;
 }
 
-// TODO: add frame initialisation for ISimulatorArrays.
 
 int main() {
-	std::cout << "The system compiles!" << std::endl;
-
+	
 	int ydim = 100, xdim = 100;
-
-	RulesArrayConway<int> con2{};
-	SegmenterStrips seg2{};
-	
-	
-	SimulatorGPU<int> sim2{ 3,3,con2,seg2 };
-	sim2.setLaunchParams(2, 2);
-	for(int y = 0; y < 3; ++y)
-	{
-		std::cout << std::endl;
-		for(int x = 0; x < 3; ++x)
-		{
-			sim2.setCell(y, x, 0);
-		}
-	}
-	sim2.setCell(2, 2, 1);
-	sim2.setCell(2, 1, 1);
-	sim2.setCell(1, 2, 1);
-	std::cout << "\nPrint out frame" << std::endl;
-	for (int y = 0; y < 3; ++y)
-	{
-		std::cout << std::endl;
-		for (int x = 0; x < 3; ++x)
-		{
-			std::cout << sim2.getCell(y, x);
-		}
-	}
-	std::cout << std::endl;
-	sim2.stepForward(1);
-	
-	std::cout << "\nPrinting stored frame in the simulator" << std::endl;
-	for(int y = 0; y < 3; ++y)
-	{
-		std::cout << std::endl;
-		for (int x = 0; x < 3; ++x)
-		{
-			std::cout << sim2.getCell(y, x);
-		}
-	}
-	std::cout << std::endl;
-	getchar();
-
-	sim2.stepForward();
-	
-	for (int y = 0; y < 3; ++y)
-	{
-		std::cout << std::endl;
-		for (int x = 0; x < 3; ++x)
-		{
-			std::cout << sim2.getCell(y, x);
-		}
-	}
-	std::cout << std::endl;
-	sim2.stepForward(1);
-	for (int y = 0; y < 3; ++y)
-	{
-		std::cout << std::endl;
-		for (int x = 0; x < 3; ++x)
-		{
-			std::cout << sim2.getCell(y, x);
-		}
-	}
-
-	RulesArrayBML<int> bml3{ 20,20 };
-	SimulatorGPU<int> sim3{ 20,20,bml3,seg2,2,32 };
-	
-	sim3.setCell(0, 0,1);
-	sim3.setCell(0, 1, 1);
-	sim3.setCell(4, 7, 2);
-	
-	int count = 0;
-	std::string input = "";
-	while(input != "end")
-	{
-		std::cout << "Input = " << input << std::endl;
-		std::getline(std::cin, input);
-		
-		++count;
-		sim3.stepForward(5);
-		std::cout << "Output frame" << count << ": " << std::endl;
-		for (int y = 0; y < 20; ++y)
-		{
-			for (int x = 0; x < 20; ++x)
-			{
-				std::cout << sim3.getCell(y, x) << ",";
-			}
-			std::cout << std::endl;
-		}
-	}
-	
-	std::cout << "Finished initial stuff" << std::endl;
-	RulesConway<int> rules{};
+	int nBlocks = 2, nThreads = 16;
 	SegmenterStrips stripsHor{ 0 };
 	SegmenterStrips stripsVer{ 1 };
+	int nSegments = 4;
 	std::map<int, std::string> simNames{};
 	std::string ID;
+	int nFrames = 50;
+	std::string ruleSet;
+	std::map<std::string, IRules<int>*> rules{};
+	std::map<std::string, IRulesArray<int>*>rulesArray{};
+	ZonerPixels<int> zoner{ ydim,xdim };
+	ZonerArrayPixels<int> zoner2{ ydim,xdim };
+	std::vector<ISimulator<int>*> sims;
+
 	std::cout << "Please enter the Computer ID (single digit): " << std::endl;
 	std::cin >> ID;
-	std::string ruleset = "Conway";
-	ZonerPixels<int> zoner{ ydim,xdim };
-
-	std::vector<ISimulator<int>*> sims;
-	
 	float simTime = 0.1;
 	int repeats = 3;
+	
 	float density = 0.3;
-	sims.push_back(new SimulatorSequential<int>{ ydim, xdim, rules });
+	sims.push_back(new SimulatorSequential<int>{ ydim, xdim, *rules[ruleSet] });
 	simNames[0] = "Seq";
 
-	sims.push_back(new SimulatorCPU<int>{ ydim, xdim, rules, stripsHor });
-	simNames[1] = "CPUHor";
+	sims.push_back(new SimulatorSequentialZoning<int>(ydim, xdim, *rules[ruleSet], zoner));
+	simNames[1] = "SeqZon";
 
-	sims.push_back(new SimulatorCPU<int>{ ydim, xdim, rules, stripsVer });
-	simNames[2] = "CPUVer";
+	sims.push_back(new SimulatorCPU<int>{ ydim, xdim, *rules[ruleSet], stripsHor });
+	simNames[2] = "CPUHor";
 
-	sims.push_back(new SimulatorSequentialZoning<int>(ydim, xdim, rules, zoner));
-	simNames[3] = "SeqZon";
+	sims.push_back(new SimulatorCPU<int>{ ydim, xdim, *rules[ruleSet], stripsVer });
+	simNames[3] = "CPUVer";
 
-	sims.push_back(new SimulatorCPUZoning<int>{ ydim,xdim,rules,stripsHor,zoner });
+	sims.push_back(new SimulatorCPUZoning<int>{ ydim,xdim,*rules[ruleSet],stripsHor,zoner });
 	simNames[4] = "CPUHorZon";
 
-	sims.push_back(new SimulatorCPUZoning<int>{ ydim,xdim,rules,stripsVer,zoner });
+	sims.push_back(new SimulatorCPUZoning<int>{ ydim,xdim,*rules[ruleSet],stripsVer,zoner });
 	simNames[5] = "CPUVerZon";
 
+	sims.push_back(new SimulatorGPU<int>{ ydim,xdim,*rulesArray[ruleSet],stripsVer});
+	simNames[6] = "GPUVer";
+
+	sims.push_back(new SimulatorGPU<int>{ ydim,xdim,*rulesArray[ruleSet],stripsHor });
+	simNames[7] = "GPUHor";
+
+	sims.push_back(new SimulatorGPUZoning<int>{ ydim,xdim,*rulesArray[ruleSet],stripsVer,zoner2,nBlocks,nThreads });
+	simNames[8] = "GPUVerZon";
+
+	sims.push_back(new SimulatorGPUZoning<int>{ ydim,xdim,*rulesArray[ruleSet],stripsHor,zoner2,nBlocks,nThreads });
+	simNames[9] = "GPUHorZon";
+
 	std::ofstream log{ "results_" + ID + ".out" };
-	log << "Simulator,Ruleset,YDimension,XDimension,Density,MeanFramesSimulated\n";
-	int numFrames;
-	float meanFrames;
+	log << "Simulator,Ruleset,YDimension,XDimension,Density,MeanTime,nBlocks,nThreads,nSegments\n";
+	double totalTime = 0;
+	double meanTime;
+	// Sequential
 	try {
-		for (int r = 0; r < sims.size(); ++r) {
+		for (int r = 0; r < 3; ++r) {
 			for (ydim = 10; ydim < 1000; ydim *= 10) {
 				for (xdim = 10; xdim < 1000; xdim *= 10) {
-					for (float density = 0; density < 1; density += 0.2) {
-						numFrames = 0;
+					for (density = 0; density < 1; density += 0.2) {
+						totalTime = 0;
+
 						for (int e = 0; e < repeats; ++e) {
 							sims[r]->clear();
 							initialiseFrame(*sims[r], density);
-							sims[r]->stepForwardTime(simTime);
-							numFrames += sims[r]->getNumFrames();
+							totalTime += sims[r]->stepForward(nFrames);
 						}
 						// clear up the space that the simulation is taking up
 						sims[r]->clear();
-						meanFrames = numFrames / repeats;
-						std::cout << simNames[r] << ", " << meanFrames << std::endl;
-						log << simNames[r] << ", " << ruleset << "," << ydim << "," << xdim << "," << density << "," << meanFrames << "\n";
+						meanTime = totalTime / repeats;
+						std::cout << simNames[r] << ", " << meanTime << std::endl;
+						log << simNames[r] << ", " << ruleSet << "," << ydim << "," << xdim << "," << density << "," << meanTime << "," << nBlocks << "," << nThreads << "," << "-1" << "," << "\n";
+					}
+					
+				}
+			}
+
+		}
+		log.close();
+	}
+	catch (std::exception e) {
+		log.close();
+		std::cout << "Got an error: " << e.what() << std::endl;
+		return 1;
+	}
+
+	// CPU Parallelised
+	int params[3];
+	try {
+		for (int r = 3; r < 6; ++r) {
+			for (ydim = 10; ydim < 1000; ydim *= 10) {
+				for (xdim = 10; xdim < 1000; xdim *= 10) {
+					for (float density = 0; density < 1; density += 0.2) {
+						totalTime = 0;
+						for (nSegments = 1; nSegments < 30; ++nSegments)
+						{
+							for (int e = 0; e < repeats; ++e) {
+								sims[r]->clear();
+								initialiseFrame(*sims[r], density);
+								params[0] = nSegments;
+								sims[r]->setParams(params);
+								totalTime += sims[r]->stepForward(nFrames);
+							}
+							// clear up the space that the simulation is taking up
+							sims[r]->clear();
+							meanTime = totalTime / repeats;
+							std::cout << simNames[r] << ", " << meanTime << std::endl;
+							log << simNames[r] << ", " << ruleSet << "," << ydim << "," << xdim << "," << density << "," << meanTime << "," << nBlocks << "," << nThreads << "," << nSegments << "," << "\n";
+						}
 					}
 				}
 			}
@@ -188,6 +153,49 @@ int main() {
 		std::cout << "Got an error: " << e.what() << std::endl;
 		return 1;
 	}
+
+	// GPU Parallelised
+	try {
+		for (int r = 3; r < 6; ++r) {
+			for (ydim = 10; ydim < 1000; ydim *= 10) {
+				for (xdim = 10; xdim < 1000; xdim *= 10) {
+					for (float density = 0; density < 1; density += 0.2) {
+						totalTime = 0;
+						for (nBlocks = 1; nBlocks < 8; ++nBlocks)
+						{
+							for (nThreads = 2; nThreads < 512; ++nThreads)
+							{
+								for (nSegments = 1; nSegments < nBlocks * nThreads * 2; ++nSegments)
+								{
+									for (int e = 0; e < repeats; ++e) {
+										sims[r]->clear();
+										initialiseFrame(*sims[r], density);
+										params[0] = nSegments;
+										params[1] = nBlocks;
+										params[2] = nThreads;
+										sims[r]->setParams(params);
+										totalTime += sims[r]->stepForward(nFrames);
+									}
+									// clear up the space that the simulation is taking up
+									sims[r]->clear();
+									meanTime = totalTime / repeats;
+									std::cout << simNames[r] << ", " << meanTime << std::endl;
+									log << simNames[r] << ", " << ruleSet << "," << ydim << "," << xdim << "," << density << "," << meanTime << "," << nBlocks << "," << nThreads << "," << nSegments << "," << "\n";
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		log.close();
+	}
+	catch (std::exception e) {
+		log.close();
+		std::cout << "Got an error: " << e.what() << std::endl;
+		return 1;
+	}
+
 	std::cout << "Finished testing" << std::endl;
 	getchar();
 	return 0;

@@ -123,7 +123,7 @@ namespace CellularAutomata {
 	double SimulatorGPU<T>::stepForward(int steps) {
 		this->timer.reset();
 		// declare the variables needed
-		int numSegments = this->nBlocks * this->nThreads;
+		//int numSegments = this->nBlocks * this->nThreads;
 		T *h_currFrame, *h_newFrame, *d_currFrame, *d_newFrame;
 		int *h_segments, *d_segments;
 		int *h_context,*d_context;
@@ -131,11 +131,11 @@ namespace CellularAutomata {
 		int frameSize = this->x_dim * this->y_dim;
 
 		// define the host variables
-		h_segments = this->segmenter.segmentToArray(this->y_dim, this->x_dim, numSegments);
+		h_segments = this->segmenter.segmentToArray(this->y_dim, this->x_dim, nSegments);
 		h_context = static_cast<int*>(malloc(sizeof(int) * 3));
 		h_context[0] = this->y_dim;
 		h_context[1] = this->x_dim;
-		h_context[2] = numSegments;
+		h_context[2] = nSegments;
 
 		h_currFrame = this->cellStore.back();
 		h_dimensions = static_cast<int*>(malloc(sizeof(int) * 3));
@@ -145,14 +145,14 @@ namespace CellularAutomata {
 		// allocate the device memory
 		checkCudaErrors(cudaMalloc(&d_currFrame, sizeof(T) * frameSize));
 		checkCudaErrors(cudaMalloc(&d_newFrame, sizeof(T) * frameSize));
-		checkCudaErrors(cudaMalloc(&d_segments, sizeof(int) * 4 * numSegments));
+		checkCudaErrors(cudaMalloc(&d_segments, sizeof(int) * 4 * nSegments));
 		checkCudaErrors(cudaMalloc(&d_context, sizeof(int) * 3));
 		checkCudaErrors(cudaMalloc(&d_dimensions, sizeof(int) * 3));
 		
 		// copy over data to the device
 		checkCudaErrors(cudaMemcpy(d_currFrame, h_currFrame, sizeof(T) * frameSize, cudaMemcpyHostToDevice));
 		checkCudaErrors(cudaMemcpy(d_context, h_context, sizeof(int) * 3, cudaMemcpyHostToDevice));
-		checkCudaErrors(cudaMemcpy(d_segments, h_segments, sizeof(int) * 4 * numSegments, cudaMemcpyHostToDevice));
+		checkCudaErrors(cudaMemcpy(d_segments, h_segments, sizeof(int) * 4 * nSegments, cudaMemcpyHostToDevice));
 		
 		// Get the ruleset 
 		RulesArrayConway<T>* h_con = dynamic_cast<RulesArrayConway<T>*>(&(this->rules));
@@ -210,7 +210,7 @@ namespace CellularAutomata {
 	double SimulatorGPUZoning<T>::stepForward(int steps) {
 		this->timer.reset();
 		// declare the variables needed
-		int numSegments = this->nBlocks * this->nThreads;
+		//int numSegments = this->nBlocks * this->nThreads;
 		T *h_currFrame, *h_newFrame, *d_currFrame, *d_newFrame;
 		int *h_segments, *d_segments;
 		int *h_context, *d_context;
@@ -220,11 +220,11 @@ namespace CellularAutomata {
 		IDeadZoneHandlerArray<T>* d_zoner;
 
 		// define the host variables
-		h_segments = this->segmenter.segmentToArray(this->y_dim, this->x_dim, numSegments);
+		h_segments = this->segmenter.segmentToArray(this->y_dim, this->x_dim, this->nSegments);
 		h_context = static_cast<int*>(malloc(sizeof(int) * 3));
 		h_context[0] = this->y_dim;
 		h_context[1] = this->x_dim;
-		h_context[2] = numSegments;
+		h_context[2] = this->nSegments;
 
 		h_currFrame = this->cellStore.back();
 		h_dimensions = static_cast<int*>(malloc(sizeof(int) * 3));
@@ -240,7 +240,7 @@ namespace CellularAutomata {
 		// allocate the device memory
 		checkCudaErrors(cudaMalloc(&d_currFrame, sizeof(T) * frameSize));
 		checkCudaErrors(cudaMalloc(&d_newFrame, sizeof(T) * frameSize));
-		checkCudaErrors(cudaMalloc(&d_segments, sizeof(int) * 4 * numSegments));
+		checkCudaErrors(cudaMalloc(&d_segments, sizeof(int) * 4 * this->nSegments));
 		checkCudaErrors(cudaMalloc(&d_context, sizeof(int) * 3));
 		checkCudaErrors(cudaMalloc(&d_dimensions, sizeof(int) * 3));
 		checkCudaErrors(cudaMalloc(&d_zoner_args, sizeof(int) * 3));
@@ -251,7 +251,7 @@ namespace CellularAutomata {
 		// copy over data to the device
 		checkCudaErrors(cudaMemcpy(d_currFrame, h_currFrame, sizeof(T) * frameSize, cudaMemcpyHostToDevice));
 		checkCudaErrors(cudaMemcpy(d_context, h_context, sizeof(int) * 3, cudaMemcpyHostToDevice));
-		checkCudaErrors(cudaMemcpy(d_segments, h_segments, sizeof(int) * 4 * numSegments, cudaMemcpyHostToDevice));
+		checkCudaErrors(cudaMemcpy(d_segments, h_segments, sizeof(int) * 4 * this->nSegments, cudaMemcpyHostToDevice));
 		checkCudaErrors(cudaMemcpy(d_zoner_args, h_zoner_args, sizeof(int) * 3, cudaMemcpyHostToDevice));
 
 		// Create the zoner

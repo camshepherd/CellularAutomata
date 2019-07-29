@@ -29,6 +29,8 @@ namespace CellularAutomata {
 		/** Get the maximum value that can be used to represent a state in the model
 		*/
 		virtual T getMaxValidState() override;
+
+		virtual bool setParams(int* list) override;
 	};
 }
 #include "SimulatorSequential.inl"

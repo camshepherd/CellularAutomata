@@ -25,6 +25,7 @@ namespace CellularAutomata {
 		@param steps: Number of timesteps to simulate forward by. Default is 1
 		*/
 		double stepForward(int steps = 1) override;
+
 	};
 }
 #include "SimulatorSequentialZoning.inl"

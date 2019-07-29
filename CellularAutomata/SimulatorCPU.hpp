@@ -14,6 +14,7 @@ namespace CellularAutomata {
 	{
 	protected:
 		const ISegmenter& segmenter;
+		int nSegments;
 	public:
 		/** Constructor 1. Create the simulator using the injected dependencies
 		@param ydim: The size of the simulation in the y-axis
@@ -43,6 +44,8 @@ namespace CellularAutomata {
 		/** Get the maximum valid value to represent states in the model
 		*/
 		virtual T getMaxValidState() override;
+
+		virtual bool setParams(int* list) override;
 	};
 }
 

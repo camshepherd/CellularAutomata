@@ -35,4 +35,12 @@ namespace CellularAutomata {
 	T SimulatorSequential<T>::getMaxValidState() {
 		return this->rules.getMaxValidState();
 	}
+
+	template <typename T>
+	bool SimulatorSequential<T>::setParams(int* list)
+	{
+		// do nothing, doesn't need any launch parameters
+		return true;
+	}
+
 }

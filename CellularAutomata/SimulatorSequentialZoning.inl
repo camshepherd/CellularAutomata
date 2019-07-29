@@ -33,4 +33,5 @@ namespace CellularAutomata {
 		this->elapsedTime += elapsed;
 		return elapsed;
 	}
+
 }

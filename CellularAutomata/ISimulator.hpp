@@ -58,6 +58,10 @@ namespace CellularAutomata {
 		*/
 		virtual T getMaxValidState() = 0;
 
+		/** Set the list of the parameters needed by the simulator
+		 */
+		virtual bool setParams(int* list) = 0;
+
 		/** Set the value of a specific cell
 		@param y: The y-coordinate of the target cell
 		@param x: The x-coordinate of the target cell

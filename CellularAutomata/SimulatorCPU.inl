@@ -4,6 +4,7 @@ namespace CellularAutomata {
 	template <typename T>
 	SimulatorCPU<T>::SimulatorCPU(int y, int x, IRules<T>& rules, ISegmenter& segmenter) : SimulatorVector<T>(y, x, rules), segmenter(segmenter)
 	{
+		nSegments = std::thread::hardware_concurrency();
 	}
 
 	template <typename T>
@@ -29,7 +30,8 @@ namespace CellularAutomata {
 	template <typename T>
 	double SimulatorCPU<T>::stepForward(int steps) {
 		this->timer.reset();
-		int num_threads = std::thread::hardware_concurrency();
+		//int num_threads = std::thread::hardware_concurrency();
+		int num_threads = nSegments;
 		std::vector<std::tuple<int, int, int, int>> segments = segmenter.segment(this->y_dim, this->x_dim, num_threads);
 		std::vector<std::thread> threads{};
 		
@@ -55,4 +57,12 @@ namespace CellularAutomata {
 	T SimulatorCPU<T>::getMaxValidState() {
 		return this->rules.getMaxValidState();
 	}
+
+	template <typename T>
+	bool SimulatorCPU<T>::setParams(int* list)
+	{
+		nSegments = list[0];
+		return true;
+	}
+
 }

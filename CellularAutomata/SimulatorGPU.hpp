@@ -14,7 +14,7 @@ namespace CellularAutomata {
 	protected:
 		const ISegmenter& segmenter;
 		int* segments;
-		int nBlocks, nThreads;
+		int nBlocks, nThreads, nSegments;
 	public:
 		/** Constructor 1. Create the simulator using the injected dependencies
 		@param ydim: The size of the simulation in the y-axis
@@ -48,6 +48,12 @@ namespace CellularAutomata {
 		/** Set the number of blocks and threads to use to run the CUDA kernel for stepping the simulation
 		*/
 		bool setLaunchParams(int nBlocks, int nThreads);
+
+		virtual bool setParams(int* list)
+		{
+			nSegments = list[0];
+			return setLaunchParams(list[1], list[2]);
+		}
 	};
 }
 
