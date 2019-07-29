@@ -183,7 +183,7 @@ namespace CellularAutomata {
 			this->blankFrame();
 			h_newFrame = this->cellStore.back();
 			//no need to copy the new frame to the device, as every cell's value will be assigned to during the step process
-			stepForwardRegion<int> << <nBlocks, nThreads >> > (d_currFrame, d_newFrame, d_segments, d_context, d_rules);
+			stepForwardRegion<T> << <nBlocks, nThreads >> > (d_currFrame, d_newFrame, d_segments, d_context, d_rules);
 			// copy back the data 
 			cudaMemcpy(h_newFrame, d_newFrame, sizeof(T) * frameSize, cudaMemcpyDeviceToHost);
 
@@ -309,8 +309,17 @@ namespace CellularAutomata {
 		return elapsed;
 	}
 
+	template class SimulatorGPU<bool>;
+	template class SimulatorGPU<char>;
 	template class SimulatorGPU<int>;
+	template class SimulatorGPU<long int>;
+	template class SimulatorGPU<long long int>;
+
+	template class SimulatorGPUZoning<bool>;
+	template class SimulatorGPUZoning<char>;
 	template class SimulatorGPUZoning<int>;
+	template class SimulatorGPUZoning<long int>;
+	template class SimulatorGPUZoning<long long int>;
 
 
 }
