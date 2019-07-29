@@ -46,7 +46,6 @@ namespace CellularAutomata {
 	template <typename T>
 	CUDA_FUNCTION T RulesArrayConway<T>::getNextState(T* cells, int y, int x) const {
 		int count = countNeighours(cells, y, x);
-		printf("Count: %d\n", count);
 		if (cells[y*this->x_dim + x]) {
 			//alive
 			if (count >= live_min && count <= live_max) {

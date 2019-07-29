@@ -80,16 +80,6 @@ namespace CellularAutomata {
 				partitions[k * 4 + 3] = -1;
 			}
 		}
-
-		printf("Segmenter: \n");
-		for(int m = 0; m < numSegments * 4; m += 4)
-		{
-			for(int n = 0; n < 4; ++n)
-			{
-				printf("%d,", partitions[m + n]);
-			}
-		}
-
 		return partitions;
 	}
 }

@@ -31,6 +31,8 @@ bool initialiseFrame(ISimulator<T>& sim, float density) {
 
 int main() {
 	
+	// TODO: Test both BML and GoL!
+
 	int ydim = 100, xdim = 100;
 	int nBlocks = 2, nThreads = 16;
 	SegmenterStrips stripsHor{ 0 };
@@ -38,10 +40,14 @@ int main() {
 	int nSegments = 4;
 	std::map<int, std::string> simNames{};
 	std::string ID;
-	int nFrames = 50;
-	std::string ruleSet;
+	int nFrames = 20;
+	std::string ruleSet = "Conway";
 	std::map<std::string, IRules<int>*> rules{};
+	rules["Conway"] = new RulesConway<int>{};
+	rules["BML"] = new RulesBML<int>{};
 	std::map<std::string, IRulesArray<int>*>rulesArray{};
+	rulesArray["Conway"] = new RulesArrayConway<int>{};
+	rulesArray["BML"] = new RulesArrayBML<int>{};
 	ZonerPixels<int> zoner{ ydim,xdim };
 	ZonerArrayPixels<int> zoner2{ ydim,xdim };
 	std::vector<ISimulator<int>*> sims;
@@ -86,9 +92,9 @@ int main() {
 	log << "Simulator,Ruleset,YDimension,XDimension,Density,MeanTime,nBlocks,nThreads,nSegments\n";
 	double totalTime = 0;
 	double meanTime;
-	// Sequential
+	//// Sequential
 	try {
-		for (int r = 0; r < 3; ++r) {
+		for (int r = 0; r < 2; ++r) {
 			for (ydim = 10; ydim < 1000; ydim *= 10) {
 				for (xdim = 10; xdim < 1000; xdim *= 10) {
 					for (density = 0; density < 1; density += 0.2) {
@@ -121,13 +127,13 @@ int main() {
 	// CPU Parallelised
 	int params[3];
 	try {
-		for (int r = 3; r < 6; ++r) {
+		for (int r = 2; r < 6; ++r) {
 			for (ydim = 10; ydim < 1000; ydim *= 10) {
 				for (xdim = 10; xdim < 1000; xdim *= 10) {
 					for (float density = 0; density < 1; density += 0.2) {
-						totalTime = 0;
 						for (nSegments = 1; nSegments < 30; ++nSegments)
 						{
+							totalTime = 0;
 							for (int e = 0; e < repeats; ++e) {
 								sims[r]->clear();
 								initialiseFrame(*sims[r], density);
@@ -156,17 +162,18 @@ int main() {
 
 	// GPU Parallelised
 	try {
-		for (int r = 3; r < 6; ++r) {
+		for (int r = 6; r < 10; ++r) {
 			for (ydim = 10; ydim < 1000; ydim *= 10) {
 				for (xdim = 10; xdim < 1000; xdim *= 10) {
 					for (float density = 0; density < 1; density += 0.2) {
-						totalTime = 0;
+						
 						for (nBlocks = 1; nBlocks < 8; ++nBlocks)
 						{
 							for (nThreads = 2; nThreads < 512; ++nThreads)
 							{
 								for (nSegments = 1; nSegments < nBlocks * nThreads * 2; ++nSegments)
 								{
+									totalTime = 0;
 									for (int e = 0; e < repeats; ++e) {
 										sims[r]->clear();
 										initialiseFrame(*sims[r], density);
