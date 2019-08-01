@@ -15,6 +15,7 @@ namespace CellularAutomata {
 		const ISegmenter& segmenter;
 		int* segments;
 		int nBlocks, nThreads, nSegments;
+		int maxY = 1000, maxX = 1000;
 	public:
 		/** Constructor 1. Create the simulator using the injected dependencies
 		@param ydim: The size of the simulation in the y-axis
@@ -49,11 +50,7 @@ namespace CellularAutomata {
 		*/
 		bool setLaunchParams(int nBlocks, int nThreads);
 
-		virtual bool setParams(int* list)
-		{
-			nSegments = list[0];
-			return setLaunchParams(list[1], list[2]);
-		}
+		virtual bool setParams(int* list) override;
 	};
 }
 

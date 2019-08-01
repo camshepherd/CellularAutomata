@@ -16,7 +16,7 @@ namespace CellularAutomata {
 	bool SimulatorVector<T>::clear(bool addBlankFirstFrame) {
 		cellStore.clear();
 		// Add cells into the blank frame only if needed
-		cellStore.push_back(std::vector<std::vector<int>>(addBlankFirstFrame ? y_dim : 0));
+		cellStore.push_back(std::vector<std::vector<T>>(addBlankFirstFrame ? y_dim : 0));
 		for (auto& it : cellStore.back()) {
 			it = std::vector<T>(addBlankFirstFrame ? x_dim : 0);
 		}

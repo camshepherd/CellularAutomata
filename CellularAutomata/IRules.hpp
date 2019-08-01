@@ -22,7 +22,7 @@ namespace CellularAutomata {
 		@param y: The y-coordinate of the target cell
 		@param x: The x-coordinate of the target cell
 		*/
-		virtual int getNextState(const std::vector<std::vector<T>>& cells, int y, int x) const = 0;
+		virtual T getNextState(const std::vector<std::vector<T>>& cells, int y, int x) const = 0;
 
 	};
 }

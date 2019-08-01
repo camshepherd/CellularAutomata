@@ -22,7 +22,7 @@ namespace CellularAutomata {
 	template <typename T>
 	CUDA_FUNCTION RulesArrayConway<T>::~RulesArrayConway()
 	{
-		printf("\N*********CONWAY IS DEAD***********\N");
+		printf("\n*********CONWAY IS DEAD***********\n");
 	}
 
 	template <typename T>
@@ -78,7 +78,6 @@ namespace CellularAutomata {
 		}
 		return count;
 	}
-
 
 	template class RulesArrayConway<int>;
 	template class RulesArrayConway<bool>;

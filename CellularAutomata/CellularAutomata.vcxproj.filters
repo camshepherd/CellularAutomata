@@ -26,9 +26,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ZonerRectangles.inl">
-      <Filter>Inline Files</Filter>
-    </None>
     <None Include="ZonerPixels.inl">
       <Filter>Inline Files</Filter>
     </None>
@@ -116,9 +113,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ZonerPixels.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ZonerRectangles.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SimulatorArray.hpp">

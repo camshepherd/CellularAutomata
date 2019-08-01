@@ -13,7 +13,7 @@ namespace CellularAutomata {
 	protected:
 		// The store of all frames in all timesteps
 		std::vector<std::vector<std::vector<T>>> cellStore;
-		const int y_dim, x_dim;
+		int y_dim, x_dim;
 
 		const IRules<T>& rules;
 	public:

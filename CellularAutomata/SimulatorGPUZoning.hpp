@@ -10,15 +10,14 @@ namespace CellularAutomata {
 	template <typename T>
 	class SimulatorGPUZoning : public SimulatorGPU<T> {
 	protected:
-		IDeadZoneHandlerArray<T>& zoner;
 	public:
 		/** Constructor 1. Create the simulator utilising the given dependencies
 		*/
-		SimulatorGPUZoning(int y, int x, IRulesArray<T>& rules, ISegmenter& segmenter, IDeadZoneHandlerArray<T>& zoner);
+		SimulatorGPUZoning(int y, int x, IRulesArray<T>& rules, ISegmenter& segmenter);
 
 		/** Constructor 2. Create the simulator utilising the given dependencies and defining the number of blocks and threads to use for simulation
 		 */
-		SimulatorGPUZoning(int y, int x, IRulesArray<T>& rules, ISegmenter& segmenter, IDeadZoneHandlerArray<T>& zoner, int nBlocks, int nThreads);
+		SimulatorGPUZoning(int y, int x, IRulesArray<T>& rules, ISegmenter& segmenter, int nBlocks, int nThreads);
 		
 		/** Destructor 1. Default destructor
 		*/
@@ -28,6 +27,7 @@ namespace CellularAutomata {
 		*/
 		virtual double stepForward(int steps = 1) override;
 
+		virtual bool setParams(int* list) override;
 	};
 }
 #include "SimulatorGPUZoning.inl"

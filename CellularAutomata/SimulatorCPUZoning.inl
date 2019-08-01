@@ -49,4 +49,15 @@ namespace CellularAutomata {
 		}
 		return true;
 	}
+
+	template <typename T>
+	bool SimulatorCPUZoning<T>::setParams(int* list)
+	{
+		this->nSegments = list[0];
+		this->y_dim = list[1];
+		this->x_dim = list[2];
+		this->zoner.setDimensions(this->y_dim, this->x_dim);
+		return true;
+	}
+
 }

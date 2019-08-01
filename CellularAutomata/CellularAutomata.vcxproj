@@ -92,6 +92,7 @@
     <CudaCompile>
       <Include>../Helpers;</Include>
       <TargetMachinePlatform>64</TargetMachinePlatform>
+      <GenerateRelocatableDeviceCode>true</GenerateRelocatableDeviceCode>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -129,6 +130,7 @@
     <CudaCompile>
       <Include>../Helpers;</Include>
       <TargetMachinePlatform>64</TargetMachinePlatform>
+      <GenerateRelocatableDeviceCode>true</GenerateRelocatableDeviceCode>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -150,7 +152,6 @@
     <None Include="SimulatorVector.inl" />
     <None Include="ZonerArrayPixels.inl" />
     <None Include="ZonerPixels.inl" />
-    <None Include="ZonerRectangles.inl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IDeadZoneHandler.hpp" />
@@ -175,7 +176,6 @@
     <ClInclude Include="Stopwatch.hpp" />
     <ClInclude Include="ZonerArrayPixels.hpp" />
     <ClInclude Include="ZonerPixels.hpp" />
-    <ClInclude Include="ZonerRectangles.hpp" />
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="SimulatorGPU.cu" />

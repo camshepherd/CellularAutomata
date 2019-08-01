@@ -80,6 +80,9 @@ namespace CellularAutomata {
 		*/
 		bool writeData(std::string filename);
 
+		/** Evaluate whether the two simulations are equal. This is the case if the dimensions are the same and all 
+		 * frames have been simulated in the same way in both simulators.
+		 */
 		bool friend operator==(ISimulator<T>& a, ISimulator<T>& b) {
 			if (a.getXDim() != b.getXDim()) {
 				return false;

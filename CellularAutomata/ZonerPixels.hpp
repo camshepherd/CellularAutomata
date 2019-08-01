@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include "IDeadZoneHandler.hpp"
 
 namespace CellularAutomata {
@@ -10,6 +11,7 @@ namespace CellularAutomata {
 	{
 	protected:
 		std::vector<std::vector<bool>> cellActivities;
+		std::vector<std::vector<bool>> rawActivities;
 		int ydim, xdim;
 	public:
 		/** Constructor 1. Create a zoner of the specified dimensions
@@ -37,6 +39,8 @@ namespace CellularAutomata {
 		/** Get the complete matrix of cell activites (whether a cell's state may change in the next frame)
 		*/
 		std::vector<std::vector<bool>> getCellActivities();
+
+		virtual bool setDimensions(int y, int x) override;
 	};
 }
 #include "ZonerPixels.inl"

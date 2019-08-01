@@ -46,12 +46,12 @@ namespace CellularAutomata {
 		@param args: 3-element array containing: [y_dim, x_dim, zoner type] of the frames to be simulated
 	 */
 	template <typename T>
-	__global__ void constructZoner(IDeadZoneHandlerArray<T>* dest, int* args)
+	__global__ void constructZoner(IDeadZoneHandlerArray<T>* dest, int* args, bool* A, bool* B)
 	{
 		switch (args[2])
 		{
-		case 0:
-			new (dest) ZonerArrayPixels<T>(args[0], args[1]);
+		default:
+			new (dest) ZonerArrayPixels<T>(args[0], args[1], A, B);
 			break;
 		}
 	}
@@ -115,7 +115,7 @@ namespace CellularAutomata {
 			}
 		}
 		// update the zoner, ready for the next round
-		zoner->updateDeadZones(A, B);
+		zoner->updateDeadZones(A, B,context);
 	}
 
 
@@ -165,8 +165,7 @@ namespace CellularAutomata {
 			cudaMemcpy(d_dimensions, h_dimensions, sizeof(int) * 3, cudaMemcpyHostToDevice);
 			// Get the rules set up on the device
 			checkCudaErrors(cudaMalloc(&d_rules, sizeof(RulesArrayConway<T>) * 2));
-			constructRuleset<T><<<1,1>>>(d_rules, d_dimensions);
-			
+			constructRuleset<T><<<1,1>>>(d_rules, d_dimensions);	
 		}
 		else if((h_bml != nullptr))
 		{
@@ -203,11 +202,24 @@ namespace CellularAutomata {
 		//checkCudaErrors(cudaDeviceReset());
 		double elapsed = this->timer.elapsed();
 		this->elapsedTime += elapsed;
+
+
+		// free the memory used on the host
+		free(h_segments);
+		free(h_context);
+		free(h_dimensions);
+
+
 		return elapsed;
 	}
 
 	template <typename T>
 	double SimulatorGPUZoning<T>::stepForward(int steps) {
+
+		printf("ydim: %d, xdim: %d, segments: %d, blocks: %d, threads: %d\n", this->y_dim, this->x_dim, this->nSegments, this->nBlocks, this->nThreads);
+
+
+
 		this->timer.reset();
 		// declare the variables needed
 		//int numSegments = this->nBlocks * this->nThreads;
@@ -217,6 +229,8 @@ namespace CellularAutomata {
 		int* h_dimensions, *d_dimensions;
 		int *h_zoner_args, *d_zoner_args;
 		int frameSize = this->x_dim * this->y_dim;
+		bool *d_zoner_A, *d_zoner_B;
+
 		IDeadZoneHandlerArray<T>* d_zoner;
 
 		// define the host variables
@@ -229,12 +243,12 @@ namespace CellularAutomata {
 		h_currFrame = this->cellStore.back();
 		h_dimensions = static_cast<int*>(malloc(sizeof(int) * 3));
 		h_zoner_args = static_cast<int*>(malloc(sizeof(int) * 3));
-		h_dimensions[0] = this->x_dim;
-		h_dimensions[1] = this->y_dim;
+		h_dimensions[0] = this->y_dim;
+		h_dimensions[1] = this->x_dim;
 		h_dimensions[2] = 0;
 
-		h_zoner_args[0] = this->x_dim;
-		h_zoner_args[1] = this->y_dim;
+		h_zoner_args[0] = this->maxY;
+		h_zoner_args[1] = this->maxX;
 		h_zoner_args[2] = 0;
 
 		// allocate the device memory
@@ -245,7 +259,9 @@ namespace CellularAutomata {
 		checkCudaErrors(cudaMalloc(&d_dimensions, sizeof(int) * 3));
 		checkCudaErrors(cudaMalloc(&d_zoner_args, sizeof(int) * 3));
 		checkCudaErrors(cudaMalloc(&d_zoner, sizeof(ZonerArrayPixels<T>)));
-
+		printf("maximums are: %d and %d\n", this->maxY, this->maxX);
+		checkCudaErrors(cudaMalloc(&d_zoner_A, sizeof(bool) * 1000 * 1000));
+		checkCudaErrors(cudaMalloc(&d_zoner_B, sizeof(bool) * 1000 * 1000));
 		
 
 		// copy over data to the device
@@ -254,8 +270,12 @@ namespace CellularAutomata {
 		checkCudaErrors(cudaMemcpy(d_segments, h_segments, sizeof(int) * 4 * this->nSegments, cudaMemcpyHostToDevice));
 		checkCudaErrors(cudaMemcpy(d_zoner_args, h_zoner_args, sizeof(int) * 3, cudaMemcpyHostToDevice));
 
+		
+
+
+
 		// Create the zoner
-		constructZoner<T> << <1, 1 >> > (d_zoner, d_zoner_args);
+		constructZoner<T> << <1, 1 >> > (d_zoner, d_zoner_args, d_zoner_A, d_zoner_B);
 
 		// Get the ruleset 
 		RulesArrayConway<T>* h_con = dynamic_cast<RulesArrayConway<T>*>(&(this->rules));
@@ -267,26 +287,30 @@ namespace CellularAutomata {
 			h_dimensions[2] = 0;
 			cudaMemcpy(d_dimensions, h_dimensions, sizeof(int) * 3, cudaMemcpyHostToDevice);
 			// Get the rules set up on the device
-			checkCudaErrors(cudaMalloc(&d_rules, sizeof(RulesArrayConway<T>) * 2));
+			checkCudaErrors(cudaMalloc(&d_rules, sizeof(RulesArrayConway<T>)));
 			constructRuleset<T> << <1, 1 >> > (d_rules, d_dimensions);
 
 		}
-		else if ((h_bml != nullptr))
+		else if (h_bml != nullptr)
 		{
 			// Rules type is BML
 			h_dimensions[2] = 1;
-			cudaMemcpy(d_dimensions, h_dimensions, sizeof(int) * 3, cudaMemcpyHostToDevice);
+			checkCudaErrors(cudaMemcpy(d_dimensions, h_dimensions, sizeof(int) * 3, cudaMemcpyHostToDevice));
 			// Get the rules set up on the device
 			checkCudaErrors(cudaMalloc(&d_rules, sizeof(RulesArrayBML<T>)));
 			constructRuleset<T> << <1, 1 >> > (d_rules, d_dimensions);
 		}
-
+		else
+		{
+			std::cout << "******************" << std::endl;
+			std::cout << "Reached the land that should never be reached!!" << std::endl;
+		}
 		for (int step = 0; step < steps; ++step)
 		{
 			this->blankFrame();
 			h_newFrame = this->cellStore.back();
 			//no need to copy the new frame to the device, as every cell's value will be assigned to during the step process
-			stepForwardRegionZoning<T> << <nBlocks, nThreads >> > (d_currFrame, d_newFrame, d_segments, d_context, d_rules, d_zoner);
+			stepForwardRegionZoning<T> << <this->nBlocks, this->nThreads >> > (d_currFrame, d_newFrame, d_segments, d_context, d_rules, d_zoner);
 			// copy back the data 
 			cudaMemcpy(h_newFrame, d_newFrame, sizeof(T) * frameSize, cudaMemcpyDeviceToHost);
 
@@ -303,9 +327,19 @@ namespace CellularAutomata {
 		checkCudaErrors(cudaFree(d_segments));
 		checkCudaErrors(cudaFree(d_dimensions));
 		checkCudaErrors(cudaFree(d_rules));
+		checkCudaErrors(cudaFree(d_zoner));
+		checkCudaErrors(cudaFree(d_zoner_A));
+		checkCudaErrors(cudaFree(d_zoner_B));
+
 		//checkCudaErrors(cudaDeviceReset());
 		double elapsed = this->timer.elapsed();
 		this->elapsedTime += elapsed;
+
+		// free the memory used on the host
+		free(h_segments);
+		free(h_context);
+		free(h_dimensions);
+
 		return elapsed;
 	}
 
@@ -320,6 +354,4 @@ namespace CellularAutomata {
 	template class SimulatorGPUZoning<int>;
 	template class SimulatorGPUZoning<long int>;
 	template class SimulatorGPUZoning<long long int>;
-
-
 }

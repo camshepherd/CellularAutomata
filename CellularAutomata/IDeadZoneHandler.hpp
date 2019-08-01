@@ -29,5 +29,8 @@ namespace CellularAutomata {
 		@param x: The cell's x-coordinate
 		*/
 		bool virtual isLive(int y, int x) = 0;
+
+		bool virtual setDimensions(int y, int x) = 0;
+
 	};
 }

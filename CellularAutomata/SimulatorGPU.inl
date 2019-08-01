@@ -27,4 +27,15 @@ namespace CellularAutomata {
 		this->nThreads = nThreads;
 		return true;
 	}
+
+	template <typename T>
+	bool SimulatorGPU<T>::setParams(int* list)
+	{
+		nSegments = list[0];
+		this->y_dim = list[1];
+		this->x_dim = list[2];
+		this->nBlocks = list[3];
+		this->nThreads = list[4];
+		return true;
+	}
 }

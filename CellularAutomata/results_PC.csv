@@ -1,6 +1,0 @@
-Sequential, 100
-CPU Parallelised Horizontal, 260
-CPU Parallelised Vertical, 260
-Sequential with pixel zoning, 559
-Parallelised horizontal segmentation with pixel zoning, 294
-Parallelised vertical segmentation with pixel zoning, 294

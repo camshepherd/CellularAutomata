@@ -62,7 +62,8 @@ namespace CellularAutomata {
 	bool SimulatorCPU<T>::setParams(int* list)
 	{
 		nSegments = list[0];
+		this->y_dim = list[1];
+		this->x_dim = list[2];
 		return true;
 	}
-
 }

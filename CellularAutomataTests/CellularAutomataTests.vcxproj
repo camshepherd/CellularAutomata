@@ -189,7 +189,6 @@
     <ClCompile Include="StopwatchTests.cpp" />
     <ClCompile Include="ZonerArrayPixelsTests.cpp" />
     <ClCompile Include="ZonerPixelsTests.cpp" />
-    <ClCompile Include="ZonerRectanglesTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CellularAutomata\CellularAutomata.vcxproj">

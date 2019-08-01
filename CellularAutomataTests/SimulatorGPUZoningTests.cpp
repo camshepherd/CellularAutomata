@@ -16,16 +16,14 @@ public:
 	TEST_METHOD(CanInstantiate) {
 		RulesArrayConway<int> con{};
 		SegmenterStrips strips{};
-		ZonerArrayPixels<int> zoner{6, 4};
-		SimulatorGPUZoning<int> sim{ 6,4, con, strips,zoner };
+		SimulatorGPUZoning<int> sim{ 6,4, con, strips};
 		Assert::IsTrue(true);
 	}
 
 	TEST_METHOD(CanStepForward) {
 		RulesArrayConway<int> con{};
 		SegmenterStrips seg{};
-		ZonerArrayPixels<int> zoner{ 4,4 };
-		SimulatorGPUZoning<int> sim{ 4, 4, con, seg,zoner,3,32 };
+		SimulatorGPUZoning<int> sim{ 4, 4, con, seg,3,32 };
 
 		sim.stepForward();
 		Assert::AreEqual(sim.getNumFrames(), 2);
@@ -59,8 +57,7 @@ public:
 		RulesArrayConway<int> con = RulesArrayConway<int>();
 		RulesConway<int> con2{};
 		SegmenterStrips seg{};
-		ZonerArrayPixels<int> zoner{4, 4};
-		SimulatorGPUZoning<int> sim{ 4, 4, con, seg,zoner };
+		SimulatorGPUZoning<int> sim{ 4, 4, con, seg};
 		SimulatorSequential<int> refSim{ 4,4,con2 };
 		refSim.stepForward(5);
 		sim.stepForward(5);

@@ -11,6 +11,7 @@ namespace CellularAutomata {
 	class SimulatorCPUZoning : public SimulatorCPU<T> {
 	protected:
 		IDeadZoneHandler<T>& zoner;
+		
 	public:
 		/** Constructor 1. Create the simulator utilising the given dependencies
 		*/
@@ -31,6 +32,8 @@ namespace CellularAutomata {
 		@param x_max: The largest x-coordinate of the region
 		*/
 		virtual bool stepForwardRegion(int y_min, int y_max, int x_min, int x_max) override;
+
+		virtual bool setParams(int* list) override;
 	};
 }
 #include "SimulatorCPUZoning.inl"

@@ -8,20 +8,26 @@ namespace ZonerTesting {
 	TEST_CLASS(ZonerArrayPixelsTesting) {
 public:
 	TEST_METHOD(CanInstantiate) {
-		ZonerArrayPixels<int> deadZone{ 3,3 };
+		bool* A = static_cast<bool*>(malloc(sizeof(bool) * 3 * 3));
+		bool* B = static_cast<bool*>(malloc(sizeof(bool) * 3 * 3));
+		ZonerArrayPixels<int> deadZone{ 3,3 ,A,B};
 		deadZone.isLive(1, 1);
 		Assert::IsTrue(true);
 	}
 
 	TEST_METHOD(UpdateMinDimensions) {
-
+		bool* A = static_cast<bool*>(malloc(sizeof(bool) * 3 * 3));
+		bool* B = static_cast<bool*>(malloc(sizeof(bool) * 3 * 3));
 		// no changes
-		ZonerArrayPixels<int> zoner{ 3,3 };
+		ZonerArrayPixels<int> zoner{ 3,3 ,A,B};
 
 		int *frame1 = static_cast<int*>(malloc(sizeof(int) * 3 * 3)), 
 			*frame2 = static_cast<int*>(malloc(sizeof(int) * 3 * 3));
 		bool *expected = static_cast<bool*>(malloc(sizeof(bool) * 3 * 3)),
 			*actual = static_cast<bool*>(malloc(sizeof(bool) * 3 * 3));
+		int* dimensions = static_cast<int*>(malloc(sizeof(int) * 2));
+		dimensions[0] = 3;
+		dimensions[1] = 3;
 		for(int t = 0; t < 9; ++t)
 		{
 			frame1[t] = 0;
@@ -29,7 +35,7 @@ public:
 			expected[t] = false;
 		}
 
-		zoner.updateDeadZones(frame1, frame2);
+		zoner.updateDeadZones(frame1, frame2, dimensions);
 
 		
 		actual = zoner.getCellActivities();
@@ -43,7 +49,7 @@ public:
 		// single change at [0, 0]
 		frame1[0] = 1;
 
-		zoner.updateDeadZones(frame1, frame2);
+		zoner.updateDeadZones(frame1, frame2, dimensions);
 
 		for(int r = 0; r < 9; ++r)
 		{
@@ -61,13 +67,16 @@ public:
 
 	TEST_METHOD(UpdateMoreDimensions) {
 		// single change
-
-		ZonerArrayPixels<int> zoner{ 6,4 };
+		bool* A = static_cast<bool*>(malloc(sizeof(bool) * 6 * 4));
+		bool* B = static_cast<bool*>(malloc(sizeof(bool) * 6 * 4));
+		ZonerArrayPixels<int> zoner{ 6,4,A,B };
 		int *frame1 = static_cast<int*>(malloc(sizeof(int) * 6 * 4)),
 			*frame2 = static_cast<int*>(malloc(sizeof(int) * 6 * 4));
 		bool *expected = static_cast<bool*>(malloc(sizeof(bool) * 6 * 4)),
 			*actual;
-
+		int* dimensions = static_cast<int*>(malloc(sizeof(int) * 2));
+		dimensions[0] = 6;
+		dimensions[1] = 4;
 		for (int t = 0; t < 6*4; ++t)
 		{
 			frame1[t] = 0;
@@ -77,7 +86,7 @@ public:
 
 		frame1[5] = 1;
 
-		zoner.updateDeadZones(frame1, frame2);
+		zoner.updateDeadZones(frame1, frame2, dimensions);
 
 		expected[1] = true;
 		expected[1*4+1] = true;

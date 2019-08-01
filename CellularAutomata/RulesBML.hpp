@@ -32,6 +32,7 @@ namespace CellularAutomata {
 		/** Get the maximum value that can be used to represent a cell's state
 		*/
 		virtual T getMaxValidState() const override;
+
 	};
 }
 #include "RulesBML.inl"
