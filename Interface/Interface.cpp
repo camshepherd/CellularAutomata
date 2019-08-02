@@ -119,6 +119,23 @@ void handleInput(string line) {
 				simInt = new SimulatorSequential<int>{ ydim, xdim, *rulesInt };
 			}
 		}
+		else if (words[1] == "seqzon") {
+			if (words.size() > 3 && words[3] == "int") {
+				if (words[2] == "conway" || words[2] == "gol") {
+					rulesInt = new RulesConway<int>{};
+				}
+				else {
+					rulesInt = new RulesBML<int>{};
+				}
+				if (words.size() > 4) {
+					ydim = stoi(words[4]);
+					xdim = stoi(words[5]);
+				}
+				zoner = new ZonerPixels<int>{ ydim,xdim };
+				simType = 1;
+				simInt = new SimulatorSequentialZoning<int>{ ydim, xdim, *rulesInt,*zoner };
+			}
+		}
 	}
 	else if (words[0] == "print") {
 		// print [frameNum] [numToPrint]
