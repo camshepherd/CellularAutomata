@@ -87,4 +87,19 @@ namespace CellularAutomata {
 		}
 		return true;
 	}
+
+	template <typename T>
+	void SimulatorArray<T>::printFrame(int frameNumber) {
+		if (frameNumber == -1) {
+			frameNumber = this->getNumFrames() - 1;
+		}
+		std::cout << "______________ START" << std::endl;
+		for (int y = 0; y < this->y_dim; ++y) {
+			std::cout << "|\n";
+			for (int x = 0; x < this->x_dim; ++x){
+				std::cout << this->getCell(y, x, frameNumber);
+			}
+		}
+		std::cout << "\n______________ END" << std::endl;
+	}
 }

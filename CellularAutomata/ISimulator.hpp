@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <algorithm>
+#include <iostream>
 
 namespace CellularAutomata {
 	/** Interface defining the behaviour of any class to simulate synchronous cellular automata models
@@ -104,6 +105,8 @@ namespace CellularAutomata {
 				return true;
 			}
 		}
+
+		virtual void printFrame(int frameNum=-1) = 0;
 	};
 }
 #include "ISimulator.inl"

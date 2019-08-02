@@ -67,6 +67,8 @@ namespace CellularAutomata {
 		/** Insert a new frame in the simulation, exactly duplicating the back frame
 		*/
 		bool copyFrame() override;
+
+		virtual void printFrame(int frameNum) override;
 	};
 }
 #include "SimulatorArray.inl"
