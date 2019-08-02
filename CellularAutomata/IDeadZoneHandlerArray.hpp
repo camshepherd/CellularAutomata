@@ -30,7 +30,7 @@ namespace CellularAutomata {
 		@param frame1: The first frame; to be compared against frame2
 		@param frame2: The second frame; to be compared against frame1
 		*/
-		CUDA_FUNCTION bool virtual updateDeadZones(T* frame1, T* frame2, int* dimensions) = 0;
+		CUDA_FUNCTION bool virtual updateDeadZones(T* frame1, T* frame2) = 0;
 
 		/** Whether the targeted cell has the potential to change state in the next frame
 		@param y: The cell's y-coordinate
@@ -39,6 +39,8 @@ namespace CellularAutomata {
 		CUDA_FUNCTION bool virtual isLive(int y, int x) = 0;
 
 
-		CUDA_FUNCTION bool virtual setDimensions(int y, int x) = 0;
+		CUDA_FUNCTION bool virtual setDimensions(int* dims) = 0;
+
+		CUDA_FUNCTION bool virtual refresh() = 0;
 	};
 }

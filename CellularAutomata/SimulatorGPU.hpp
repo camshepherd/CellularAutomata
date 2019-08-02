@@ -13,17 +13,9 @@ namespace CellularAutomata {
 	{
 	protected:
 		const ISegmenter& segmenter;
-		int* segments;
 		int nBlocks, nThreads, nSegments;
 		int maxY = 1000, maxX = 1000;
 	public:
-		/** Constructor 1. Create the simulator using the injected dependencies
-		@param ydim: The size of the simulation in the y-axis
-		@param xdim: The size of the simulation in the x-axis
-		@param rules: The rules to use to simulate the model
-		@param segmenter: The class to use to segment up the frame to the individual CPU threads
-		*/
-		SimulatorGPU(int ydim, int xdim, IRulesArray<T>& rules, ISegmenter& segmenter);
 
 		/** Constructor 2. Create the simulator using the injected dependencies, and specify the numbers of blocks and threads to use
 		@param ydim: The size of the simulation in the y-axis
@@ -48,9 +40,9 @@ namespace CellularAutomata {
 
 		/** Set the number of blocks and threads to use to run the CUDA kernel for stepping the simulation
 		*/
-		bool setLaunchParams(int nBlocks, int nThreads);
+		bool setLaunchParams(int nBlocks, int nThreads, int nSegments);
 
-		virtual bool setParams(int* list) override;
+		virtual bool setDimensions(int y, int x) override;
 	};
 }
 

@@ -17,12 +17,6 @@
 
 namespace CellularAutomata {
 
-	template <typename T>
-	SimulatorGPU<T>::~SimulatorGPU()
-	{
-		checkCudaErrors(cudaDeviceReset());
-	}
-
 	/** Construct an instance of RulesArrayConway on the device
 		@param dest: Destination address for the ruleset. Must already be (cuda)Malloced
 		@param args: 3-element array containing: [y_dim, x_dim, Ruleset type] of the frames to be simulated
@@ -30,7 +24,7 @@ namespace CellularAutomata {
 	template <typename T>
 	__global__ void constructRuleset(IRulesArray<T>* dest, int* args)
 	{
-		switch(args[2])
+		switch (args[2])
 		{
 		case 0:
 			new (dest) RulesArrayConway<T>(args[0], args[1]);
@@ -43,17 +37,102 @@ namespace CellularAutomata {
 
 	/** Construct an instance of ZonerArrayPixels on the device
 		@param dest: Destination address for the ruleset. Must already be (cuda)Malloced
-		@param args: 3-element array containing: [y_dim, x_dim, zoner type] of the frames to be simulated
+		@param args: 4-element array containing: [y_dim, x_dim, y_max, x_max] of the frames to be simulated
 	 */
 	template <typename T>
-	__global__ void constructZoner(IDeadZoneHandlerArray<T>* dest, int* args, bool* A, bool* B)
+	__global__ void constructZoner(IDeadZoneHandlerArray<T>* dest, int *dims, int *maxDims, bool* A, bool* B)
 	{
-		switch (args[2])
-		{
-		default:
-			new (dest) ZonerArrayPixels<T>(args[0], args[1], A, B);
-			break;
-		}
+		new (dest) ZonerArrayPixels<T>(dims, maxDims, A, B);
+	}
+
+	template <typename T>
+	SimulatorGPU<T>::~SimulatorGPU()
+	{
+		checkCudaErrors(cudaDeviceReset());
+	}
+
+
+	template <typename T>
+	SimulatorGPUZoning<T>::~SimulatorGPUZoning()
+	{
+		checkCudaErrors(cudaFree(d_zoner));
+		checkCudaErrors(cudaFree(d_zoner_a));
+		checkCudaErrors(cudaFree(d_zoner_b));
+		checkCudaErrors(cudaFree(d_zoner_dims));
+		checkCudaErrors(cudaFree(d_zoner_maxDims));
+	};
+
+
+
+	template <typename T>
+	bool SimulatorGPUZoning<T>::setDimensions(int y, int x)
+	{
+		this->y_dim = y;
+		this->x_dim = x;
+		int* dims = static_cast<int*> (malloc(sizeof(int) * 2));
+		dims[0] = y;
+		dims[1] = x;
+		checkCudaErrors(cudaMemcpy(d_zoner_dims, dims, sizeof(int) * 2, cudaMemcpyHostToDevice));
+		free(dims);
+		refreshZoner << <1, 1 >> > (d_zoner);
+		return true;
+	}
+
+	template <typename T>
+	SimulatorGPU<T>::SimulatorGPU(int ydim, int xdim, IRulesArray<T>& rules, ISegmenter& segmenter, int nBlocks, int nThreads) : SimulatorArray<T>(ydim, xdim, rules), segmenter(segmenter), nBlocks(nBlocks), nThreads(nThreads)
+	{
+		size_t size;
+		checkCudaErrors(cudaDeviceGetLimit(&size, cudaLimitMallocHeapSize));
+		printf("The size is: %llu", size);
+		size = 2000000000;
+		checkCudaErrors(cudaDeviceSetLimit(cudaLimitMallocHeapSize, size));
+		checkCudaErrors(cudaDeviceGetLimit(&size, cudaLimitMallocHeapSize));
+		printf("And now it is: %llu", size);
+		nSegments = this->y_dim * this->x_dim;
+		printf("The dimensions of SimulatorGPU are: %d and %d\n", this->y_dim, this->x_dim);
+	}
+
+	template<typename T>
+	SimulatorGPUZoning<T>::SimulatorGPUZoning(int y, int x, IRulesArray<T>& rules, ISegmenter& segmenter, int nBlocks, int nThreads, int y_max, int x_max) : SimulatorGPU<T>(y, x, rules, segmenter, nBlocks, nThreads), y_max(y_max), x_max(x_max)
+	{
+		size_t size;
+		checkCudaErrors(cudaDeviceGetLimit(&size, cudaLimitMallocHeapSize));
+		printf("The size is: %llu", size);
+		size = 2000000000;
+		checkCudaErrors(cudaDeviceSetLimit(cudaLimitMallocHeapSize, size));
+		checkCudaErrors(cudaDeviceGetLimit(&size, cudaLimitMallocHeapSize));
+		printf("And now it is: %llu", size);
+		printf("The size is: %llu", size);
+		int *dims = static_cast<int*>(malloc(sizeof(int) * 2));
+		dims[0] = y;
+		dims[1] = x;
+		int *maxDims = static_cast<int*>(malloc(sizeof(int) * 2));
+		maxDims[2] = y_max;
+		maxDims[3] = x_max;
+		checkCudaErrors(cudaMalloc(&d_zoner_dims, sizeof(int) * 2));
+		checkCudaErrors(cudaMemcpy(d_zoner_dims, dims, sizeof(int) * 2, cudaMemcpyHostToDevice));
+		checkCudaErrors(cudaMalloc(&d_zoner_maxDims, sizeof(int) * 2));
+		checkCudaErrors(cudaMemcpy(d_zoner_maxDims, maxDims, sizeof(int) * 2, cudaMemcpyHostToDevice));
+		
+		checkCudaErrors(cudaMalloc(&d_zoner_a, sizeof(bool) * y_max * x_max));
+		checkCudaErrors(cudaMalloc(&d_zoner_b, sizeof(bool) * y_max * x_max));
+		//free(dims);
+		//free(maxDims);
+		// Create the zoner
+		constructZoner<T> << <1, 1 >> > (d_zoner, d_zoner_dims, d_zoner_maxDims, d_zoner_a, d_zoner_b);
+		
+	};
+
+
+	
+
+	/** Refresh the instance of ZonerArrayPixels on th device
+		@param dest: Destination address for the ruleset. Must already be (cuda)Malloced
+	 */
+	template <typename T>
+	__global__ void refreshZoner(IDeadZoneHandlerArray<T>* zoner)
+	{
+		zoner->refresh();
 	}
 
 
@@ -115,12 +194,13 @@ namespace CellularAutomata {
 			}
 		}
 		// update the zoner, ready for the next round
-		zoner->updateDeadZones(A, B,context);
+		zoner->updateDeadZones(A, B);
 	}
 
 
 	template <typename T>
 	double SimulatorGPU<T>::stepForward(int steps) {
+		printf("SIMULATOR DIMENSIONS: %d, %d", this->y_dim, this->x_dim);
 		this->timer.reset();
 		// declare the variables needed
 		//int numSegments = this->nBlocks * this->nThreads;
@@ -139,8 +219,8 @@ namespace CellularAutomata {
 
 		h_currFrame = this->cellStore.back();
 		h_dimensions = static_cast<int*>(malloc(sizeof(int) * 3));
-		h_dimensions[0] = this->x_dim;
-		h_dimensions[1] = this->y_dim;
+		h_dimensions[0] = this->y_dim;
+		h_dimensions[1] = this->x_dim;
 		h_dimensions[2] = 0;
 		// allocate the device memory
 		checkCudaErrors(cudaMalloc(&d_currFrame, sizeof(T) * frameSize));
@@ -218,8 +298,6 @@ namespace CellularAutomata {
 
 		printf("ydim: %d, xdim: %d, segments: %d, blocks: %d, threads: %d\n", this->y_dim, this->x_dim, this->nSegments, this->nBlocks, this->nThreads);
 
-
-
 		this->timer.reset();
 		// declare the variables needed
 		//int numSegments = this->nBlocks * this->nThreads;
@@ -227,11 +305,7 @@ namespace CellularAutomata {
 		int *h_segments, *d_segments;
 		int *h_context, *d_context;
 		int* h_dimensions, *d_dimensions;
-		int *h_zoner_args, *d_zoner_args;
 		int frameSize = this->x_dim * this->y_dim;
-		bool *d_zoner_A, *d_zoner_B;
-
-		IDeadZoneHandlerArray<T>* d_zoner;
 
 		// define the host variables
 		h_segments = this->segmenter.segmentToArray(this->y_dim, this->x_dim, this->nSegments);
@@ -242,14 +316,9 @@ namespace CellularAutomata {
 
 		h_currFrame = this->cellStore.back();
 		h_dimensions = static_cast<int*>(malloc(sizeof(int) * 3));
-		h_zoner_args = static_cast<int*>(malloc(sizeof(int) * 3));
 		h_dimensions[0] = this->y_dim;
 		h_dimensions[1] = this->x_dim;
 		h_dimensions[2] = 0;
-
-		h_zoner_args[0] = this->maxY;
-		h_zoner_args[1] = this->maxX;
-		h_zoner_args[2] = 0;
 
 		// allocate the device memory
 		checkCudaErrors(cudaMalloc(&d_currFrame, sizeof(T) * frameSize));
@@ -257,25 +326,12 @@ namespace CellularAutomata {
 		checkCudaErrors(cudaMalloc(&d_segments, sizeof(int) * 4 * this->nSegments));
 		checkCudaErrors(cudaMalloc(&d_context, sizeof(int) * 3));
 		checkCudaErrors(cudaMalloc(&d_dimensions, sizeof(int) * 3));
-		checkCudaErrors(cudaMalloc(&d_zoner_args, sizeof(int) * 3));
-		checkCudaErrors(cudaMalloc(&d_zoner, sizeof(ZonerArrayPixels<T>)));
-		printf("maximums are: %d and %d\n", this->maxY, this->maxX);
-		checkCudaErrors(cudaMalloc(&d_zoner_A, sizeof(bool) * 1000 * 1000));
-		checkCudaErrors(cudaMalloc(&d_zoner_B, sizeof(bool) * 1000 * 1000));
 		
 
 		// copy over data to the device
 		checkCudaErrors(cudaMemcpy(d_currFrame, h_currFrame, sizeof(T) * frameSize, cudaMemcpyHostToDevice));
 		checkCudaErrors(cudaMemcpy(d_context, h_context, sizeof(int) * 3, cudaMemcpyHostToDevice));
-		checkCudaErrors(cudaMemcpy(d_segments, h_segments, sizeof(int) * 4 * this->nSegments, cudaMemcpyHostToDevice));
-		checkCudaErrors(cudaMemcpy(d_zoner_args, h_zoner_args, sizeof(int) * 3, cudaMemcpyHostToDevice));
-
-		
-
-
-
-		// Create the zoner
-		constructZoner<T> << <1, 1 >> > (d_zoner, d_zoner_args, d_zoner_A, d_zoner_B);
+		checkCudaErrors(cudaMemcpy(d_segments, h_segments, sizeof(int) * 4 * this->nSegments, cudaMemcpyHostToDevice));		
 
 		// Get the ruleset 
 		RulesArrayConway<T>* h_con = dynamic_cast<RulesArrayConway<T>*>(&(this->rules));
@@ -327,9 +383,6 @@ namespace CellularAutomata {
 		checkCudaErrors(cudaFree(d_segments));
 		checkCudaErrors(cudaFree(d_dimensions));
 		checkCudaErrors(cudaFree(d_rules));
-		checkCudaErrors(cudaFree(d_zoner));
-		checkCudaErrors(cudaFree(d_zoner_A));
-		checkCudaErrors(cudaFree(d_zoner_B));
 
 		//checkCudaErrors(cudaDeviceReset());
 		double elapsed = this->timer.elapsed();

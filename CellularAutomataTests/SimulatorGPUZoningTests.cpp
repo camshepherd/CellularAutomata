@@ -16,7 +16,7 @@ public:
 	TEST_METHOD(CanInstantiate) {
 		RulesArrayConway<int> con{};
 		SegmenterStrips strips{};
-		SimulatorGPUZoning<int> sim{ 6,4, con, strips};
+		SimulatorGPUZoning<int> sim{ 6,4, con, strips,2,32};
 		Assert::IsTrue(true);
 	}
 
@@ -57,7 +57,7 @@ public:
 		RulesArrayConway<int> con = RulesArrayConway<int>();
 		RulesConway<int> con2{};
 		SegmenterStrips seg{};
-		SimulatorGPUZoning<int> sim{ 4, 4, con, seg};
+		SimulatorGPUZoning<int> sim{ 4, 4, con, seg,2,32};
 		SimulatorSequential<int> refSim{ 4,4,con2 };
 		refSim.stepForward(5);
 		sim.stepForward(5);

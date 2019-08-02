@@ -60,7 +60,7 @@ namespace CellularAutomata {
 
 		/** Set the list of the parameters needed by the simulator
 		 */
-		virtual bool setParams(int* list) = 0;
+		virtual bool setDimensions(int y, int x) = 0;
 
 		/** Set the value of a specific cell
 		@param y: The y-coordinate of the target cell

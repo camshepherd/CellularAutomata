@@ -37,9 +37,10 @@ namespace CellularAutomata {
 	}
 
 	template <typename T>
-	bool SimulatorSequential<T>::setParams(int* list)
+	bool SimulatorSequential<T>::setDimensions(int y, int x)
 	{
-		// do nothing, doesn't need any launch parameters
+		this->y_dim = y;
+		this->x_dim = x;
 		return true;
 	}
 

@@ -10,7 +10,9 @@ public:
 	TEST_METHOD(CanInstantiate) {
 		bool* A = static_cast<bool*>(malloc(sizeof(bool) * 3 * 3));
 		bool* B = static_cast<bool*>(malloc(sizeof(bool) * 3 * 3));
-		ZonerArrayPixels<int> deadZone{ 3,3 ,A,B};
+		int dims[2] = { 3,3 };
+		int maxDims[2] = { 3,3 };
+		ZonerArrayPixels<int> deadZone{ dims,maxDims,A,B};
 		deadZone.isLive(1, 1);
 		Assert::IsTrue(true);
 	}
@@ -19,7 +21,9 @@ public:
 		bool* A = static_cast<bool*>(malloc(sizeof(bool) * 3 * 3));
 		bool* B = static_cast<bool*>(malloc(sizeof(bool) * 3 * 3));
 		// no changes
-		ZonerArrayPixels<int> zoner{ 3,3 ,A,B};
+		int dims[2] = { 3,3 };
+		int maxDims[2] = { 3,3 };
+		ZonerArrayPixels<int> zoner{ dims,maxDims,A,B};
 
 		int *frame1 = static_cast<int*>(malloc(sizeof(int) * 3 * 3)), 
 			*frame2 = static_cast<int*>(malloc(sizeof(int) * 3 * 3));
@@ -35,7 +39,7 @@ public:
 			expected[t] = false;
 		}
 
-		zoner.updateDeadZones(frame1, frame2, dimensions);
+		zoner.updateDeadZones(frame1, frame2);
 
 		
 		actual = zoner.getCellActivities();
@@ -49,7 +53,7 @@ public:
 		// single change at [0, 0]
 		frame1[0] = 1;
 
-		zoner.updateDeadZones(frame1, frame2, dimensions);
+		zoner.updateDeadZones(frame1, frame2);
 
 		for(int r = 0; r < 9; ++r)
 		{
@@ -69,7 +73,9 @@ public:
 		// single change
 		bool* A = static_cast<bool*>(malloc(sizeof(bool) * 6 * 4));
 		bool* B = static_cast<bool*>(malloc(sizeof(bool) * 6 * 4));
-		ZonerArrayPixels<int> zoner{ 6,4,A,B };
+		int dims[2] = { 6,4 };
+		int maxDims[2] = { 6,4 };
+		ZonerArrayPixels<int> zoner{ dims,maxDims,A,B };
 		int *frame1 = static_cast<int*>(malloc(sizeof(int) * 6 * 4)),
 			*frame2 = static_cast<int*>(malloc(sizeof(int) * 6 * 4));
 		bool *expected = static_cast<bool*>(malloc(sizeof(bool) * 6 * 4)),
@@ -86,7 +92,7 @@ public:
 
 		frame1[5] = 1;
 
-		zoner.updateDeadZones(frame1, frame2, dimensions);
+		zoner.updateDeadZones(frame1, frame2);
 
 		expected[1] = true;
 		expected[1*4+1] = true;

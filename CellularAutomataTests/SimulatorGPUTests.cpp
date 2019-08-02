@@ -21,7 +21,7 @@ namespace SimulatorTesting {
 		TEST_METHOD(CanStepForward) {
 			RulesArrayConway<int> con{};
 			SegmenterStrips seg{};
-			SimulatorGPU<int> sim{ 4, 4, con, seg };
+			SimulatorGPU<int> sim{ 4, 4, con, seg,2,32 };
 
 			sim.stepForward();
 			Assert::AreEqual(sim.getNumFrames(), 2);
@@ -55,7 +55,7 @@ namespace SimulatorTesting {
 			RulesArrayConway<int> con = RulesArrayConway<int>();
 			RulesConway<int> con2{};
 			SegmenterStrips seg{};
-			SimulatorGPU<int> sim{ 4, 4, con, seg };
+			SimulatorGPU<int> sim{ 4, 4, con, seg,2,32 };
 			SimulatorSequential<int> refSim{ 4,4,con2 };
 			refSim.stepForward(5);
 			sim.stepForward(5);

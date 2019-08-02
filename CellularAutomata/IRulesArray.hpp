@@ -14,7 +14,6 @@ namespace CellularAutomata {
 	protected:
 		int y_dim = 1, x_dim = 1;
 	public:
-		int l = 2;
 		/** Get the highest state that can represent a valid state
 		*/
 		CUDA_FUNCTION virtual T getMaxValidState() const = 0;

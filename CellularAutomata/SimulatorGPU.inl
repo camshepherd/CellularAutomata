@@ -1,18 +1,8 @@
 #include <iostream>
 
 namespace CellularAutomata {
-	template <typename T>
-	SimulatorGPU<T>::SimulatorGPU(int y, int x, IRulesArray<T>& rules, ISegmenter& segmenter) : SimulatorArray<T>(y, x, rules), segmenter(segmenter)
-	{
-		setLaunchParams(2, 32);
-		nSegments = 64;
-	}
 
-	template <typename T>
-	SimulatorGPU<T>::SimulatorGPU(int ydim, int xdim, IRulesArray<T>& rules, ISegmenter& segmenter, int nBlocks, int nThreads) : SimulatorArray<T>(ydim, xdim, rules), segmenter(segmenter), nBlocks(nBlocks), nThreads(nThreads)
-	{
-		nSegments = this->y_dim * this->x_dim;
-	}
+	
 
 
 
@@ -22,20 +12,18 @@ namespace CellularAutomata {
 	}
 
 	template <typename T>
-	bool SimulatorGPU<T>::setLaunchParams(int nBlocks, int nThreads) {
+	bool SimulatorGPU<T>::setLaunchParams(int nBlocks, int nThreads, int nSegments) {
 		this->nBlocks = nBlocks;
 		this->nThreads = nThreads;
+		this->nSegments = nSegments;
 		return true;
 	}
 
 	template <typename T>
-	bool SimulatorGPU<T>::setParams(int* list)
+	bool SimulatorGPU<T>::setDimensions(int y , int x)
 	{
-		nSegments = list[0];
-		this->y_dim = list[1];
-		this->x_dim = list[2];
-		this->nBlocks = list[3];
-		this->nThreads = list[4];
+		this->y_dim = y;
+		this->x_dim = x;
 		return true;
 	}
 }

@@ -30,7 +30,7 @@ namespace CellularAutomata {
 		*/
 		virtual T getMaxValidState() override;
 
-		virtual bool setParams(int* list) override;
+		virtual bool setDimensions(int y, int x) override;
 	};
 }
 #include "SimulatorSequential.inl"

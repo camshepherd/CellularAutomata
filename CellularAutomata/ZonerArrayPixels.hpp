@@ -16,15 +16,15 @@ namespace CellularAutomata {
 		public IDeadZoneHandlerArray<T>
 	{
 	protected:
-		bool* cellActivities, *rawActivities;
-		
+		bool *cellActivities, *rawActivities;
+		int *dims, *maxDims;
 	public:
-		int ydim, xdim;
+		
 		/** Constructor 1. Create a zoner of the specified dimensions
 		@param y: The size of the simulation in the y axis
 		@param x: The size of the simulation in the x axis
 		*/
-		CUDA_FUNCTION ZonerArrayPixels(int y, int x, bool* A, bool* B);
+		CUDA_FUNCTION ZonerArrayPixels(int * dims, int* maxDims, bool* A, bool* B);
 
 		/** Destructor 1. Default destructor
 		*/
@@ -34,7 +34,7 @@ namespace CellularAutomata {
 		@param frame1: y*x frame to be compared against frame2
 		@param frame2: y*x frame of cell state to be compared against frame1
 		*/
-		CUDA_FUNCTION bool virtual updateDeadZones(T* frame1, T* frame2,int* dimensions) override;
+		CUDA_FUNCTION bool virtual updateDeadZones(T* frame1, T* frame2) override;
 
 		/** Get whether the target cell is live (may change in the next frame)
 		@param y: The y-coordinate of the target cell
@@ -46,7 +46,9 @@ namespace CellularAutomata {
 		*/
 		CUDA_FUNCTION bool* getCellActivities();
 
-		CUDA_FUNCTION virtual bool setDimensions(int y, int x) override;
+		CUDA_FUNCTION virtual bool setDimensions(int* dims) override;
+
+		CUDA_FUNCTION virtual bool refresh() override;
 	};
 }
 #include "ZonerArrayPixels.inl"

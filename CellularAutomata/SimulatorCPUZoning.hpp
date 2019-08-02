@@ -33,7 +33,7 @@ namespace CellularAutomata {
 		*/
 		virtual bool stepForwardRegion(int y_min, int y_max, int x_min, int x_max) override;
 
-		virtual bool setParams(int* list) override;
+		virtual bool setDimensions(int y, int x) override;
 	};
 }
 #include "SimulatorCPUZoning.inl"

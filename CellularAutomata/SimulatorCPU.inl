@@ -59,11 +59,18 @@ namespace CellularAutomata {
 	}
 
 	template <typename T>
-	bool SimulatorCPU<T>::setParams(int* list)
+	bool SimulatorCPU<T>::setDimensions(int y, int x)
 	{
-		nSegments = list[0];
-		this->y_dim = list[1];
-		this->x_dim = list[2];
+		this->y_dim = y;
+		this->x_dim = x;
 		return true;
 	}
+
+	template <typename T>
+	bool SimulatorCPU<T>::setLaunchParams(int nSegments)
+	{
+		this->nSegments = nSegments;
+		return true;
+	}
+
 }
