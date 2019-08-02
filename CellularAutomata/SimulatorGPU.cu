@@ -113,7 +113,8 @@ namespace CellularAutomata {
 		checkCudaErrors(cudaMemcpy(d_zoner_dims, dims, sizeof(int) * 2, cudaMemcpyHostToDevice));
 		checkCudaErrors(cudaMalloc(&d_zoner_maxDims, sizeof(int) * 2));
 		checkCudaErrors(cudaMemcpy(d_zoner_maxDims, maxDims, sizeof(int) * 2, cudaMemcpyHostToDevice));
-		
+
+		checkCudaErrors(cudaMalloc(&(this->d_zoner), sizeof(ZonerArrayPixels<T>)));
 		checkCudaErrors(cudaMalloc(&d_zoner_a, sizeof(bool) * y_max * x_max));
 		checkCudaErrors(cudaMalloc(&d_zoner_b, sizeof(bool) * y_max * x_max));
 		//free(dims);
@@ -288,7 +289,6 @@ namespace CellularAutomata {
 		free(h_segments);
 		free(h_context);
 		free(h_dimensions);
-
 
 		return elapsed;
 	}

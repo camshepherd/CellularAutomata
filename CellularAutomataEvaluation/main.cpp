@@ -80,19 +80,19 @@ bool runSimulations(std::ofstream& log, std::ofstream& error_log, int ydim, int 
 		sims.push_back(new SimulatorCPUZoning<T>{ ydim,xdim,*rules[ruleSet],stripsVer,zoner });
 		simNames[5] = "CPUVerZon";
 
-		sims.push_back(new SimulatorGPUZoning<T>{ ydim,xdim,*rulesArray[ruleSet],stripsVer,nBlocks,nThreads });
-		simNames[6] = "GPUVerZon";
-
-		sims.push_back(new SimulatorGPUZoning<T>{ ydim,xdim,*rulesArray[ruleSet],stripsHor,nBlocks,nThreads });
-		simNames[7] = "GPUHorZon";
 
 		sims.push_back(new SimulatorGPU<T>{ ydim,xdim,*rulesArray[ruleSet],stripsVer,2,32 });
-		simNames[8] = "GPUVer";
+		simNames[6] = "GPUVer";
 
 		sims.push_back(new SimulatorGPU<T>{ ydim,xdim,*rulesArray[ruleSet],stripsHor,2,32 });
-		simNames[9] = "GPUHor";
+		simNames[7] = "GPUHor";
 
-		
+
+		sims.push_back(new SimulatorGPUZoning<T>{ ydim,xdim,*rulesArray[ruleSet],stripsVer,nBlocks,nThreads });
+		simNames[8] = "GPUVerZon";
+
+		sims.push_back(new SimulatorGPUZoning<T>{ ydim,xdim,*rulesArray[ruleSet],stripsHor,nBlocks,nThreads });
+		simNames[9] = "GPUHorZon";
 
 
 		// Sequential
@@ -183,8 +183,8 @@ bool runSimulations(std::ofstream& log, std::ofstream& error_log, int ydim, int 
 		try {
 			int runs = 0;
 			for (int r = 6; r < 10; ++r) {
-				for (ydim = 10; ydim < 10000; ydim *= 10) {
-					for (xdim = 10; xdim < 10000; xdim *= 10) {
+				for (ydim = 10000; ydim < 100000; ydim *= 10) {
+					for (xdim = 10000; xdim < 100000; xdim *= 10) {
 						for (float density = 0.05; density < 1; density += 1) {
 							for (nBlocks = 64; nBlocks < 128; nBlocks*=2)
 							{
@@ -204,20 +204,9 @@ bool runSimulations(std::ofstream& log, std::ofstream& error_log, int ydim, int 
 											params[3] = nBlocks;
 											params[4] = nThreads;
 											sims[r]->setParams(params);*/
-											if(r == 6 || r == 7)
+											if(r == 8 || r == 9)
 											{
-												/*SimulatorGPUZoning<T> *sim = static_cast<SimulatorGPUZoning<T>*>(sims[r]);
-												sim->setLaunchParams(nBlocks, nThreads, nSegments);
-												sim->setDimensions(ydim, xdim);
-												for (int e = 0; e < repeats; ++e) {
-													sim->clear();
-													initialiseFrame(*sims[r], density);
-													totalTime += sims[r]->stepForward(nFrames);
-												}*/
-											}
-											else
-											{
-												SimulatorGPU<T> *sim = static_cast<SimulatorGPU<T>*>(sims[r]);
+												SimulatorGPUZoning<T> *sim = static_cast<SimulatorGPUZoning<T>*>(sims[r]);
 												sim->setLaunchParams(nBlocks, nThreads, nSegments);
 												sim->setDimensions(ydim, xdim);
 												for (int e = 0; e < repeats; ++e) {
@@ -225,6 +214,17 @@ bool runSimulations(std::ofstream& log, std::ofstream& error_log, int ydim, int 
 													initialiseFrame(*sims[r], density);
 													totalTime += sims[r]->stepForward(nFrames);
 												}
+											}
+											else
+											{
+												/*SimulatorGPU<T> *sim = static_cast<SimulatorGPU<T>*>(sims[r]);
+												sim->setLaunchParams(nBlocks, nThreads, nSegments);
+												sim->setDimensions(ydim, xdim);
+												for (int e = 0; e < repeats; ++e) {
+													sim->clear();
+													initialiseFrame(*sims[r], density);
+													totalTime += sims[r]->stepForward(nFrames);
+												}*/
 											}
 
 											
