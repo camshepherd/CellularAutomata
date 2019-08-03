@@ -70,7 +70,7 @@ namespace CellularAutomata {
 		bool copyFrame() override;
 
 		virtual void printFrame(int frameNumber) override;
-		void rebuildCellStore();
+		virtual void rebuildCellStore();
 	};
 }
 #include "SimulatorVector.inl"

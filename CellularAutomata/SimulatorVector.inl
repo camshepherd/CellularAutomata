@@ -111,6 +111,7 @@ namespace CellularAutomata {
 		}
 		std::cout << "\n______________ END" << std::endl;
 	}
+	template <typename T>
 	void SimulatorVector<T>::rebuildCellStore()
 	{
 		cellStore = std::vector<std::vector<std::vector<T>>>();
