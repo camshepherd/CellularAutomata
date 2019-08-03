@@ -27,7 +27,10 @@ IRules<long long>* rulesLongLong;
 
 ISegmenter* segmenter;
 
-IDeadZoneHandler<int>* zoner;
+IDeadZoneHandler<bool>* zonerBool;
+IDeadZoneHandler<int>* zonerInt;
+IDeadZoneHandler<long>* zonerLong;
+IDeadZoneHandler<long long>* zonerLongLong;
 
 
 void printInsult() {
@@ -106,24 +109,85 @@ void handleInput(string line) {
 		int ydim, xdim;
 		// build simulatorType ruleSet [datatype=int] [ydim xdim nSegments nBlocks nThreads ymax xmax]
 		if (words[1] == "seq") {
-			if (words.size() > 3 && words[3] == "int") {
+			if (words.size() > 3 && words[3] == "bool") {
 				if (words[2] == "conway" || words[2] == "gol") {
-					rulesInt = new RulesConway<int>{};
+					rulesBool = new RulesConway<bool>{};
 				}
 				else {
-					rulesInt = new RulesBML<int>{};
+					cout << "Only available for Game of Life" << endl;
 				}
-				if (words.size() > 4) {
+				if (words.size() > 5) {
 					ydim = stoi(words[4]);
 					xdim = stoi(words[5]);
 				}
-				simType = 1;
-				simInt = new SimulatorSequential<int>{ ydim, xdim, *rulesInt };
+				simType = 0;
+				simBool = new SimulatorSequential<bool>{ ydim, xdim, *rulesBool };
 				cout << "Created\n";
 			}
+			else if (words.size() > 3 && words[3] == "int") {
+					if (words[2] == "conway" || words[2] == "gol") {
+						rulesInt = new RulesConway<int>{};
+					}
+					else {
+						rulesInt = new RulesBML<int>{};
+					}
+					if (words.size() > 5) {
+						ydim = stoi(words[4]);
+						xdim = stoi(words[5]);
+					}
+					simType = 1;
+					simInt = new SimulatorSequential<int>{ ydim, xdim, *rulesInt };
+					cout << "Created\n";
+				}
+				else if (words.size() > 3 && words[3] == "long") {
+					if (words[2] == "conway" || words[2] == "gol") {
+						rulesLong = new RulesConway<long>{};
+					}
+					else {
+						rulesLong = new RulesBML<long>{};
+					}
+					if (words.size() > 5) {
+						ydim = stoi(words[4]);
+						xdim = stoi(words[5]);
+					}
+					simType = 2;
+					simLong = new SimulatorSequential<long>{ ydim, xdim, *rulesLong };
+					cout << "Created\n";
+				}
+				else if (words.size() > 3 && words[3] == "longlong") {
+					if (words[2] == "conway" || words[2] == "gol") {
+						rulesLongLong = new RulesConway<long long>{};
+					}
+					else {
+						rulesLongLong = new RulesBML<long long>{};
+					}
+					if (words.size() > 5) {
+						ydim = stoi(words[4]);
+						xdim = stoi(words[5]);
+					}
+					simType = 3;
+					simLongLong = new SimulatorSequential<long long>{ ydim, xdim, *rulesLongLong };
+					cout << "Created\n";
+				}
 		}
 		else if (words[1] == "seqzon") {
-			if (words.size() > 3 && words[3] == "int") {
+			if (words.size() > 3 && words[3] == "bool") {
+				if (words[2] == "conway" || words[2] == "gol") {
+					rulesBool = new RulesConway<bool>{};
+				}
+				else {
+					cout << "Only available for Game of Life" << endl;
+				}
+				if (words.size() > 5) {
+					ydim = stoi(words[4]);
+					xdim = stoi(words[5]);
+				}
+				zonerBool = new ZonerPixels<bool>{ ydim,xdim };
+				simType = 0;
+				simBool = new SimulatorSequentialZoning<bool>{ ydim, xdim, *rulesBool,*zonerBool };
+				cout << "Created\n";
+			}
+			else if (words.size() > 3 && words[3] == "int") {
 				if (words[2] == "conway" || words[2] == "gol") {
 					rulesInt = new RulesConway<int>{};
 				}
@@ -134,21 +198,70 @@ void handleInput(string line) {
 					ydim = stoi(words[4]);
 					xdim = stoi(words[5]);
 				}
-				zoner = new ZonerPixels<int>{ ydim,xdim };
+				zonerInt = new ZonerPixels<int>{ ydim,xdim };
 				simType = 1;
-				simInt = new SimulatorSequentialZoning<int>{ ydim, xdim, *rulesInt,*zoner };
+				simInt = new SimulatorSequentialZoning<int>{ ydim, xdim, *rulesInt,*zonerInt };
+				cout << "Created\n";
+			}
+			else if (words.size() > 3 && words[3] == "long") {
+				if (words[2] == "conway" || words[2] == "gol") {
+					rulesLong = new RulesConway<long>{};
+				}
+				else {
+					rulesLong = new RulesBML<long>{};
+				}
+				if (words.size() > 5) {
+					ydim = stoi(words[4]);
+					xdim = stoi(words[5]);
+				}
+				zonerLong = new ZonerPixels<long>{ ydim,xdim };
+				simType = 2;
+				simLong = new SimulatorSequentialZoning<long>{ ydim, xdim, *rulesLong,*zonerLong };
+				cout << "Created\n";
+			}
+			else if (words.size() > 3 && words[3] == "longlong") {
+				if (words[2] == "conway" || words[2] == "gol") {
+					rulesLongLong = new RulesConway<long long>{};
+				}
+				else {
+					rulesLongLong = new RulesBML<long long>{};
+				}
+				if (words.size() > 5) {
+					ydim = stoi(words[4]);
+					xdim = stoi(words[5]);
+				}
+				zonerLongLong = new ZonerPixels<long long>{ ydim,xdim };
+				simType = 3;
+				simLongLong = new SimulatorSequentialZoning<long long>{ ydim, xdim, *rulesLongLong,*zonerLongLong };
 				cout << "Created\n";
 			}
 		}
 		else if (words[1] == "cpuhor") {
-			if (words.size() > 3 && words[3] == "int") {
+			if (words.size() > 3 && words[3] == "bool") {
+				if (words[2] == "conway" || words[2] == "gol") {
+					rulesBool = new RulesConway<bool>{};
+				}
+				else {
+					cout << "Only availalable for Game of Life" << endl;
+				}
+				if (words.size() > 5) {
+					ydim = stoi(words[4]);
+					xdim = stoi(words[5]);
+				}
+				segmenter = new SegmenterStrips{ 0 };
+
+				simType = 0;
+				simBool = new SimulatorCPU<bool>{ ydim, xdim, *rulesBool,*segmenter };
+				cout << "Created\n";
+			}
+			else if (words.size() > 3 && words[3] == "int") {
 				if (words[2] == "conway" || words[2] == "gol") {
 					rulesInt = new RulesConway<int>{};
 				}
 				else {
 					rulesInt = new RulesBML<int>{};
 				}
-				if (words.size() > 4) {
+				if (words.size() > 5) {
 					ydim = stoi(words[4]);
 					xdim = stoi(words[5]);
 				}
@@ -158,16 +271,67 @@ void handleInput(string line) {
 				simInt = new SimulatorCPU<int>{ ydim, xdim, *rulesInt,*segmenter };
 				cout << "Created\n";
 			}
+			else if (words.size() > 3 && words[3] == "long") {
+				if (words[2] == "conway" || words[2] == "gol") {
+					rulesLong = new RulesConway<long>{};
+				}
+				else {
+					rulesLong = new RulesBML<long>{};
+				}
+				if (words.size() > 5) {
+					ydim = stoi(words[4]);
+					xdim = stoi(words[5]);
+				}
+				segmenter = new SegmenterStrips{ 0 };
+
+				simType = 2;
+				simLong = new SimulatorCPU<long>{ ydim, xdim, *rulesLong,*segmenter };
+				cout << "Created\n";
+			}
+			else if (words.size() > 3 && words[3] == "longlong") {
+				if (words[2] == "conway" || words[2] == "gol") {
+					rulesLongLong = new RulesConway<long long>{};
+				}
+				else {
+					rulesLongLong = new RulesBML<long long>{};
+				}
+				if (words.size() > 5) {
+					ydim = stoi(words[4]);
+					xdim = stoi(words[5]);
+				}
+				segmenter = new SegmenterStrips{ 0 };
+
+				simType = 3;
+				simLongLong = new SimulatorCPU<long long>{ ydim, xdim, *rulesLongLong,*segmenter };
+				cout << "Created\n";
+			}
 		}
 		else if (words[1] == "cpuver") {
-			if (words.size() > 3 && words[3] == "int") {
+			if (words.size() > 3 && words[3] == "bool") {
+				if (words[2] == "conway" || words[2] == "gol") {
+					rulesBool = new RulesConway<bool>{};
+				}
+				else {
+					cout << "Only available for Game of Life" << endl;
+				}
+				if (words.size() > 5) {
+					ydim = stoi(words[4]);
+					xdim = stoi(words[5]);
+				}
+				segmenter = new SegmenterStrips{ 1 };
+
+				simType = 0;
+				simBool = new SimulatorCPU<bool>{ ydim, xdim, *rulesBool,*segmenter };
+				cout << "Created\n";
+			}
+			else if (words.size() > 3 && words[3] == "int") {
 				if (words[2] == "conway" || words[2] == "gol") {
 					rulesInt = new RulesConway<int>{};
 				}
 				else {
 					rulesInt = new RulesBML<int>{};
 				}
-				if (words.size() > 4) {
+				if (words.size() > 5) {
 					ydim = stoi(words[4]);
 					xdim = stoi(words[5]);
 				}
@@ -177,24 +341,112 @@ void handleInput(string line) {
 				simInt = new SimulatorCPU<int>{ ydim, xdim, *rulesInt,*segmenter };
 				cout << "Created\n";
 			}
+			else if (words.size() > 3 && words[3] == "long") {
+				if (words[2] == "conway" || words[2] == "gol") {
+					rulesLong = new RulesConway<long>{};
+				}
+				else {
+					rulesLong = new RulesBML<long>{};
+				}
+				if (words.size() > 5) {
+					ydim = stoi(words[4]);
+					xdim = stoi(words[5]);
+				}
+				segmenter = new SegmenterStrips{ 1 };
+
+				simType = 2;
+				simLong = new SimulatorCPU<long>{ ydim, xdim, *rulesLong,*segmenter };
+				cout << "Created\n";
+			}
+			else if (words.size() > 3 && words[3] == "longlong") {
+				if (words[2] == "conway" || words[2] == "gol") {
+					rulesLongLong = new RulesConway<long long>{};
+				}
+				else {
+					rulesLongLong = new RulesBML<long long>{};
+				}
+				if (words.size() > 5) {
+					ydim = stoi(words[4]);
+					xdim = stoi(words[5]);
+				}
+				segmenter = new SegmenterStrips{ 1 };
+
+				simType = 3;
+				simLongLong = new SimulatorCPU<long long>{ ydim, xdim, *rulesLongLong,*segmenter };
+				cout << "Created\n";
+			}
 		}
 		else if (words[1] == "cpuhorzon") {
-			if (words.size() > 3 && words[3] == "int") {
+			if (words.size() > 3 && words[3] == "bool") {
+				if (words[2] == "conway" || words[2] == "gol") {
+					rulesBool = new RulesConway<bool>{};
+				}
+				else {
+					cout << "Only available for Game of Life" << endl;
+				}
+				if (words.size() > 5) {
+					ydim = stoi(words[4]);
+					xdim = stoi(words[5]);
+				}
+				segmenter = new SegmenterStrips{ 0 };
+
+				zonerBool = new ZonerPixels<bool>{ ydim,xdim };
+				simType = 0;
+				simBool = new SimulatorCPUZoning<bool>{ ydim, xdim, *rulesBool,*segmenter,*zonerBool };
+				cout << "Created\n";
+			}
+			else if (words.size() > 3 && words[3] == "int") {
 				if (words[2] == "conway" || words[2] == "gol") {
 					rulesInt = new RulesConway<int>{};
 				}
 				else {
 					rulesInt = new RulesBML<int>{};
 				}
-				if (words.size() > 4) {
+				if (words.size() > 5) {
 					ydim = stoi(words[4]);
 					xdim = stoi(words[5]);
 				}
 				segmenter = new SegmenterStrips{ 0 };
 
-				zoner = new ZonerPixels<int>{ ydim,xdim };
+				zonerInt = new ZonerPixels<int>{ ydim,xdim };
 				simType = 1;
-				simInt = new SimulatorCPUZoning<int>{ ydim, xdim, *rulesInt,*segmenter,*zoner };
+				simInt = new SimulatorCPUZoning<int>{ ydim, xdim, *rulesInt,*segmenter,*zonerInt };
+				cout << "Created\n";
+			}
+			else if (words.size() > 3 && words[3] == "long") {
+				if (words[2] == "conway" || words[2] == "gol") {
+					rulesLong = new RulesConway<long>{};
+				}
+				else {
+					rulesLong = new RulesBML<long>{};
+				}
+				if (words.size() > 5) {
+					ydim = stoi(words[4]);
+					xdim = stoi(words[5]);
+				}
+				segmenter = new SegmenterStrips{ 0 };
+
+				zonerLong = new ZonerPixels<long>{ ydim,xdim };
+				simType = 2;
+				simLong = new SimulatorCPUZoning<long>{ ydim, xdim, *rulesLong,*segmenter,*zonerLong };
+				cout << "Created\n";
+			}
+			else if (words.size() > 3 && words[3] == "longlong") {
+				if (words[2] == "conway" || words[2] == "gol") {
+					rulesLongLong = new RulesConway<long long>{};
+				}
+				else {
+					rulesLongLong = new RulesBML<long long>{};
+				}
+				if (words.size() > 5) {
+					ydim = stoi(words[4]);
+					xdim = stoi(words[5]);
+				}
+				segmenter = new SegmenterStrips{ 0 };
+
+				zonerLongLong = new ZonerPixels<long long>{ ydim,xdim };
+				simType = 3;
+				simLongLong = new SimulatorCPUZoning<long long>{ ydim, xdim, *rulesLongLong,*segmenter,*zonerLongLong };
 				cout << "Created\n";
 			}
 		}

@@ -53,8 +53,7 @@ namespace CellularAutomata {
 	template <typename T>
 	bool SimulatorCPUZoning<T>::setDimensions(int y, int x)
 	{
-		this->y_dim = y;
-		this->x_dim = x;
+		this->setDimensions(y, x);
 		this->zoner.setDimensions(this->y_dim, this->x_dim);
 		return true;
 	}
