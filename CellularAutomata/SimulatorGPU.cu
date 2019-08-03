@@ -103,12 +103,13 @@ namespace CellularAutomata {
 		checkCudaErrors(cudaDeviceGetLimit(&size, cudaLimitMallocHeapSize));
 		printf("And now it is: %llu", size);
 		printf("The size is: %llu", size);
-		int *dims = static_cast<int*>(malloc(sizeof(int) * 2));
+
+		int dims[2];
+		int maxDims[2];
 		dims[0] = y;
 		dims[1] = x;
-		int *maxDims = static_cast<int*>(malloc(sizeof(int) * 2));
-		maxDims[2] = y_max;
-		maxDims[3] = x_max;
+		maxDims[0] = y_max;
+		maxDims[1] = x_max;
 		checkCudaErrors(cudaMalloc(&d_zoner_dims, sizeof(int) * 2));
 		checkCudaErrors(cudaMemcpy(d_zoner_dims, dims, sizeof(int) * 2, cudaMemcpyHostToDevice));
 		checkCudaErrors(cudaMalloc(&d_zoner_maxDims, sizeof(int) * 2));
@@ -117,11 +118,9 @@ namespace CellularAutomata {
 		checkCudaErrors(cudaMalloc(&(this->d_zoner), sizeof(ZonerArrayPixels<T>)));
 		checkCudaErrors(cudaMalloc(&d_zoner_a, sizeof(bool) * y_max * x_max));
 		checkCudaErrors(cudaMalloc(&d_zoner_b, sizeof(bool) * y_max * x_max));
-		//free(dims);
-		//free(maxDims);
+		
 		// Create the zoner
 		constructZoner<T> << <1, 1 >> > (d_zoner, d_zoner_dims, d_zoner_maxDims, d_zoner_a, d_zoner_b);
-		
 	};
 
 
@@ -207,6 +206,7 @@ namespace CellularAutomata {
 		//int numSegments = this->nBlocks * this->nThreads;
 		T *h_currFrame, *h_newFrame, *d_currFrame, *d_newFrame;
 		int *h_segments, *d_segments;
+		//int h_context[3];
 		int *h_context,*d_context;
 		int* h_dimensions, *d_dimensions;
 		int frameSize = this->x_dim * this->y_dim;

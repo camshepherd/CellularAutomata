@@ -41,6 +41,7 @@ namespace CellularAutomata {
 	{
 		this->y_dim = y;
 		this->x_dim = x;
+		this->rebuildCellStore();
 		return true;
 	}
 

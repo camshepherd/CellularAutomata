@@ -96,35 +96,36 @@ bool runSimulations(std::ofstream& log, std::ofstream& error_log, int ydim, int 
 
 
 		// Sequential
-		//try {
-		//	for (int r = 0; r < 2; ++r) {
-		//		for (ydim = 10; ydim < 1000; ydim *= 10) {
-		//			for (xdim = 10; xdim < 1000; xdim *= 10) {
-		//				for (density = 0; density < 1; density += 0.2) {
-		//					totalTime = 0;
+		try {
+			for (int r = 0; r < 2; ++r) {
+				for (ydim = 10; ydim < 100000; ydim *= 10) {
+					for (xdim = 10; xdim < 100000; xdim *= 10) {
+						sims[r]->setDimensions(ydim, xdim);
+						for (density = 0; density < 1; density += 0.2) {
+							totalTime = 0;
 
-		//					for (int e = 0; e < repeats; ++e) {
-		//						sims[r]->clear();
-		//						initialiseFrame(*sims[r], density);
-		//						totalTime += sims[r]->stepForward(nFrames);
-		//					}
-		//					// clear up the space that the simulation is taking up
-		//					sims[r]->clear();
-		//					meanTime = totalTime / repeats;
-		//					std::cout << simNames[r] << ", " << meanTime << std::endl;
-		//					log << simNames[r] << ", " << ruleSet << "," << ydim << "," << xdim << "," << density << "," << meanTime << "," << "-1" << "," << "-1" << "," << "-1" << "," << sizeof(T) << "," << "\n";
-		//				}
+							for (int e = 0; e < repeats; ++e) {
+								sims[r]->clear();
+								initialiseFrame(*sims[r], density);
+								totalTime += sims[r]->stepForward(nFrames);
+							}
+							// clear up the space that the simulation is taking up
+							sims[r]->clear();
+							meanTime = totalTime / repeats;
+							std::cout << simNames[r] << ", " << meanTime << std::endl;
+							log << simNames[r] << ", " << ruleSet << "," << ydim << "," << xdim << "," << density << "," << meanTime << "," << "-1" << "," << "-1" << "," << "-1" << "," << sizeof(T) << "," << "\n";
+						}
 
-		//			}
-		//		}
+					}
+				}
 
-		//	}
-		//}
-		//catch (std::exception e) {
-		//	error_log << "Sequential failure!: " << e.what() << "\n";
-		//	// std::cout << "Got an error: " << e.what() << std::endl;
-		//	//return 1;
-		//}
+			}
+		}
+		catch (std::exception e) {
+			error_log << "Sequential failure!: " << e.what() << "\n";
+			// std::cout << "Got an error: " << e.what() << std::endl;
+			return 1;
+		}
 
 		// CPU Parallelised
 
@@ -180,79 +181,78 @@ bool runSimulations(std::ofstream& log, std::ofstream& error_log, int ydim, int 
 		//}
 
 		// GPU Parallelised
-		try {
-			int runs = 0;
-			for (int r = 6; r < 10; ++r) {
-				for (ydim = 10000; ydim < 100000; ydim *= 10) {
-					for (xdim = 10000; xdim < 100000; xdim *= 10) {
-						for (float density = 0.05; density < 1; density += 1) {
-							for (nBlocks = 64; nBlocks < 128; nBlocks*=2)
-							{
-								for (nThreads = 32; nThreads < 64; nThreads*=2)
-								{
-									for (nSegments = 8; nSegments < 16; nSegments *= 8)
-									{
-										try {
-											++runs;
-											std::cout << "Run: " << runs << std::endl;
-											std::cout << "Using " << ruleSet << " with density " << density << std::endl;
-											totalTime = 0;
-											// params are persistent across runs
-											/*params[0] = nSegments;
-											params[1] = ydim;
-											params[2] = xdim;
-											params[3] = nBlocks;
-											params[4] = nThreads;
-											sims[r]->setParams(params);*/
-											if(r == 8 || r == 9)
-											{
-												SimulatorGPUZoning<T> *sim = static_cast<SimulatorGPUZoning<T>*>(sims[r]);
-												sim->setLaunchParams(nBlocks, nThreads, nSegments);
-												sim->setDimensions(ydim, xdim);
-												for (int e = 0; e < repeats; ++e) {
-													sim->clear();
-													initialiseFrame(*sims[r], density);
-													totalTime += sims[r]->stepForward(nFrames);
-												}
-											}
-											else
-											{
-												/*SimulatorGPU<T> *sim = static_cast<SimulatorGPU<T>*>(sims[r]);
-												sim->setLaunchParams(nBlocks, nThreads, nSegments);
-												sim->setDimensions(ydim, xdim);
-												for (int e = 0; e < repeats; ++e) {
-													sim->clear();
-													initialiseFrame(*sims[r], density);
-													totalTime += sims[r]->stepForward(nFrames);
-												}*/
-											}
+		//try {
+		//	int runs = 0;
+		//	for (int r = 6; r < 10; ++r) {
+		//		for (ydim = 100; ydim <= 10000; ydim *= 10) {
+		//			for (xdim = 100; xdim <= 10000; xdim *= 10) {
+		//				for (float density = 0.05; density < 1; density += 1) {
+		//					for (nBlocks = 2; nBlocks < 64; nBlocks*=2)
+		//					{
+		//						for (nThreads = 32; nThreads < 64; nThreads*=2)
+		//						{
+		//							nSegments = nBlocks * nThreads;
+		//							try {
+		//								++runs;
+		//								std::cout << "Run: " << runs << std::endl;
+		//								std::cout << "Using " << ruleSet << " with density " << density << std::endl;
+		//								totalTime = 0;
+		//								// params are persistent across runs
+		//								/*params[0] = nSegments;
+		//								params[1] = ydim;
+		//								params[2] = xdim;
+		//								params[3] = nBlocks;
+		//								params[4] = nThreads;
+		//								sims[r]->setParams(params);*/
+		//								if(r == 8 || r == 9)
+		//								{
+		//									SimulatorGPUZoning<T> *sim = static_cast<SimulatorGPUZoning<T>*>(sims[r]);
+		//									sim->setLaunchParams(nBlocks, nThreads, nSegments);
+		//									sim->setDimensions(ydim, xdim);
+		//									for (int e = 0; e < repeats; ++e) {
+		//										sim->clear();
+		//										initialiseFrame(*sims[r], density);
+		//										totalTime += sims[r]->stepForward(nFrames);
+		//									}
+		//								}
+		//								else
+		//								{
+		//									/*SimulatorGPU<T> *sim = static_cast<SimulatorGPU<T>*>(sims[r]);
+		//									sim->setLaunchParams(nBlocks, nThreads, nSegments);
+		//									sim->setDimensions(ydim, xdim);
+		//									for (int e = 0; e < repeats; ++e) {
+		//										sim->clear();
+		//										initialiseFrame(*sims[r], density);
+		//										totalTime += sims[r]->stepForward(nFrames);
+		//									}*/
+		//								}
 
-											
-											// clear up the space that the simulation is taking up
-											sims[r]->clear();
-											meanTime = totalTime / repeats;
-											std::cout << simNames[r] << ", " << meanTime << std::endl;
-											log << simNames[r] << ", " << ruleSet << "," << ydim << "," << xdim << "," << density << "," << meanTime << "," << nBlocks << "," << nThreads << "," << nSegments << "," << sizeof(T) << "," << "\n";
-										}
-										catch(std::exception f)
-										{
-											error_log << "Failed on blocks: " << nBlocks << ", threads: " << nThreads << ", and segments: " << nSegments << "\n";
-											std::cout << "Failed on blocks: " << nBlocks << ", threads: " << nThreads << ", and segments: " << nSegments << "\n";
-											error_log << "Exception was: " << f.what() << std::endl;
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		catch (std::exception e) {
-			error_log << "GPU failure!: " << e.what() << "\n";
-			//std::cout << "Got an error: " << e.what() << std::endl;
-			return 1;
-		}
+		//								
+		//								// clear up the space that the simulation is taking up
+		//								sims[r]->clear();
+		//								meanTime = totalTime / repeats;
+		//								std::cout << simNames[r] << ", " << meanTime << std::endl;
+		//								log << simNames[r] << ", " << ruleSet << "," << ydim << "," << xdim << "," << density << "," << meanTime << "," << nBlocks << "," << nThreads << "," << nSegments << "," << sizeof(T) << "," << "\n";
+		//							}
+		//							catch(std::exception f)
+		//							{
+		//								error_log << "Failed on blocks: " << nBlocks << ", threads: " << nThreads << ", and segments: " << nSegments << "\n";
+		//								std::cout << "Failed on blocks: " << nBlocks << ", threads: " << nThreads << ", and segments: " << nSegments << "\n";
+		//								error_log << "Exception was: " << f.what() << std::endl;
+		//							}
+		//							
+		//						}
+		//					}
+		//				}
+		//			}
+		//		}
+		//	}
+		//}
+		//catch (std::exception e) {
+		//	error_log << "GPU failure!: " << e.what() << "\n";
+		//	//std::cout << "Got an error: " << e.what() << std::endl;
+		//	return 1;
+		//}
 	}
 	return true;
 }
