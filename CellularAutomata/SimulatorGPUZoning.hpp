@@ -19,7 +19,7 @@ namespace CellularAutomata {
 
 		/** Constructor 2. Create the simulator utilising the given dependencies and defining the number of blocks and threads to use for simulation
 		 */
-		SimulatorGPUZoning(int y, int x, IRulesArray<T>& rules, ISegmenter& segmenter, int nBlocks, int nThreads, int y_max=1000, int x_max=1000);
+		SimulatorGPUZoning(int y, int x, IRulesArray<T>& rules, ISegmenter& segmenter, int nBlocks, int nThreads, int y_max=10000, int x_max=10000);
 		
 		/** Destructor 1. Default destructor
 		*/

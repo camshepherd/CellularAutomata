@@ -34,4 +34,13 @@ namespace CellularAutomata {
 		return elapsed;
 	}
 
+	template <typename T>
+	bool SimulatorSequentialZoning<T>::setDimensions(int y, int x)
+	{
+		this->y_dim = y;
+		this->x_dim = x;
+		this->rebuildCellStore();
+		zoner.setDimensions(y, x);
+		return true;
+	}
 }

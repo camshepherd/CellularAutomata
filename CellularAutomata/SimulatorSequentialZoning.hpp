@@ -26,6 +26,7 @@ namespace CellularAutomata {
 		*/
 		double stepForward(int steps = 1) override;
 
+		virtual bool setDimensions(int y, int x) override;
 	};
 }
 #include "SimulatorSequentialZoning.inl"

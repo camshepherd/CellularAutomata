@@ -96,4 +96,12 @@ namespace CellularAutomata {
 		cellStore.push_back(std::vector<std::vector<T>>(cellStore.back().begin(), cellStore.back().end()));
 		return true;
 	}
+
+	template <typename T>
+	void SimulatorVector<T>::rebuildCellStore()
+	{
+		cellStore = std::vector<std::vector<std::vector<T>>>();
+		clear();
+	}
+
 }
