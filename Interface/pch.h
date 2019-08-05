@@ -18,14 +18,20 @@
 #include <SimulatorSequentialZoning.hpp>
 #include <SimulatorCPUZoning.hpp>
 
+#include <SimulatorGPU.hpp>
+#include <SimulatorGPUZoning.hpp>
+
 #include <RulesConway.hpp>
 #include <RulesBML.hpp>
+
+#include <RulesArrayConway.hpp>
+#include <RulesArrayBML.hpp>
 
 #include <SegmenterStrips.hpp>
 #include <Stopwatch.hpp>
 
 #include <ZonerPixels.hpp>
-#include <ZonerRectangles.hpp>
+#include <ZonerArrayPixels.hpp>
 // TODO: add headers that you want to pre-compile here
 
 #endif //PCH_H
