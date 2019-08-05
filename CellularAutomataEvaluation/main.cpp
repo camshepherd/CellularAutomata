@@ -88,18 +88,18 @@ bool runSimulations(std::ofstream& log, std::ofstream& error_log, int ydim, int 
 		simNames[7] = "GPUHor";
 
 
-		sims.push_back(new SimulatorGPUZoning<T>{ ydim,xdim,*rulesArray[ruleSet],stripsVer,nBlocks,nThreads });
-		simNames[8] = "GPUVerZon";
+		//sims.push_back(new SimulatorGPUZoning<T>{ ydim,xdim,*rulesArray[ruleSet],stripsVer,nBlocks,nThreads });
+		//simNames[8] = "GPUVerZon";
 
-		sims.push_back(new SimulatorGPUZoning<T>{ ydim,xdim,*rulesArray[ruleSet],stripsHor,nBlocks,nThreads });
-		simNames[9] = "GPUHorZon";
+		//sims.push_back(new SimulatorGPUZoning<T>{ ydim,xdim,*rulesArray[ruleSet],stripsHor,nBlocks,nThreads });
+		//simNames[9] = "GPUHorZon";
 
 
 		// Sequential
 		try {
 			for (int r = 0; r < 2; ++r) {
-				for (ydim = 10; ydim < 100000; ydim *= 10) {
-					for (xdim = 10; xdim < 100000; xdim *= 10) {
+				for (ydim = 64; ydim <= 4096; ydim *= 2) {
+					for (xdim = 64; xdim < 4096; xdim *= 2) {
 						sims[r]->setDimensions(ydim, xdim);
 						for (density = 0; density < 1; density += 0.2) {
 							totalTime = 0;
@@ -129,130 +129,133 @@ bool runSimulations(std::ofstream& log, std::ofstream& error_log, int ydim, int 
 
 		// CPU Parallelised
 
-		//try {
-		//	for (int r = 2; r < 6; ++r) {
-		//		for (ydim = 10; ydim < 1000000; ydim *= 10) {
-		//			for (xdim = 10; xdim < 1000000; xdim *= 10) {
-		//				for (float density = 0; density < 1; density += 0.2) {
-		//					for (nSegments = 1; nSegments <= std::thread::hardware_concurrency(); nSegments*=2)
-		//					{
-		//						totalTime = 0;
-		//						if(r == 5 || r == 6)
-		//						{
-		//							SimulatorCPUZoning<T>* sim = static_cast<SimulatorCPUZoning<T>*>(sims[r]);
-		//							sim->setDimensions(ydim, xdim);
-		//							sim->setLaunchParams(nSegments);
-		//							for (int e = 0; e < repeats; ++e) {
-		//								sims[r]->clear();
-		//								initialiseFrame(*sims[r], density);
-		//								std::cout << "Running CPU with ydim " << sims[r]->getYDim() << " and xdim " << sims[r]->getXDim() << std::endl;
-		//								totalTime += sims[r]->stepForward(nFrames);
-		//							}
-		//						}
-		//						else
-		//						{
-		//							SimulatorCPU<T>* sim = static_cast<SimulatorCPU<T>*>(sims[r]);
-		//							sim->setDimensions(ydim, xdim);
-		//							sim->setLaunchParams(nSegments);
-		//							for (int e = 0; e < repeats; ++e) {
-		//								sims[r]->clear();
-		//								initialiseFrame(*sims[r], density);
-		//								std::cout << "Running CPU with ydim " << sims[r]->getYDim() << " and xdim " << sims[r]->getXDim() << std::endl;
-		//								totalTime += sims[r]->stepForward(nFrames);
-		//							}
-		//							
-		//						}
-		//						// clear up the space that the simulation is taking up
-		//						sims[r]->clear();
-		//						meanTime = totalTime / repeats;
-		//						std::cout << simNames[r] << ", " << meanTime << std::endl;
-		//						log << simNames[r] << ", " << ruleSet << "," << ydim << "," << xdim << "," << density << "," << meanTime << "," << nBlocks << "," << nThreads << "," << nSegments << "," << sizeof(T) << "," << "\n";
-		//					}
-		//				}
-		//			}
-		//		}
+		try {
+			for (int r = 2; r < 6; ++r) {
+				for (ydim = 64; ydim <= 4096; ydim *= 2) {
+					for (xdim = 64; xdim <= 4096; xdim *= 2) {
+						for (float density = 0; density < 1; density += 0.2) {
+							for (nSegments = 1; nSegments <= std::thread::hardware_concurrency(); nSegments+=1)
+							{
+								totalTime = 0;
+								if(r == 5 || r == 6)
+								{
+									SimulatorCPUZoning<T>* sim = static_cast<SimulatorCPUZoning<T>*>(sims[r]);
+									sim->setDimensions(ydim, xdim);
+									sim->setLaunchParams(nSegments);
+									for (int e = 0; e < repeats; ++e) {
+										sims[r]->clear();
+										initialiseFrame(*sims[r], density);
+										//std::cout << "Running CPU with ydim " << sims[r]->getYDim() << " and xdim " << sims[r]->getXDim() << std::endl;
+										totalTime += sims[r]->stepForward(nFrames);
+									}
+								}
+								else
+								{
+									SimulatorCPU<T>* sim = static_cast<SimulatorCPU<T>*>(sims[r]);
+									sim->setDimensions(ydim, xdim);
+									sim->setLaunchParams(nSegments);
+									for (int e = 0; e < repeats; ++e) {
+										sims[r]->clear();
+										initialiseFrame(*sims[r], density);
+										//std::cout << "Running CPU with ydim " << sims[r]->getYDim() << " and xdim " << sims[r]->getXDim() << std::endl;
+										totalTime += sims[r]->stepForward(nFrames);
+									}
+									
+								}
+								// clear up the space that the simulation is taking up
+								sims[r]->clear();
+								meanTime = totalTime / repeats;
+								std::cout << simNames[r] << ", " << meanTime << std::endl;
+								log << simNames[r] << ", " << ruleSet << "," << ydim << "," << xdim << "," << density << "," << meanTime << "," << nBlocks << "," << nThreads << "," << nSegments << "," << sizeof(T) << "," << "\n";
+							}
+						}
+					}
+				}
 
-		//	}
-		//}
-		//catch (std::exception e) {
-		//	error_log << "CPU failure!: " << e.what() << "\n";
-		//	//std::cout << "Got an error: " << e.what() << std::endl;
-		//	//return 1;
-		//}
+			}
+		}
+		catch (std::exception e) {
+			error_log << "CPU failure!: " << e.what() << "\n";
+			//std::cout << "Got an error: " << e.what() << std::endl;
+			//return 1;
+		}
 
 		// GPU Parallelised
-		//try {
-		//	int runs = 0;
-		//	for (int r = 6; r < 10; ++r) {
-		//		for (ydim = 100; ydim <= 10000; ydim *= 10) {
-		//			for (xdim = 100; xdim <= 10000; xdim *= 10) {
-		//				for (float density = 0.05; density < 1; density += 1) {
-		//					for (nBlocks = 2; nBlocks < 64; nBlocks*=2)
-		//					{
-		//						for (nThreads = 32; nThreads < 64; nThreads*=2)
-		//						{
-		//							nSegments = nBlocks * nThreads;
-		//							try {
-		//								++runs;
-		//								std::cout << "Run: " << runs << std::endl;
-		//								std::cout << "Using " << ruleSet << " with density " << density << std::endl;
-		//								totalTime = 0;
-		//								// params are persistent across runs
-		//								/*params[0] = nSegments;
-		//								params[1] = ydim;
-		//								params[2] = xdim;
-		//								params[3] = nBlocks;
-		//								params[4] = nThreads;
-		//								sims[r]->setParams(params);*/
-		//								if(r == 8 || r == 9)
-		//								{
-		//									SimulatorGPUZoning<T> *sim = static_cast<SimulatorGPUZoning<T>*>(sims[r]);
-		//									sim->setLaunchParams(nBlocks, nThreads, nSegments);
-		//									sim->setDimensions(ydim, xdim);
-		//									for (int e = 0; e < repeats; ++e) {
-		//										sim->clear();
-		//										initialiseFrame(*sims[r], density);
-		//										totalTime += sims[r]->stepForward(nFrames);
-		//									}
-		//								}
-		//								else
-		//								{
-		//									/*SimulatorGPU<T> *sim = static_cast<SimulatorGPU<T>*>(sims[r]);
-		//									sim->setLaunchParams(nBlocks, nThreads, nSegments);
-		//									sim->setDimensions(ydim, xdim);
-		//									for (int e = 0; e < repeats; ++e) {
-		//										sim->clear();
-		//										initialiseFrame(*sims[r], density);
-		//										totalTime += sims[r]->stepForward(nFrames);
-		//									}*/
-		//								}
+		try {
+			int runs = 0;
+			for (int r = 6; r < 10; ++r) {
+				for (ydim = 256; ydim <= 4096; ydim *= 2) {
+					for (xdim = 256; xdim <= 4096; xdim *= 2) {
+						for (float density = 0; density < 1; density += 0.2) {
+							for (nBlocks = 2; nBlocks <= 32; nBlocks*=2)
+							{
+								for (nThreads = 32; nThreads <= 256; nThreads*=2)
+								{
+									nSegments = nBlocks * nThreads;
+									try {
+										++runs;
+										//std::cout << "Run: " << runs << std::endl;
+										//std::cout << "Using " << ruleSet << " with density " << density << std::endl;
+										totalTime = 0;
+										// params are persistent across runs
+										/*params[0] = nSegments;
+										params[1] = ydim;
+										params[2] = xdim;
+										params[3] = nBlocks;
+										params[4] = nThreads;
+										sims[r]->setParams(params);*/
+										if(r == 8 || r == 9)
+										{
+											//SimulatorGPUZoning<T> *sim = static_cast<SimulatorGPUZoning<T>*>(sims[r]);
+											/*((SimulatorGPUZoning<T>*)(sims[r]))->setLaunchParams(nBlocks, nThreads, nSegments);
+											sims[r]->setDimensions(ydim, xdim);
+											for (int e = 0; e < repeats; ++e) {
+												sims[r]->clear();
+												initialiseFrame(*sims[r], density);
+												totalTime += sims[r]->stepForward(nFrames);
+											}*/
+										}
+										else
+										{
+											SimulatorGPU<T> *sim = static_cast<SimulatorGPU<T>*>(sims[r]);
+											sim->setLaunchParams(nBlocks, nThreads, nSegments);
+											sim->setDimensions(ydim, xdim);
+											for (int e = 0; e < repeats; ++e) {
+												sim->clear();
+												initialiseFrame(*sims[r], density);
+												totalTime += sims[r]->stepForward(nFrames);
+											}
+										}
 
-		//								
-		//								// clear up the space that the simulation is taking up
-		//								sims[r]->clear();
-		//								meanTime = totalTime / repeats;
-		//								std::cout << simNames[r] << ", " << meanTime << std::endl;
-		//								log << simNames[r] << ", " << ruleSet << "," << ydim << "," << xdim << "," << density << "," << meanTime << "," << nBlocks << "," << nThreads << "," << nSegments << "," << sizeof(T) << "," << "\n";
-		//							}
-		//							catch(std::exception f)
-		//							{
-		//								error_log << "Failed on blocks: " << nBlocks << ", threads: " << nThreads << ", and segments: " << nSegments << "\n";
-		//								std::cout << "Failed on blocks: " << nBlocks << ", threads: " << nThreads << ", and segments: " << nSegments << "\n";
-		//								error_log << "Exception was: " << f.what() << std::endl;
-		//							}
-		//							
-		//						}
-		//					}
-		//				}
-		//			}
-		//		}
-		//	}
-		//}
-		//catch (std::exception e) {
-		//	error_log << "GPU failure!: " << e.what() << "\n";
-		//	//std::cout << "Got an error: " << e.what() << std::endl;
-		//	return 1;
-		//}
+										
+										// clear up the space that the simulation is taking up
+										sims[r]->clear();
+										meanTime = totalTime / repeats;
+										std::cout << simNames[r] << ", " << meanTime << std::endl;
+										log << simNames[r] << ", " << ruleSet << "," << ydim << "," << xdim << "," << density << "," << meanTime << "," << nBlocks << "," << nThreads << "," << nSegments << "," << sizeof(T) << "," << "\n";
+									}
+									catch(std::exception f)
+									{
+										error_log << "Failed on blocks: " << nBlocks << ", threads: " << nThreads << ", and segments: " << nSegments << "\n";
+										std::cout << "Failed on blocks: " << nBlocks << ", threads: " << nThreads << ", and segments: " << nSegments << "\n";
+										error_log << "Exception was: " << f.what() << std::endl;
+									}
+									
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		catch (std::exception e) {
+			error_log << "GPU failure!: " << e.what() << "\n";
+			//std::cout << "Got an error: " << e.what() << std::endl;
+			return 1;
+		}
+
+		sims.clear();
+		simNames.clear();
 	}
 	return true;
 }
@@ -261,7 +264,7 @@ bool runSimulations(std::ofstream& log, std::ofstream& error_log, int ydim, int 
 int main() {
 	Stopwatch timer;
 	timer.reset();
-	int ydim = 200, xdim = 200, nFrames = 1;
+	int ydim = 256, xdim = 256, nFrames = 1;
 	std::string ID;
 	std::cout << "Please enter the Computer ID (single digit): " << std::endl;
 	std::cin >> ID;

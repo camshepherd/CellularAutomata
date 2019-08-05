@@ -48,6 +48,8 @@ namespace CellularAutomata {
 	template <typename T>
 	SimulatorGPU<T>::~SimulatorGPU()
 	{
+		printf("\nGPUSIM  BEING DELETED at %p", this);
+		this->clear();
 		checkCudaErrors(cudaDeviceReset());
 	}
 
@@ -55,11 +57,13 @@ namespace CellularAutomata {
 	template <typename T>
 	SimulatorGPUZoning<T>::~SimulatorGPUZoning()
 	{
-		checkCudaErrors(cudaFree(d_zoner));
-		checkCudaErrors(cudaFree(d_zoner_a));
+		printf("\nGPUZONING BEING DELETED at %p\n",this);
+		this->clear();
+		//checkCudaErrors(cudaFree(d_zoner));
+		/*checkCudaErrors(cudaFree(d_zoner_a));
 		checkCudaErrors(cudaFree(d_zoner_b));
 		checkCudaErrors(cudaFree(d_zoner_dims));
-		checkCudaErrors(cudaFree(d_zoner_maxDims));
+		checkCudaErrors(cudaFree(d_zoner_maxDims));*/
 	};
 
 
@@ -81,6 +85,7 @@ namespace CellularAutomata {
 	template <typename T>
 	SimulatorGPU<T>::SimulatorGPU(int ydim, int xdim, IRulesArray<T>& rules, ISegmenter& segmenter, int nBlocks, int nThreads) : SimulatorArray<T>(ydim, xdim, rules), segmenter(segmenter), nBlocks(nBlocks), nThreads(nThreads)
 	{
+		printf("SimulatorGPU location is %p\n", this);
 		size_t size;
 		checkCudaErrors(cudaDeviceGetLimit(&size, cudaLimitMallocHeapSize));
 		printf("The size is: %llu", size);
@@ -95,6 +100,9 @@ namespace CellularAutomata {
 	template<typename T>
 	SimulatorGPUZoning<T>::SimulatorGPUZoning(int y, int x, IRulesArray<T>& rules, ISegmenter& segmenter, int nBlocks, int nThreads, int y_max, int x_max) : SimulatorGPU<T>(y, x, rules, segmenter, nBlocks, nThreads), y_max(y_max), x_max(x_max)
 	{
+		printf("SimulatorGPUZoning location is %p", this);
+		printf("A is %p\n", this->d_zoner_a);
+		printf("B is %p\n", this->d_zoner_b);
 		size_t size;
 		checkCudaErrors(cudaDeviceGetLimit(&size, cudaLimitMallocHeapSize));
 		printf("The size is: %llu", size);
