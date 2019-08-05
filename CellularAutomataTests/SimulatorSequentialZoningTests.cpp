@@ -53,5 +53,23 @@ public:
 			}
 		}
 	}
+
+	TEST_METHOD(CanResize) {
+		RulesConway<long> con{};
+		ZonerPixels<long> zoner{ 19,19 };
+		SimulatorSequentialZoning<long> sim{ 19,19, con, zoner };
+		Assert::AreEqual(sim.getYDim(), 19);
+		Assert::AreEqual(sim.getXDim(), 19);
+
+		sim.stepForward(20);
+
+		sim.setDimensions(9, 4);
+		Assert::AreEqual(sim.getXDim(), 4);
+		Assert::AreEqual(sim.getYDim(), 9);
+		sim.stepForward(20);
+
+
+		// If this runs it should be fine
+	}
 	};
 }
