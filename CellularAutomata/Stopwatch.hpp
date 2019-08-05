@@ -14,15 +14,21 @@ namespace CellularAutomata {
 		std::chrono::time_point<clock_t> start_time;
 
 	public:
+		/** Constructor 1. Default constructor; start the clock
+		*/
 		Stopwatch() : start_time(clock_t::now())
 		{
 		}
 
+		/** Reset the stopwatch, starting the clock from 0 again
+		*/
 		void reset()
 		{
 			start_time = clock_t::now();
 		}
 
+		/** Get tiem elapsed since the clock was started in seconds
+		*/
 		double elapsed() const
 		{
 			return std::chrono::duration_cast<second_t>(clock_t::now() - start_time).count();

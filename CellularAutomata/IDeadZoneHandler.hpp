@@ -30,6 +30,10 @@ namespace CellularAutomata {
 		*/
 		bool virtual isLive(int y, int x) = 0;
 
+		/** Set the dimensions of the frame that the zoner is handling
+		@param y: The size of the frame in the y dimension
+		@param x: The size of the frame in the x dimension
+		*/
 		bool virtual setDimensions(int y, int x) = 0;
 
 	};

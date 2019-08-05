@@ -69,7 +69,13 @@ namespace CellularAutomata {
 		*/
 		bool copyFrame() override;
 
-		virtual void printFrame(int frameNumber) override;
+		/** Print the specified frame to stdout
+		@param frameNum: Number of the frame to print
+		*/
+		virtual void printFrame(int frameNum) override;
+
+		/** Rebuild the cellStore to match the current dimensions
+		*/
 		virtual void rebuildCellStore();
 	};
 }

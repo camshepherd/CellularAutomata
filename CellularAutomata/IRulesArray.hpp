@@ -18,6 +18,8 @@ namespace CellularAutomata {
 		*/
 		CUDA_FUNCTION virtual T getMaxValidState() const = 0;
 
+		/** Destructor 1. Default destructor
+		*/
 		CUDA_FUNCTION virtual ~IRulesArray<T>() {};
 
 		/** Whether the given state is valid in the context of the model
