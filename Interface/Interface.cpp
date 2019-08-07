@@ -770,20 +770,21 @@ void handleInput(string line) {
 	else if (words[0] == "step") {
 		//step[steps = 1]
 		int steps = 1;
+		
 		if (words.size() > 1) {
 			steps = stoi(words[1]);
 		}
 		if (simType == 0) {
-			simBool->stepForward(steps);
+			cout << "Took " << simBool->stepForward(steps) << " seconds";
 		}
 		else if (simType == 1) {
-			simInt->stepForward(steps);
+			cout << "Took " << simInt->stepForward(steps) << " seconds";
 		}
 		else if (simType == 2) {
-			simLong->stepForward(steps);
+			cout << "Took " << simLong->stepForward(steps) << " seconds";
 		}
 		else if (simType == 3) {
-			simLongLong->stepForward(steps);
+			cout << "Took " << simLongLong->stepForward(steps) << " seconds";
 		}
 	}
 	else if (words[0] == "clear") {
