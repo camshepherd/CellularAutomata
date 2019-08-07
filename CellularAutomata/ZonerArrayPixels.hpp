@@ -46,8 +46,14 @@ namespace CellularAutomata {
 		*/
 		CUDA_FUNCTION bool* getCellActivities();
 
+		/** Set the dimensions of the frame that the zoner is handling
+		@param y: The size of the frame in the y dimension
+		@param x: The size of the frame in the x dimension
+		*/
 		CUDA_FUNCTION virtual bool setDimensions(int* dims) override;
 
+		/** Reset all stored cell states, matching with the current frame dimensions
+		*/
 		CUDA_FUNCTION virtual bool refresh() override;
 	};
 }

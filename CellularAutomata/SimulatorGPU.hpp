@@ -42,6 +42,10 @@ namespace CellularAutomata {
 		*/
 		bool setLaunchParams(int nBlocks, int nThreads, int nSegments);
 
+		/** Set the dimensions of the frame that the zoner is handling
+		@param y: The size of the frame in the y dimension
+		@param x: The size of the frame in the x dimension
+		*/
 		virtual bool setDimensions(int y, int x) override;
 	};
 }

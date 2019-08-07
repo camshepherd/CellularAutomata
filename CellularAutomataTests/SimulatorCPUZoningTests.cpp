@@ -82,5 +82,25 @@ public:
 			}
 		}
 	}
+
+	TEST_METHOD(CanResize) {
+		RulesConway<int> bml{};
+		SegmenterStrips seg{};
+		SimulatorCPU<int> sim{ 19,19,bml,seg };
+		Assert::AreEqual(sim.getYDim(), 19);
+		Assert::AreEqual(sim.getXDim(), 19);
+
+		sim.stepForward(20);
+
+		sim.setDimensions(9, 4);
+		Assert::AreEqual(sim.getYDim(), 9);
+		Assert::AreEqual(sim.getXDim(), 4);
+
+		sim.stepForward(20);
+
+
+		// If this runs it should be fine
+	}
+
 };
 }

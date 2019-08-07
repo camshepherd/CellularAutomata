@@ -106,6 +106,9 @@ namespace CellularAutomata {
 			}
 		}
 
+		/** Print the specified frame to stdout
+		@param frameNum: The frame number to print; defaults to -1: highest-numbered
+		*/
 		virtual void printFrame(int frameNum=-1) = 0;
 	};
 }

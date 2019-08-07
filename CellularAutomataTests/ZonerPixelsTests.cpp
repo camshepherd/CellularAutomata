@@ -77,5 +77,27 @@ public:
 			}
 		}
 	}
+
+	TEST_METHOD(CanResize) {
+		// single change
+
+		ZonerPixels<int> zoner{ 20,20};
+		std::vector<std::vector<int>> frame1(20, std::vector<int>(20, 0));
+		std::vector<std::vector<int>> frame2(frame1.begin(), frame1.end());
+
+		frame1[8][2] = 1;
+		zoner.updateDeadZones(frame1, frame2);
+		zoner.setDimensions(10, 10);
+
+		// check that it does set the activities correctly
+		Assert::IsTrue(zoner.isLive(0, 0));
+		Assert::IsTrue(zoner.isLive(9, 9));
+
+		auto state = zoner.getCellActivities();
+
+		Assert::IsTrue(state.size() == 10);
+		Assert::IsTrue(state[6].size() == 10);
+
+	}
 	};
 }

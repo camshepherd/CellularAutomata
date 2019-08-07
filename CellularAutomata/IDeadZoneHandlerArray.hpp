@@ -38,8 +38,14 @@ namespace CellularAutomata {
 		*/
 		CUDA_FUNCTION bool virtual isLive(int y, int x) = 0;
 
-
+		/** Set the dimensions of the frame that the zoner is handling
+		@param y: The size of the frame in the y dimension
+		@param x: The size of the frame in the x dimension
+		*/
 		CUDA_FUNCTION bool virtual setDimensions(int* dims) = 0;
+
+		/** Reset the state, so that all cells are active once again
+		*/
 
 		CUDA_FUNCTION bool virtual refresh() = 0;
 	};

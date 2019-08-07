@@ -67,5 +67,24 @@ namespace SimulatorTesting {
 				}
 			}
 		}
+
+		TEST_METHOD(CanResize) {
+			RulesConway<long long> con{};
+			SegmenterStrips seg{};
+			SimulatorCPU<long long> sim{ 19,19,con,seg };
+			Assert::AreEqual(sim.getYDim(), 19);
+			Assert::AreEqual(sim.getXDim(), 19);
+
+			sim.stepForward(20);
+
+			sim.setDimensions(9, 4);
+			Assert::AreEqual(sim.getYDim(), 9);
+			Assert::AreEqual(sim.getXDim(), 4);
+
+			sim.stepForward(20);
+
+
+			// If this runs it should be fine
+		}
 	};
 }

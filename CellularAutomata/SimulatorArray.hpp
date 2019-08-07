@@ -68,6 +68,9 @@ namespace CellularAutomata {
 		*/
 		bool copyFrame() override;
 
+		/** Print the frame to stdout
+		@param frameNum: Number of the frame to output. When set to -1 will use the highest-numbered
+		*/
 		virtual void printFrame(int frameNum) override;
 	};
 }

@@ -161,5 +161,22 @@ namespace SimulatorTesting {
 			Assert::AreEqual(sim.getCell(3, 3), 1);
 			Assert::AreEqual(sim.getCell(3, 1), 2);
 		}
+
+		TEST_METHOD(CanResize) {
+			RulesBML<long> bml{};
+			SimulatorSequential<long> sim{ 19,19,bml };
+			Assert::AreEqual(sim.getYDim(), 19);
+			Assert::AreEqual(sim.getXDim(), 19);
+
+			sim.stepForward(20);
+
+			sim.setDimensions(9, 4);
+			Assert::AreEqual(sim.getYDim(), 9);
+			Assert::AreEqual(sim.getXDim(), 4);
+			sim.stepForward(20);
+			
+
+			// If this runs it should be fine
+		}
 	};
 }
