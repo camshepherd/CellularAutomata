@@ -208,7 +208,7 @@ namespace CellularAutomata {
 
 	template <typename T>
 	double SimulatorGPU<T>::stepForward(int steps) {
-		printf("SIMULATOR DIMENSIONS: %d, %d", this->y_dim, this->x_dim);
+		//printf("SIMULATOR DIMENSIONS: %d, %d", this->y_dim, this->x_dim);
 		this->timer.reset();
 		// declare the variables needed
 		//int numSegments = this->nBlocks * this->nThreads;
