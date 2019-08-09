@@ -39,7 +39,7 @@ bool runSimulations(std::ofstream& log, std::ofstream& error_log)
 	RulesConway<T> con{};
 	float meanTime,density = 0.3;
 	SimulatorSequential<T> seq{ 64,64,bml };
-	for(int y = 64; y < 4096;y*=2)
+	for(int y = 64; y <= 4096;y*=2)
 	{
 			meanTime = 0;
 			seq.setDimensions(y, y);
@@ -58,7 +58,6 @@ bool runSimulations(std::ofstream& log, std::ofstream& error_log)
 	SimulatorSequential<T>seq2{ 64,64,con };
 	for (int y = 64; y <= 4096; y*=2)
 	{
-
 			meanTime = 0;
 			seq2.setDimensions(y, y);
 			for (int r = 0; r < numRepeats; ++r)
@@ -77,7 +76,6 @@ bool runSimulations(std::ofstream& log, std::ofstream& error_log)
 	SimulatorSequentialZoning<T> seqzon{ 64,64,bml,zoner };
 	for (int y = 64; y <= 4096; y *= 2)
 	{
-
 			meanTime = 0;
 			seqzon.setDimensions(y, y);
 			zoner.setDimensions(y, y);
@@ -89,14 +87,12 @@ bool runSimulations(std::ofstream& log, std::ofstream& error_log)
 			}
 			meanTime /= numRepeats;
 			log << "seqzon,bml," << y << "," << y << "," << density << "," << meanTime << ",-1,-1," << sizeID << std::endl;
-		
 	}
 	seqzon.clear(false);
 	std::cout << "done seq zoning bml" << std::endl;
 	SimulatorSequentialZoning<T> seqzon2{ 64,64,con,zoner };
 	for (int y = 64; y <= 4096; y *= 2)
 	{
-
 			meanTime = 0;
 			seqzon2.setDimensions(y, y);
 			for (int r = 0; r < numRepeats; ++r)
@@ -107,16 +103,17 @@ bool runSimulations(std::ofstream& log, std::ofstream& error_log)
 			}
 			meanTime /= numRepeats;
 			log << "seqzon,con," << y << "," << y << "," << density << "," << meanTime << ",-1,-1," << sizeID << std::endl;
-		
 	}
 	seqzon2.clear(false);
-	int numThreads = std::thread::hardware_concurrency();
-	SegmenterStrips seg{};
+	
 	std::cout << "done seqzon conway" << std::endl;
+	int numThreads = std::thread::hardware_concurrency();
+	SegmenterStrips seg{ 0 };
+	
+
 	SimulatorCPU<T> cpu{ 64,64,bml,seg };
 	for (int y = 64; y <= 4096; y *= 2)
 	{
-
 			meanTime = 0;
 			cpu.setDimensions(y, y);
 			for (int r = 0; r < numRepeats; ++r)
@@ -127,15 +124,15 @@ bool runSimulations(std::ofstream& log, std::ofstream& error_log)
 				meanTime += cpu.stepForward(numFrames);
 			}
 			meanTime /= numRepeats;
-			log << "cpu,bml," << y << "," << y << "," << density << "," << meanTime << ",-1," << numThreads << "," << sizeID << std::endl;
+			log << "cpuhor,bml," << y << "," << y << "," << density << "," << meanTime << ",-1," << numThreads << "," << sizeID << std::endl;
 		
 	}
+	std::cout << "done cpu bml horizontal";
 	cpu.clear(false);
 
 	SimulatorCPU<T> cpu2{ 64,64,con,seg };
 	for (int y = 64; y <= 4096; y *= 2)
 	{
-
 			meanTime = 0;
 			cpu2.setDimensions(y, y);
 			for (int r = 0; r < numRepeats; ++r)
@@ -146,10 +143,136 @@ bool runSimulations(std::ofstream& log, std::ofstream& error_log)
 				meanTime += cpu2.stepForward(numFrames);
 			}
 			meanTime /= numRepeats;
-			log << "cpu,con," << y << "," << y << "," << density << "," << meanTime << ",-1," << numThreads << "," << sizeID << std::endl;
+			log << "cpuhor,con," << y << "," << y << "," << density << "," << meanTime << ",-1," << numThreads << "," << sizeID << std::endl;
 		
 	}
+	std::cout << "Done cpu conway horizontal";
+
+
+
+
+		seg.setOrientation(1);
+	for (int y = 64; y <= 4096; y *= 2)
+	{
+		meanTime = 0;
+		cpu.setDimensions(y, y);
+		for (int r = 0; r < numRepeats; ++r)
+		{
+			cpu.rebuildCellStore();
+			initialiseFrame(cpu, density);
+			cpu.setLaunchParams(numThreads);
+			meanTime += cpu.stepForward(numFrames);
+		}
+		meanTime /= numRepeats;
+		log << "cpuver,bml," << y << "," << y << "," << density << "," << meanTime << ",-1," << numThreads << "," << sizeID << std::endl;
+	}
+	std::cout << "done cpu bml vertical";
+	cpu.clear(false);
+
+	
+	for (int y = 64; y <= 4096; y *= 2)
+	{
+		meanTime = 0;
+		cpu2.setDimensions(y, y);
+		for (int r = 0; r < numRepeats; ++r)
+		{
+			cpu2.rebuildCellStore();
+			initialiseFrame(cpu2, density);
+			cpu2.setLaunchParams(numThreads);
+			meanTime += cpu2.stepForward(numFrames);
+		}
+		meanTime /= numRepeats;
+		log << "cpuver,con," << y << "," << y << "," << density << "," << meanTime << ",-1," << numThreads << "," << sizeID << std::endl;
+	}
+	std::cout << "Done cpu conway vertical";
+
 	cpu2.clear(false);
+
+	seg.setOrientation(0);
+
+
+	SimulatorCPUZoning<T> cpuzon{ 64,64,con,seg,zoner };
+	for (int y = 64; y <= 4096; y *= 2)
+	{
+		meanTime = 0;
+		cpuzon.setDimensions(y, y);
+		for (int r = 0; r < numRepeats; ++r)
+		{
+			cpuzon.rebuildCellStore();
+			initialiseFrame(cpuzon, density);
+			cpuzon.setLaunchParams(numThreads);
+			meanTime += cpuzon.stepForward(numFrames);
+		}
+		meanTime /= numRepeats;
+		log << "cpuzonhor,con," << y << "," << y << "," << density << "," << meanTime << ",-1," << numThreads << "," << sizeID << std::endl;
+	}
+	std::cout << "Done cpu conway zoning horizontal";
+	cpuzon.clear(false);
+
+
+	SimulatorCPUZoning<T> cpuzon2{ 64,64,bml,seg,zoner };
+	for (int y = 64; y <= 4096; y *= 2)
+	{
+		meanTime = 0;
+		cpuzon2.setDimensions(y, y);
+		for (int r = 0; r < numRepeats; ++r)
+		{
+			cpuzon2.rebuildCellStore();
+			initialiseFrame(cpuzon2, density);
+			cpuzon2.setLaunchParams(numThreads);
+			meanTime += cpuzon2.stepForward(numFrames);
+		}
+		meanTime /= numRepeats;
+		log << "cpuzonhor,bml," << y << "," << y << "," << density << "," << meanTime << ",-1," << numThreads << "," << sizeID << std::endl;
+	}
+	std::cout << "Done cpu bml zoning horizontal";
+	cpuzon2.clear(false);
+
+	seg.setOrientation(0);
+
+
+	for (int y = 64; y <= 4096; y *= 2)
+	{
+		meanTime = 0;
+		cpuzon.setDimensions(y, y);
+		for (int r = 0; r < numRepeats; ++r)
+		{
+			cpuzon.rebuildCellStore();
+			initialiseFrame(cpuzon, density);
+			cpuzon.setLaunchParams(numThreads);
+			meanTime += cpuzon.stepForward(numFrames);
+		}
+		meanTime /= numRepeats;
+		log << "cpuzonhor,con," << y << "," << y << "," << density << "," << meanTime << ",-1," << numThreads << "," << sizeID << std::endl;
+	}
+	std::cout << "Done cpu conway zoning horizontal";
+	cpuzon.clear(false);
+
+
+	for (int y = 64; y <= 4096; y *= 2)
+	{
+		meanTime = 0;
+		cpuzon2.setDimensions(y, y);
+		for (int r = 0; r < numRepeats; ++r)
+		{
+			cpuzon2.rebuildCellStore();
+			initialiseFrame(cpuzon2, density);
+			cpuzon2.setLaunchParams(numThreads);
+			meanTime += cpuzon2.stepForward(numFrames);
+		}
+		meanTime /= numRepeats;
+		log << "cpuzonhor,bml," << y << "," << y << "," << density << "," << meanTime << ",-1," << numThreads << "," << sizeID << std::endl;
+	}
+	std::cout << "Done cpu bml zoning horizontal";
+	cpuzon2.clear(false);
+
+
+	RulesArrayConway<T> conA{ 64,64 };
+	RulesArrayBML<T> bmlA{ 64,64 };
+
+
+
+
 
 	return true;
 }
@@ -165,8 +288,10 @@ int main() {
 	std::ofstream error_log{ "error_log.txt" };
 	log << "Simulator,Ruleset,YDimension,XDimension,Density,MeanTime,nBlocks,nThreads,storageSize(bytes)\n";
 
+	runSimulations<bool>(log, error_log);
+	runSimulations<short int>(log, error_log);
 	runSimulations<int>(log, error_log);
-	runSimulations<long>(log, error_log);
+	// No point doing long as it's the same as int
 	runSimulations<long long int>(log, error_log);
 
 	log.close();

@@ -120,7 +120,7 @@ void handleInput(string line) {
 		// build simulatorType ruleSet [datatype=int] [ydim xdim nSegments nBlocks nThreads ymax xmax]
 		if (words[1] == "seq") {
 			if (words.size() > 3 && words[3] == "bool") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesBool = new RulesConway<bool>{};
 				}
 				else {
@@ -135,7 +135,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "int") {
-					if (words[2] == "conway" || words[2] == "gol") {
+					if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 						rulesInt = new RulesConway<int>{};
 					}
 					else {
@@ -150,7 +150,7 @@ void handleInput(string line) {
 					cout << "Created\n";
 				}
 				else if (words.size() > 3 && words[3] == "long") {
-					if (words[2] == "conway" || words[2] == "gol") {
+					if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 						rulesLong = new RulesConway<long>{};
 					}
 					else {
@@ -165,7 +165,7 @@ void handleInput(string line) {
 					cout << "Created\n";
 				}
 				else if (words.size() > 3 && words[3] == "longlong") {
-					if (words[2] == "conway" || words[2] == "gol") {
+					if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 						rulesLongLong = new RulesConway<long long>{};
 					}
 					else {
@@ -182,7 +182,7 @@ void handleInput(string line) {
 		}
 		else if (words[1] == "seqzon") {
 			if (words.size() > 3 && words[3] == "bool") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesBool = new RulesConway<bool>{};
 				}
 				else {
@@ -198,7 +198,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "int") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesInt = new RulesConway<int>{};
 				}
 				else {
@@ -214,7 +214,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "long") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesLong = new RulesConway<long>{};
 				}
 				else {
@@ -230,7 +230,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "longlong") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesLongLong = new RulesConway<long long>{};
 				}
 				else {
@@ -248,7 +248,7 @@ void handleInput(string line) {
 		}
 		else if (words[1] == "cpuhor") {
 			if (words.size() > 3 && words[3] == "bool") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesBool = new RulesConway<bool>{};
 				}
 				else {
@@ -265,7 +265,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "int") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesInt = new RulesConway<int>{};
 				}
 				else {
@@ -282,7 +282,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "long") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesLong = new RulesConway<long>{};
 				}
 				else {
@@ -299,7 +299,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "longlong") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesLongLong = new RulesConway<long long>{};
 				}
 				else {
@@ -318,7 +318,7 @@ void handleInput(string line) {
 		}
 		else if (words[1] == "cpuver") {
 			if (words.size() > 3 && words[3] == "bool") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesBool = new RulesConway<bool>{};
 				}
 				else {
@@ -335,7 +335,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "int") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesInt = new RulesConway<int>{};
 				}
 				else {
@@ -352,7 +352,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "long") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesLong = new RulesConway<long>{};
 				}
 				else {
@@ -369,7 +369,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "longlong") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesLongLong = new RulesConway<long long>{};
 				}
 				else {
@@ -388,7 +388,7 @@ void handleInput(string line) {
 		}
 		else if (words[1] == "cpuhorzon") {
 			if (words.size() > 3 && words[3] == "bool") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesBool = new RulesConway<bool>{};
 				}
 				else {
@@ -406,7 +406,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "int") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesInt = new RulesConway<int>{};
 				}
 				else {
@@ -424,7 +424,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "long") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesLong = new RulesConway<long>{};
 				}
 				else {
@@ -442,7 +442,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "longlong") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesLongLong = new RulesConway<long long>{};
 				}
 				else {
@@ -462,7 +462,7 @@ void handleInput(string line) {
 		}
 		else if (words[1] == "cpuverzon") {
 			if (words.size() > 3 && words[3] == "bool") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesBool = new RulesConway<bool>{};
 				}
 				else {
@@ -480,7 +480,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "int") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesInt = new RulesConway<int>{};
 				}
 				else {
@@ -498,7 +498,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "long") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesLong = new RulesConway<long>{};
 				}
 				else {
@@ -516,7 +516,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "longlong") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesLongLong = new RulesConway<long long>{};
 				}
 				else {
@@ -536,7 +536,7 @@ void handleInput(string line) {
 		}
 		else if (words[1] == "gpuhor") {
 			if (words.size() > 3 && words[3] == "bool") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesArrayBool = new RulesArrayConway<bool>{};
 				}
 				else {
@@ -553,7 +553,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "int") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesArrayInt = new RulesArrayConway<int>{};
 				}
 				else {
@@ -570,7 +570,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "long") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesArrayLong = new RulesArrayConway<long>{};
 				}
 				else {
@@ -587,7 +587,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "longlong") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesArrayLongLong = new RulesArrayConway<long long>{};
 				}
 				else {
@@ -606,7 +606,7 @@ void handleInput(string line) {
 		}
 		else if (words[1] == "gpuver") {
 			if (words.size() > 3 && words[3] == "bool") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesArrayBool = new RulesArrayConway<bool>{};
 				}
 				else {
@@ -623,7 +623,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "int") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesArrayInt = new RulesArrayConway<int>{};
 				}
 				else {
@@ -640,7 +640,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "long") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesArrayLong = new RulesArrayConway<long>{};
 				}
 				else {
@@ -657,7 +657,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "longlong") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesArrayLongLong = new RulesArrayConway<long long>{};
 				}
 				else {
@@ -676,7 +676,7 @@ void handleInput(string line) {
 		}
 		else if (words[1] == "gpuhorzon") {
 			if (words.size() > 3 && words[3] == "bool") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesArrayBool = new RulesArrayConway<bool>{};
 				}
 				else {
@@ -693,7 +693,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "int") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesArrayInt = new RulesArrayConway<int>{};
 				}
 				else {
@@ -710,7 +710,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "long") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesArrayLong = new RulesArrayConway<long>{};
 				}
 				else {
@@ -727,7 +727,7 @@ void handleInput(string line) {
 				cout << "Created\n";
 			}
 			else if (words.size() > 3 && words[3] == "longlong") {
-				if (words[2] == "conway" || words[2] == "gol") {
+				if (words[2] == "conway" || words[2] == "gol" || words[2] == "con") {
 					rulesArrayLongLong = new RulesArrayConway<long long>{};
 				}
 				else {
