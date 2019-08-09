@@ -935,19 +935,19 @@ void handleInput(string line) {
 			steps = stoi(words[1]);
 		}
 		if (simType == 0) {
-			cout << "Took " << simBool->stepForward(steps) << " seconds";
+			cout << "Took " << simBool->stepForward(steps) << " seconds\n";
 		}
 		else if (simType == 1) {
-			cout << "Took " << simShort->stepForward(steps) << " seconds";
+			cout << "Took " << simShort->stepForward(steps) << " seconds\n";
 		}
 		else if (simType == 1) {
-			cout << "Took " << simInt->stepForward(steps) << " seconds";
+			cout << "Took " << simInt->stepForward(steps) << " seconds\n";
 		}
 		else if (simType == 3) {
-			cout << "Took " << simLong->stepForward(steps) << " seconds";
+			cout << "Took " << simLong->stepForward(steps) << " seconds\n";
 		}
 		else if (simType == 4) {
-			cout << "Took " << simLongLong->stepForward(steps) << " seconds";
+			cout << "Took " << simLongLong->stepForward(steps) << " seconds\n";
 		}
 	}
 	else if (words[0] == "clear") {
