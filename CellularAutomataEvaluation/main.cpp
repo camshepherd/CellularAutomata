@@ -38,6 +38,9 @@ bool runSimulations(std::ofstream& log, std::ofstream& error_log)
 	RulesBML<T> bml{};
 	RulesConway<T> con{};
 	float meanTime,density = 0.3;
+	SegmenterStrips seg{ 0 };
+
+
 	SimulatorSequential<T> seq{ 64,64,bml };
 	for(int y = 64; y <= 4096;y*=2)
 	{
@@ -108,7 +111,7 @@ bool runSimulations(std::ofstream& log, std::ofstream& error_log)
 	
 	std::cout << "done seqzon conway" << std::endl;
 	int numThreads = std::thread::hardware_concurrency();
-	SegmenterStrips seg{ 0 };
+	
 	
 
 	SimulatorCPU<T> cpu{ 64,64,bml,seg };
@@ -266,12 +269,100 @@ bool runSimulations(std::ofstream& log, std::ofstream& error_log)
 	std::cout << "Done cpu bml zoning horizontal";
 	cpuzon2.clear(false);
 
+	RulesArrayConway<T> conA{};
+	RulesArrayBML<T> bmlA{};
+	int gpuBlocks = 32, gpuThreads = 128;
 
-	RulesArrayConway<T> conA{ 64,64 };
-	RulesArrayBML<T> bmlA{ 64,64 };
+
+	seg.setOrientation(0);
+	
+	SimulatorGPU<T> gpuhor{ 64,64,conA,seg,32, 128 };
+	for (int y = 64; y <= 4096; y *= 2)
+	{
+		meanTime = 0;
+		gpuhor.setLaunchParams(gpuBlocks, gpuThreads, gpuBlocks * gpuThreads);
+		gpuhor.setDimensions(y, y);
+		for (int r = 0; r < numRepeats; ++r)
+		{
+			gpuhor.clear();
+			//gpuhor.rebuildCellStore();
+			initialiseFrame(gpuhor, density);
+			meanTime += gpuhor.stepForward(numFrames);
+		}
+		meanTime /= numRepeats;
+		log << "gpuhor,con," << y << "," << y << "," << density << "," << meanTime << "," << gpuBlocks << "," << gpuThreads << "," << sizeID << std::endl;
+	}
+	std::cout << "Done gpu conway horizontal";
+	gpuhor.clear(false);
 
 
 
+
+	SimulatorGPU<T> gpuhor2{ 64,64,bmlA,seg,32, 128};
+	for (int y = 64; y <= 4096; y *= 2)
+	{
+		meanTime = 0;
+		gpuhor2.setLaunchParams(gpuBlocks, gpuThreads, gpuBlocks * gpuThreads);
+		gpuhor2.setDimensions(y, y);
+		for (int r = 0; r < numRepeats; ++r)
+		{
+			gpuhor2.clear();
+			//gpuhor.rebuildCellStore();
+			initialiseFrame(gpuhor2, density);
+			meanTime += gpuhor2.stepForward(numFrames);
+		}
+		meanTime /= numRepeats;
+		log << "gpuhor,bml," << y << "," << y << "," << density << "," << meanTime << "," << gpuBlocks << "," << gpuThreads << "," << sizeID << std::endl;
+	}
+	std::cout << "Done gpu bml horizontal";
+	gpuhor.clear(false);
+
+
+
+
+
+
+
+
+	seg.setOrientation(1);
+
+	for (int y = 64; y <= 4096; y *= 2)
+	{
+		meanTime = 0;
+		gpuhor.setLaunchParams(gpuBlocks, gpuThreads, gpuBlocks * gpuThreads);
+		gpuhor.setDimensions(y, y);
+		for (int r = 0; r < numRepeats; ++r)
+		{
+			gpuhor.clear();
+			//gpuhor.rebuildCellStore();
+			initialiseFrame(gpuhor, density);
+			meanTime += gpuhor.stepForward(numFrames);
+		}
+		meanTime /= numRepeats;
+		log << "gpuver,con," << y << "," << y << "," << density << "," << meanTime << "," << gpuBlocks << "," << gpuThreads << "," << sizeID << std::endl;
+	}
+	std::cout << "Done gpu conway horizontal";
+	gpuhor.clear(false);
+
+
+
+	for (int y = 64; y <= 4096; y *= 2)
+	{
+		meanTime = 0;
+		gpuhor2.setLaunchParams(gpuBlocks, gpuThreads, gpuBlocks * gpuThreads);
+		gpuhor2.setDimensions(y, y);
+		for (int r = 0; r < numRepeats; ++r)
+		{
+			gpuhor2.clear();
+			//gpuhor.rebuildCellStore();
+			initialiseFrame(gpuhor2, density);
+			meanTime += gpuhor2.stepForward(numFrames);
+		}
+		meanTime /= numRepeats;
+		log << "gpuver,bml," << y << "," << y << "," << density << "," << meanTime << "," << gpuBlocks << "," << gpuThreads << "," << sizeID << std::endl;
+	}
+	std::cout << "Done gpu bml horizontal";
+	gpuhor.clear(false);
 
 
 	return true;

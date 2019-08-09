@@ -405,13 +405,13 @@ namespace CellularAutomata {
 	}
 
 	template class SimulatorGPU<bool>;
-	template class SimulatorGPU<char>;
+	template class SimulatorGPU<short>;
 	template class SimulatorGPU<int>;
 	template class SimulatorGPU<long int>;
 	template class SimulatorGPU<long long int>;
 
 	template class SimulatorGPUZoning<bool>;
-	template class SimulatorGPUZoning<char>;
+	template class SimulatorGPUZoning<short>;
 	template class SimulatorGPUZoning<int>;
 	template class SimulatorGPUZoning<long int>;
 	template class SimulatorGPUZoning<long long int>;

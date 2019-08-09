@@ -15,6 +15,10 @@ namespace CellularAutomata {
 
 	template <typename T>
 	bool SimulatorArray<T>::clear(bool addBlankFirstFrame) {
+		for(T* frame : this->cellStore)
+		{
+			free(frame);
+		}
 		cellStore.clear();
 		if (addBlankFirstFrame) {
 			blankFrame();
