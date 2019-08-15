@@ -34,5 +34,9 @@ namespace CellularAutomata {
 		@param numSegments: The number of segments to split the region up in to
 		*/
 		virtual int* segmentToArray(int y_dim_, int x_dim_, int numSegments) const override;
+
+		/** Set the orientation of the segments that will be created
+		 */
+		virtual bool setOrientation(bool newOrientation);
 	};
 }

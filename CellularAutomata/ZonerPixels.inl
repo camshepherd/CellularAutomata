@@ -55,7 +55,7 @@ namespace CellularAutomata {
 		// only need to rebuild the vectors if the dimensions have changed
 		if(y != ydim || x != xdim)
 		{
-			std::cout << "Updating ZonerPixels dimensions to " << y << " and " << x << std::endl;
+			//std::cout << "Updating ZonerPixels dimensions to " << y << " and " << x << std::endl;
 			this->ydim = y;
 			this->xdim = x;
 			//delete cellActivities;

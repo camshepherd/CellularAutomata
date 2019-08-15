@@ -82,4 +82,11 @@ namespace CellularAutomata {
 		}
 		return partitions;
 	}
+
+	bool SegmenterStrips::setOrientation(bool newOrientation)
+	{
+		orientation = newOrientation;
+		return true;
+	}
+
 }

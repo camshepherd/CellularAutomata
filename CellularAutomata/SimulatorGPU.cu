@@ -208,7 +208,7 @@ namespace CellularAutomata {
 
 	template <typename T>
 	double SimulatorGPU<T>::stepForward(int steps) {
-		printf("SIMULATOR DIMENSIONS: %d, %d", this->y_dim, this->x_dim);
+		//printf("SIMULATOR DIMENSIONS: %d, %d", this->y_dim, this->x_dim);
 		this->timer.reset();
 		// declare the variables needed
 		//int numSegments = this->nBlocks * this->nThreads;
@@ -405,13 +405,13 @@ namespace CellularAutomata {
 	}
 
 	template class SimulatorGPU<bool>;
-	template class SimulatorGPU<char>;
+	template class SimulatorGPU<short>;
 	template class SimulatorGPU<int>;
 	template class SimulatorGPU<long int>;
 	template class SimulatorGPU<long long int>;
 
 	template class SimulatorGPUZoning<bool>;
-	template class SimulatorGPUZoning<char>;
+	template class SimulatorGPUZoning<short>;
 	template class SimulatorGPUZoning<int>;
 	template class SimulatorGPUZoning<long int>;
 	template class SimulatorGPUZoning<long long int>;
