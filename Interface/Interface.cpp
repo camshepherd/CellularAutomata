@@ -85,13 +85,14 @@ void printHelp(int angriness) {
 	cout << "\n\n|______________________" << endl;
 	cout << std::uppercase << "Help Page/Manual: " << endl;
 	cout << "Note that all functionality is very primitive and will assume that you know what you're doing" << endl;
+	cout << "To get more information about an option, type [option] /?" << endl;
 	cout << "print [frameNum] [numToPrint]" << endl;
 	cout << "build simulatorType ruleSet [datatype=int] [ydim xdim nSegments nBlocks nThreads ymax xmax]: build simulator with given parameters, not all are needed for all implementations" << endl;
 	cout << "dimensions ydim xdim: change dimensions of simulator" << endl;
 	cout << "step [steps=1]: step forward through the simulation by the given number of frames" << endl;
 	cout << "clear: empties the current simulator" << endl;
 	cout << "set y x val: set position [y,x] to value val" << endl;
-	cout << "exit: exit the application in a way that doesn't involve crashing" << endl;
+	cout << "exit: exit the application in a way that doesn't involve crashing, hopefully" << endl;
 	cout << "|__________________________ END\n\n";
 }
 
