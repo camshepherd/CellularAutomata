@@ -47,39 +47,6 @@ IDeadZoneHandler<long>* zonerLong;
 IDeadZoneHandler<long long>* zonerLongLong;
 
 
-void printInsult() {
-	int num = std::rand() / ((RAND_MAX + 1u) / 9);
-	switch (num) {
-	case 0:
-		cout << "Your mother was a hamster and your father smelt of elderberries!" << endl;
-		break;
-	case 1:
-		cout << "I fart in your general direction!" << endl;
-		break;
-	case 2:
-		cout << "You great supine protoplasmic invertebrate jelly!" << endl;
-		break;
-	case 3:
-		cout << "I blow my nose at you!" << endl;		
-		break;
-	case 4:
-		cout << "English pig dog!" << endl;
-		break;
-	case 5:
-		cout << "You empty headed animal food trough wiper!" << endl;
-		break;
-	case 6:
-		cout << "Go and boil your bottom!" << endl;
-		break;
-	case 7:
-		cout << "You son of a silly person!" << endl;
-		break;
-	case 8:
-		cout << "Go away or I shall taunt you a second time!" << endl;
-		break;
-	}
-}
-
 
 void printHelp(int angriness) {
 	cout << "\n\n|______________________" << endl;
@@ -119,7 +86,7 @@ void handleInput(string line) {
 	}
 	if (words[0] == "help") {
 		if (words.size() > 1 && words[1] == "/?") {
-			cout << "\n\nMaybe you need an insult? hint hint ...\n\n" << endl;
+			cout << "\n\nThis prints out a summary of the commands and their core functionalities\n\n" << endl;
 		}
 		else {
 			if (words.size() > 1 && words[1] == "1") {
@@ -128,14 +95,6 @@ void handleInput(string line) {
 			else {
 				printHelp(0);
 			}
-		}
-	}
-	else if (words[0] == "insult") {
-		if (words.size() > 1 && words[1] == "/?") {
-			cout << "\n\nIt prints an insult; what would you expect it to do?...\n\n" << endl;
-		}
-		else {
-			printInsult();
 		}
 	}
 	else if (words[0] == "build") {
@@ -1012,7 +971,7 @@ void handleInput(string line) {
 					cout << "Took " << simLongLong->stepForward(steps) << " seconds\n";
 				}
 			}
-			catch (exception e) {
+			catch (...) {
 				cout << "That didn't work" << endl;
 			}
 		}
@@ -1113,6 +1072,9 @@ void handleInput(string line) {
 			cout << "\nI'll be back...\n" << endl;
 			running = false;
 		}
+	}
+	else {
+		cout << "No command recognised" << endl;
 	}
 }
 
