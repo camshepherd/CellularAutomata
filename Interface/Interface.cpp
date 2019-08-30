@@ -51,14 +51,15 @@ IDeadZoneHandler<long long>* zonerLongLong;
 void printHelp(int angriness) {
 	cout << "\n\n|______________________" << endl;
 	cout << std::uppercase << "Help Page/Manual: " << endl;
-	cout << "Note that all functionality is very primitive and will assume that you know what you're doing" << endl;
+	cout << "Note that all functionality is very primitive and will assume that you know what you're doing and don't make mistakes" << endl;
+	cout << "To get more information about a command, type [command] /?" << endl;
 	cout << "print [frameNum] [numToPrint]" << endl;
-	cout << "build simulatorType ruleSet [datatype=int] [ydim xdim nSegments nBlocks nThreads ymax xmax]: build simulator with given parameters, not all are needed for all implementations" << endl;
+	cout << "build simulatorType ruleSet datatype ydim xdim: build simulator with given parameters" << endl;
 	cout << "dimensions ydim xdim: change dimensions of simulator" << endl;
 	cout << "step [steps=1]: step forward through the simulation by the given number of frames" << endl;
 	cout << "clear: empties the current simulator" << endl;
 	cout << "set y x val: set position [y,x] to value val" << endl;
-	cout << "exit: exit the application in a way that doesn't involve crashing" << endl;
+	cout << "exit: exit the application in a way that doesn't involve crashing, hopefully" << endl;
 	cout << "|__________________________ END\n\n";
 }
 
@@ -656,7 +657,7 @@ void handleInput(string line) {
 						segmenter = new SegmenterStrips{ 0 };
 
 						simType = 0;
-						simBool = new SimulatorGPU<bool>{ ydim, xdim, *rulesArrayBool,*segmenter,2,32 };
+						simBool = new SimulatorGPU<bool>{ ydim, xdim, *rulesArrayBool,*segmenter,128,256 };
 						cout << "Created\n";
 					}
 					else if (words.size() > 3 && words[3] == "short") {
@@ -673,7 +674,7 @@ void handleInput(string line) {
 						segmenter = new SegmenterStrips{ 0 };
 
 						simType = 1;
-						simShort = new SimulatorGPU<short>{ ydim, xdim, *rulesArrayShort,*segmenter,2,32 };
+						simShort = new SimulatorGPU<short>{ ydim, xdim, *rulesArrayShort,*segmenter,128,256 };
 						cout << "Created\n";
 					}
 					else if (words.size() > 3 && words[3] == "int") {
@@ -690,7 +691,7 @@ void handleInput(string line) {
 						segmenter = new SegmenterStrips{ 0 };
 
 						simType = 2;
-						simInt = new SimulatorGPU<int>{ ydim, xdim, *rulesArrayInt,*segmenter,2,32 };
+						simInt = new SimulatorGPU<int>{ ydim, xdim, *rulesArrayInt,*segmenter,128,256 };
 						cout << "Created\n";
 					}
 					else if (words.size() > 3 && words[3] == "long") {
@@ -707,7 +708,7 @@ void handleInput(string line) {
 						segmenter = new SegmenterStrips{ 0 };
 
 						simType = 3;
-						simLong = new SimulatorGPU<long>{ ydim, xdim, *rulesArrayLong,*segmenter,2,32 };
+						simLong = new SimulatorGPU<long>{ ydim, xdim, *rulesArrayLong,*segmenter,128,256 };
 						cout << "Created\n";
 					}
 					else if (words.size() > 3 && words[3] == "longlong") {
@@ -724,7 +725,7 @@ void handleInput(string line) {
 						segmenter = new SegmenterStrips{ 0 };
 
 						simType = 4;
-						simLongLong = new SimulatorGPU<long long>{ ydim, xdim, *rulesArrayLongLong,*segmenter,2,32 };
+						simLongLong = new SimulatorGPU<long long>{ ydim, xdim, *rulesArrayLongLong,*segmenter,128,256 };
 						cout << "Created\n";
 					}
 				}
@@ -743,7 +744,7 @@ void handleInput(string line) {
 						segmenter = new SegmenterStrips{ 1 };
 
 						simType = 0;
-						simBool = new SimulatorGPU<bool>{ ydim, xdim, *rulesArrayBool,*segmenter,2,32 };
+						simBool = new SimulatorGPU<bool>{ ydim, xdim, *rulesArrayBool,*segmenter,128,256 };
 						cout << "Created\n";
 					}
 					else if (words.size() > 3 && words[3] == "short") {
@@ -760,7 +761,7 @@ void handleInput(string line) {
 						segmenter = new SegmenterStrips{ 1 };
 
 						simType = 1;
-						simShort = new SimulatorGPU<short>{ ydim, xdim, *rulesArrayShort,*segmenter,2,32 };
+						simShort = new SimulatorGPU<short>{ ydim, xdim, *rulesArrayShort,*segmenter,128,256 };
 						cout << "Created\n";
 					}
 					else if (words.size() > 3 && words[3] == "int") {
@@ -777,7 +778,7 @@ void handleInput(string line) {
 						segmenter = new SegmenterStrips{ 1 };
 
 						simType = 2;
-						simInt = new SimulatorGPU<int>{ ydim, xdim, *rulesArrayInt,*segmenter,2,32 };
+						simInt = new SimulatorGPU<int>{ ydim, xdim, *rulesArrayInt,*segmenter,128,256 };
 						cout << "Created\n";
 					}
 					else if (words.size() > 3 && words[3] == "long") {
@@ -794,7 +795,7 @@ void handleInput(string line) {
 						segmenter = new SegmenterStrips{ 1 };
 
 						simType = 3;
-						simLong = new SimulatorGPU<long>{ ydim, xdim, *rulesArrayLong,*segmenter,2,32 };
+						simLong = new SimulatorGPU<long>{ ydim, xdim, *rulesArrayLong,*segmenter,128,256 };
 						cout << "Created\n";
 					}
 					else if (words.size() > 3 && words[3] == "longlong") {
@@ -811,7 +812,7 @@ void handleInput(string line) {
 						segmenter = new SegmenterStrips{ 1 };
 
 						simType = 4;
-						simLongLong = new SimulatorGPU<long long>{ ydim, xdim, *rulesArrayLongLong,*segmenter,2,32 };
+						simLongLong = new SimulatorGPU<long long>{ ydim, xdim, *rulesArrayLongLong,*segmenter,128,256 };
 						cout << "Created\n";
 					}
 				}
@@ -997,6 +998,7 @@ void handleInput(string line) {
 				else if (simType == 4) {
 					simLongLong->clear();
 				}
+				cout << "\nDone\n";
 			}
 			catch (exception e) {
 				cout << "That didn't work" << endl;

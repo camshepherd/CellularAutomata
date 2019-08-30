@@ -28,7 +28,7 @@ bool initialiseFrame(ISimulator<T>& sim, float density) {
 }
 
 template <typename T>
-bool runSimulations(std::ofstream& log, std::ofstream& error_log)
+bool runSimulations(std::ofstream& log, std::ofstream& error_log,bool complete)
 {
 	Stopwatch timer{};
 	timer.reset();
@@ -271,7 +271,7 @@ bool runSimulations(std::ofstream& log, std::ofstream& error_log)
 
 	RulesArrayConway<T> conA{};
 	RulesArrayBML<T> bmlA{};
-	int gpuBlocks = 32, gpuThreads = 128;
+	int gpuBlocks = 128, gpuThreads = 256;
 
 
 	seg.setOrientation(0);
@@ -365,6 +365,39 @@ bool runSimulations(std::ofstream& log, std::ofstream& error_log)
 	gpuhor.clear(false);
 
 
+	if (complete)
+	{
+
+		//Testing the results of different block and thread counts for the gpu simulator
+
+		seg.setOrientation(0);
+		for (gpuBlocks = 32; gpuBlocks <= 256; gpuBlocks *= 2)
+		{
+			for (gpuThreads = 32; gpuThreads <= 1024; gpuThreads *= 2)
+			{
+				for (int y = 64; y <= 4096; y *= 2)
+				{
+					meanTime = 0;
+					gpuhor.setLaunchParams(gpuBlocks, gpuThreads, gpuBlocks * gpuThreads);
+					gpuhor.setDimensions(y, y);
+					for (int r = 0; r < numRepeats; ++r)
+					{
+						gpuhor.clear();
+						//gpuhor.rebuildCellStore();
+						initialiseFrame(gpuhor, density);
+						meanTime += gpuhor.stepForward(numFrames);
+					}
+					meanTime /= numRepeats;
+					std::cout << "completed with " << gpuBlocks << " and " << gpuThreads << " in " << meanTime << "s" << std::endl;
+					log << "gpuhorT,con," << y << "," << y << "," << density << "," << meanTime << "," << gpuBlocks << "," << gpuThreads << "," << sizeID << std::endl;
+				}
+			}
+		}
+		std::cout << "Done gpu block and thread evaluation";
+		gpuhor.clear(false);
+	}
+
+
 	return true;
 }
 
@@ -372,18 +405,30 @@ bool runSimulations(std::ofstream& log, std::ofstream& error_log)
 int main() {
 	Stopwatch timer;
 	timer.reset();
-	int ID;
-	std::cout << "Please enter the Computer ID (single digit): " << std::endl;
+	std::string ID;
+	std::string input;
+	bool run_complete;
+	std::cout << "Run complete? y/n" << std::endl;
+	std::cin >> input;
+	if(input == "y")
+	{
+		run_complete = true;
+	}
+	else
+	{
+		run_complete = false;
+	}
+	std::cout << "Enter identifier: " << std::endl;
 	std::cin >> ID;
-	std::ofstream log{ "results_" + std::to_string(ID) + ".out" };
+	std::ofstream log{ "results_" + ID + ".out" };
 	std::ofstream error_log{ "error_log.txt" };
 	log << "Simulator,Ruleset,YDimension,XDimension,Density,MeanTime,nBlocks,nThreads,storageSize(bytes)\n";
 
-	runSimulations<bool>(log, error_log);
-	runSimulations<short int>(log, error_log);
-	runSimulations<int>(log, error_log);
+	runSimulations<bool>(log, error_log,run_complete);
+	runSimulations<short int>(log, error_log,run_complete);
+	runSimulations<int>(log, error_log,run_complete);
 	// No point doing long as it's the same as int
-	runSimulations<long long int>(log, error_log);
+	runSimulations<long long int>(log, error_log,run_complete);
 
 	log.close();
 	error_log.close();
