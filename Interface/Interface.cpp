@@ -101,7 +101,7 @@ void handleInput(string line) {
 	else if (words[0] == "build") {
 		int ydim, xdim;
 		if (words.size() > 1 && words[1] == "/?") {
-			cout << "\n\n Build the simulator.\n\nSimulator types:\nseq\nseqzon\ncpuhor\ncpuver\ncpuhorzon\ncpuverzon\gpuhor\gpuver\n\nRulesets:\ncon/gol/conway\nbml\n\nALl arguments must be space-separated\n\n" << endl;
+			cout << "\n\n Build the simulator.\n\nSimulator types:\nseq\nseqzon\ncpuhor\ncpuver\ncpuhorzon\ncpuverzon\ngpuhor\ngpuver\n\nRulesets:\ncon/gol/conway\nbml\n\nALl arguments must be space-separated\n\n" << endl;
 		}
 		else {
 			try {
@@ -962,7 +962,7 @@ void handleInput(string line) {
 				else if (simType == 1) {
 					cout << "Took " << simShort->stepForward(steps) << " seconds\n";
 				}
-				else if (simType == 1) {
+				else if (simType == 2) {
 					cout << "Took " << simInt->stepForward(steps) << " seconds\n";
 				}
 				else if (simType == 3) {
@@ -989,7 +989,7 @@ void handleInput(string line) {
 				else if (simType == 1) {
 					simShort->clear();
 				}
-				else if (simType == 1) {
+				else if (simType == 2) {
 					simInt->clear();
 				}
 				else if (simType == 3) {
