@@ -85,24 +85,24 @@ namespace CellularAutomata {
 	template <typename T>
 	SimulatorGPU<T>::SimulatorGPU(int ydim, int xdim, IRulesArray<T>& rules, ISegmenter& segmenter, int nBlocks, int nThreads) : SimulatorArray<T>(ydim, xdim, rules), segmenter(segmenter), nBlocks(nBlocks), nThreads(nThreads)
 	{
-		printf("SimulatorGPU location is %p\n", this);
+		//printf("SimulatorGPU location is %p\n", this);
 		size_t size;
 		checkCudaErrors(cudaDeviceGetLimit(&size, cudaLimitMallocHeapSize));
-		printf("The size is: %llu", size);
+		//printf("The size is: %llu", size);
 		size = 2000000000;
 		checkCudaErrors(cudaDeviceSetLimit(cudaLimitMallocHeapSize, size));
 		checkCudaErrors(cudaDeviceGetLimit(&size, cudaLimitMallocHeapSize));
-		printf("And now it is: %llu", size);
+		//printf("And now it is: %llu", size);
 		nSegments = this->y_dim * this->x_dim;
-		printf("The dimensions of SimulatorGPU are: %d and %d\n", this->y_dim, this->x_dim);
+		//printf("The dimensions of SimulatorGPU are: %d and %d\n", this->y_dim, this->x_dim);
 	}
 
 	template<typename T>
 	SimulatorGPUZoning<T>::SimulatorGPUZoning(int y, int x, IRulesArray<T>& rules, ISegmenter& segmenter, int nBlocks, int nThreads, int y_max, int x_max) : SimulatorGPU<T>(y, x, rules, segmenter, nBlocks, nThreads), y_max(y_max), x_max(x_max)
 	{
-		printf("SimulatorGPUZoning location is %p", this);
-		printf("A is %p\n", this->d_zoner_a);
-		printf("B is %p\n", this->d_zoner_b);
+		//printf("SimulatorGPUZoning location is %p", this);
+		//printf("A is %p\n", this->d_zoner_a);
+		//printf("B is %p\n", this->d_zoner_b);
 		size_t size;
 		checkCudaErrors(cudaDeviceGetLimit(&size, cudaLimitMallocHeapSize));
 		printf("The size is: %llu", size);

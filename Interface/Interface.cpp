@@ -55,7 +55,7 @@ void printHelp(int angriness) {
 	cout << "To get more information about a command, type [command] /?" << endl;
 	cout << "print [frameNum] [numToPrint]" << endl;
 	cout << "build simulatorType ruleSet datatype ydim xdim: build simulator with given parameters" << endl;
-	cout << "dimensions ydim xdim: change dimensions of simulator" << endl;
+	cout << "dims ydim xdim: change dimensions of simulator" << endl;
 	cout << "step [steps=1]: step forward through the simulation by the given number of frames" << endl;
 	cout << "clear: empties the current simulator" << endl;
 	cout << "set y x val: set position [y,x] to value val" << endl;
@@ -101,7 +101,7 @@ void handleInput(string line) {
 	else if (words[0] == "build") {
 		int ydim, xdim;
 		if (words.size() > 1 && words[1] == "/?") {
-			cout << "\n\n Build the simulator.\n\nSimulator types:\nseq\nseqzon\ncpuhor\ncpuver\ncpuhorzon\ncpuverzon\ngpuhor\ngpuver\n\nRulesets:\ncon/gol/conway\nbml\n\nALl arguments must be space-separated\n\n" << endl;
+			cout << "\n\n Build the simulator.\nbuild simulatorType ruleSet datatype ydim xdim\n\nSimulator types:\nseq\nseqzon\ncpuhor\ncpuver\ncpuhorzon\ncpuverzon\ngpuhor\ngpuver\n\nRulesets:\ncon/gol/conway\nbml\n\nALl arguments must be space-separated\n\n" << endl;
 		}
 		else {
 			try {
@@ -913,7 +913,7 @@ void handleInput(string line) {
 		// print [frameNum] [numToPrint]
 		int frameStart = -1, frameCount = 1;
 		if (words.size() > 1 && words[1] == "/?") {
-			cout << "\n\nPrint out, starting from frameNum, numToPrint frames one after the other. \nUnless otherwise specified, only one frame will be printed, and unless otherwise specified the start frame is the highest-indexed\n\n" << endl;
+			cout << "\nprint [frameNum] [numToPrint]\n\nPrint out, starting from frameNum, numToPrint frames one after the other. \nUnless otherwise specified, only one frame will be printed, and unless otherwise specified the start frame is the highest-indexed\n\n" << endl;
 		}
 		else {
 			try {
@@ -949,7 +949,7 @@ void handleInput(string line) {
 		//step[steps = 1]
 		int steps = 1;
 		if (words.size() > 1 && words[1] == "/?") {
-			cout << "\n\nSimulate successive frames of the active simulation\n\n" << endl;
+			cout << "\nstep [steps=1]\n\nSimulate successive frames of the active simulation\n\n" << endl;
 		}
 		else {
 			try {
@@ -1010,7 +1010,7 @@ void handleInput(string line) {
 		int ydim = stoi(words[1]);
 		int xdim = stoi(words[2]);
 		if (words.size() > 1 && words[1] == "/?") {
-			cout << "\n\nChange the dimensions of the active simulation, necessarily losing all simulated frames in the process\n\n" << endl;
+			cout << "\ndims ydim xdim\n\nChange the dimensions of the active simulation, necessarily losing all simulated frames in the process\n\n" << endl;
 		}
 		else {
 			try {
@@ -1041,7 +1041,7 @@ void handleInput(string line) {
 		int x = stoi(words[2]);
 		int val = stoi(words[3]);
 		if (words.size() > 1 && words[1] == "/?") {
-			cout << "\n\nSet the state of the specified cell in the active simulation\n\n" << endl;
+			cout << "\nset y x val\n\nSet the state of the specified cell in the active simulation\n\n" << endl;
 		}
 		else {
 			try {
