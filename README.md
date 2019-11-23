@@ -5,4 +5,4 @@ Used for work on my dissertation in pursuit of my MSc in Computer Science.
 
 
 ## Contents
-Contains a Visual Studio 2017 solution containing library, test and UI projects for the solution. It should work on any system that has the CUDA integration installed. Made entirely in C++
+Contains a Visual Studio 2017 solution containing library, test UI and performance benchmarking projects for the solution. It should work on any system that has the CUDA integration installed. Made entirely in C++
